@@ -14,6 +14,7 @@ class Receptionist_model extends CI_model {
         $this->db->where('thisdate', $thisdate);
         $this->db->join('doctor', 'doctor.dr_id = appointment.dr_id', 'left');
         $this->db->join('nurse', 'nurse.emp_id = appointment.emp_id', 'left');
+        $this->db->order_by('app_tc_id', 'desc');
         $query = $this->db->get('appointment');
         return $query->result();
     }
@@ -74,7 +75,14 @@ class Receptionist_model extends CI_model {
         return $query->result();
     }
 
-
+    function getAppSerial($dr_id, $AppDate) {
+        $this->db->limit(1);
+        $this->db->where('dr_id', $dr_id);
+        $this->db->where('ap_date', $AppDate);
+        $this->db->order_by('app_tc_id', 'desc');
+        $sql = $this->db->get('appointment');
+        return $sql->row();
+    }
 
     function getDrinfo() {
         $query = $this->db->get('doctor');
@@ -109,6 +117,7 @@ class Receptionist_model extends CI_model {
         $this->db->where('app_tc_id', $ap_id);
         $this->db->join('doctor', 'doctor.dr_id = appointment.dr_id', 'left');
         $this->db->join('nurse', 'nurse.emp_id = appointment.emp_id', 'left');
+        $this->db->join('empinfo', 'empinfo.emp_id = appointment.emp_id', 'left');
         $query = $this->db->get('appointment');
         return $query->row();
     }

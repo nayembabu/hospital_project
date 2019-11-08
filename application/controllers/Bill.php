@@ -139,19 +139,18 @@ public function newbill() {
         $this->bill_model->insert_bill($data);
 
         $i_data = array(
-                    'id' => $p_serial,
+                    'id'            => $p_serial,
                     'consultant_id' => $consultant,
                     'consul_sec_id' => $consultantsec,
-                    'assistant_id' => $assistant,
-                    'anes_id' => $anesthesiologist,
-                    'dis_time' => $time_this,
-                    'p_stus' => $p_status,
-                    'blcrtemp' => $emp_id
+                    'assistant_id'  => $assistant,
+                    'anes_id'       => $anesthesiologist,
+                    'dis_time'      => $time_this,
+                    'p_stus'        => $p_status,
+                    'blcrtemp'      => $emp_id
             );
         $this->bill_model->update_bill($p_serial, $i_data);        
 
         $this->session->set_flashdata('feedback', 'Addedd Successfully'); 
-
 
         $link = "<script>window.open('bill/printbill?id=$p_serial','_blank', 'width=800,height=800,left=300,top=300');window.location.href = 'bill';</script>";
         echo $link;

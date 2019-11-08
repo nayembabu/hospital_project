@@ -272,7 +272,7 @@
                                 </a>
                                 <ul class="sub">
                                     <li><a href="reception"><i class="fa fa-check"></i><?php echo lang('ticket'); ?></a></li>
-                                    <li><a href="reception/print_total"><i class="fa fa-check"></i><?php echo lang('print').' '.lang('total').' '.lang('ticket'); ?></a></li>
+                                    <li><a href="reception/print_total"><i class="fa fa-check"></i>Ticket Statement</a></li>
 
                         <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
                                     <li><a href="bill"><i class="fa fa-dollar"></i><?php echo lang('create').' '.lang('bill'); ?></a></li>

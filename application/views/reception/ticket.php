@@ -21,13 +21,13 @@
 
                 
 <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Sr_Receptionist'))) { ?>
-                <form style="margin: -25px -15px -32px -16px; padding: 0" role="form" class="f_report" action="reception/ticketbydate" method="post" enctype="multipart/form-data">
+                <form style="margin: -25px -15px -32px -16px; padding: 0" role="form" class="f_report">
                         <div align="center" class="form-group">
                             
                                 <div class="input-group input-large" data-date="13/07/2018" data-date-format="mm/dd/yyyy">
-                                    <input type="text" class="form-control  dtpic " id="printdate" name="date" value="" placeholder="<?php echo lang('date'); ?>">
+                                    <input type="text" class="form-control dtpic " id="printdate" name="date" value="" placeholder="<?php echo lang('date'); ?>">
                                    
-                                <button type="submit" name="submit" class="btn btn-info range_submit"><?php echo lang('submit'); ?></button>
+                                <button type="button" name="submit" class="btn btn-info range_submit"><?php echo lang('submit'); ?></button>
 
                                 </div>
                             </div>
@@ -48,6 +48,7 @@
                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th> <?php  echo lang('serial'); ?></th>
                                 <th> <?php  echo lang('name'); ?></th>
                                 <th> <?php  echo lang('age'); ?></th>
@@ -55,10 +56,8 @@
                                 <th> <?php  echo lang('doctor'); ?></th>
                                 <th> <?php  echo lang('appointment'). " " .lang('date'); ?></th>
                                 <th> <?php  echo lang('status'); ?></th>
-                                <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
                                 <th> <?php  echo lang('print'). ' ' .lang('emp'). ' ' .lang('name'); ?></th>
                                 <th><?php  echo lang('entry'). ' '.lang('date'); ?></th>
-                                <?php }?>
                                 <th> <?php  echo lang('options'); ?></th>
                             </tr>
                         </thead>
@@ -94,14 +93,13 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('doctor'); ?></label>
                         <select class="form-control m-bot15 js-example-basic-single" id="doctor" name="dr_id" value=''>
-                            <option>Select....</option>
+                            <option value="">Select....</option>
                         <?php foreach ($doctors as $doctor) { ?>
                             <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
 
                         <?php } ?>
                         </select>
                     </div>
-
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('ticket').' '.lang('time'); ?></label>
@@ -111,8 +109,8 @@
                             <option value="secondtime"><?php  echo lang('second_ticket'); ?></option>
                         </select>
                     </div>
-                    <input type="text" name="doctor_fee" class="doctor_fee" value=''>
-                    <input type="text" name="hospital_fee" class="hospital_fee" value=''>
+                    <input type="hidden" required="required" name="doctor_fee" class="doctor_fee" value=''>
+                    <input type="hidden" required="required" name="hospital_fee" class="hospital_fee" value=''>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('patient'); ?> <?php  echo lang('name'); ?></label>
@@ -121,12 +119,8 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php  echo lang('appointment'); ?> <?php  echo lang('date'); ?></label>
-                        <input required="required" type="text" class="form-control  dtpic " name="date" id="exampleInputEmail1" value='' placeholder="">
+                        <input required="required" type="text" class="form-control  dtpic " name="date" id="app_date" value='' placeholder="">
                     </div>
-
-
-
-
 
                     <div class="form-group col-auto">
                         <label for="exampleInputEmail1"> <?php  echo lang('age'); ?></label>
@@ -138,7 +132,6 @@
                         </select>
                     </div>
 
-
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('mobile'); ?></label>
                         <input required="required" type="text" class="form-control" name="mobile" id="exampleInputEmail1" value='' placeholder="Mobile Number">
@@ -146,12 +139,8 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php echo lang('serial'); ?></label>
-                        <input required="required" type="text" class="form-control" name="serial" id="exampleInputEmail1" placeholder="">
+                        <input required="required" type="text" class="form-control" name="serial" id="appoinment_serial" placeholder="">
                     </div>
-
-
-                    <input type="hidden" name="emp_id" value='<?php echo $this->ion_auth->user()->row()->emp_id;?>'>
-
 
                     <center><button style="padding: 20px 60px 20px 60px; font-size: 20px;" type="submit" name="submit" class="btn btn-info"> <?php  echo lang('add'); ?></button></center>
                 </form>
@@ -255,19 +244,27 @@
 <script>
 
 var log_user = '<?php echo $this->ion_auth->get_users_groups()->row()->name; ?>';
+var thisdate = '<?php echo date('Y-m-d', time()); ?>'
 
-alert(log_user);
 getTicketQuery();
 
 
+    /* Event for Date Wise Ticket */
+$(document).on('click ','.range_submit', function () {
+    thisdate = $('#printdate').val();
+    
 
+getTicketQuery();
+});
+    /* Event for Date Wise Ticket */
 
     function getTicketQuery() {
 
         $.ajax({
             type: 'ajax',
-            url: 'reception/getTicketJsonEncode',
+            url: 'reception/getTicketJsonEncode?date='+thisdate,
             data: '',
+            method: 'GET',
             dataType: 'json',
         }).success(function(edata) {
             
@@ -292,7 +289,8 @@ getTicketQuery();
                 if (log_user == 'admin') {
                     if (edata[i].print == 'printed') {
                         html += '<tr>'+
-                                '<td>'+edata[i].app_serial+'</td>'+
+                                '<td>'+edata[i].app_tc_id+'</td>'+
+                                '<td>'+edata[i].ticket_serial+'</td>'+
                                 '<td>'+edata[i].app_patient+'</td>'+
                                 '<td>'+edata[i].age+'</td>'+
                                 '<td>'+edata[i].mobile+'</td>'+
@@ -302,8 +300,55 @@ getTicketQuery();
                                 '<td>'+edata[i].ename+'</td>'+
                                 '<td>'+this_date_time+'</td>'+
                                 '<td><button id="printbnt" style="font-size: 16px; padding-right: 10px;" type="button" class="btn btn-info btn-xs btn_width printbnt" title="View" data-toggle="modal" data-id="'+edata[i].app_tc_id+'">'+
-                        '<i class="fa fa-eye"> </i>View</button><button style="margin-left: 20px;" type="button" class="btn btn-info btn-xs btn_width editbutton" title="Edit" data-toggle="modal" data-target="#editTicket" data_id="'+edata[i].app_tc_id+'"><i class="fa fa-edit"> </i></button><a class="btn btn-info btn-xs btn_width delete_button" href="reception/deleteticket?id='+edata[i].app_tc_id+'" title="Delete" onclick="return confirm("Are you sure you want to delete this item?");"><i class="fa fa-trash"></i></a></td>'+
+                        '<i class="fa fa-eye"> </i>View</button><button style="margin-left: 20px;" type="button" class="btn btn-info btn-xs btn_width editbutton" id="editbutton" title="Edit" data-toggle="modal" data-target="#editTicket" data_id="'+edata[i].app_tc_id+'"><i class="fa fa-edit"> </i></button><a class="btn btn-info btn-xs btn_width delete_button" href="reception/deleteticket?id='+edata[i].app_tc_id+'" title="Delete" onclick="return confirm("Are you sure you want to delete this item?");"><i class="fa fa-trash"></i></a></td>'+
                             '</tr>';   
+                        }else {
+                        html += '<tr>'+
+                                '<td>'+edata[i].app_tc_id+'</td>'+
+                                '<td>'+edata[i].ticket_serial+'</td>'+
+                                '<td>'+edata[i].app_patient+'</td>'+
+                                '<td>'+edata[i].age+'</td>'+
+                                '<td>'+edata[i].mobile+'</td>'+
+                                '<td>'+edata[i].dr_name+'</td>'+
+                                '<td>'+edata[i].ap_date+'</td>'+
+                                '<td>Not Print</td>'+
+                                '<td>'+edata[i].ename+'</td>'+
+                                '<td>'+this_date_time+'</td>'+
+                                '<td><button id="printbnt" style="font-size: 16px; padding-right: 10px;" type="button" class="btn btn-info btn-xs btn_width printbnt print_paid" title="View" data-toggle="modal" data-id="'+edata[i].app_tc_id+'">'+
+                        '<i class="fa fa-eye"> </i>View</button><button style="margin-left: 20px;" type="button" class="btn btn-info btn-xs btn_width editbutton" id="editbutton" title="Edit" data-toggle="modal" data-target="#editTicket" data_id="'+edata[i].app_tc_id+'"><i class="fa fa-edit"> </i></button><a class="btn btn-info btn-xs btn_width delete_button" href="reception/deleteticket?id='+edata[i].app_tc_id+'" title="Delete" onclick="return confirm("Are you sure you want to delete this item?");"><i class="fa fa-trash"></i></a></td>'+
+                            '</tr>';  
+                        }
+                    }else {
+                    if (edata[i].print == 'printed') {
+                        html += '<tr>'+
+                                '<td>'+edata[i].app_tc_id+'</td>'+
+                                '<td>'+edata[i].ticket_serial+'</td>'+
+                                '<td>'+edata[i].app_patient+'</td>'+
+                                '<td>'+edata[i].age+'</td>'+
+                                '<td>'+edata[i].mobile+'</td>'+
+                                '<td>'+edata[i].dr_name+'</td>'+
+                                '<td>'+edata[i].ap_date+'</td>'+
+                                '<td>Already Printed & Paid</td>'+
+                                '<td>'+edata[i].ename+'</td>'+
+                                '<td>'+this_date_time+'</td>'+
+                                '<td><button id="printbnt" style="font-size: 16px; padding-right: 10px;" type="button" class="btn btn-info btn-xs btn_width printbnt" title="View" data-toggle="modal" data-id="'+edata[i].app_tc_id+'">'+
+                        '<i class="fa fa-eye"> </i>View</button></td>'+
+                            '</tr>';   
+                        }else {
+                        html += '<tr>'+
+                                '<td>'+edata[i].app_tc_id+'</td>'+
+                                '<td>'+edata[i].ticket_serial+'</td>'+
+                                '<td>'+edata[i].app_patient+'</td>'+
+                                '<td>'+edata[i].age+'</td>'+
+                                '<td>'+edata[i].mobile+'</td>'+
+                                '<td>'+edata[i].dr_name+'</td>'+
+                                '<td>'+edata[i].ap_date+'</td>'+
+                                '<td>Not Print</td>'+
+                                '<td>'+edata[i].ename+'</td>'+
+                                '<td>'+this_date_time+'</td>'+
+                                '<td><button id="printbnt" style="font-size: 16px; padding-right: 10px;" type="button" class="btn btn-info btn-xs btn_width printbnt print_paid" title="View" data-toggle="modal" data-id="'+edata[i].app_tc_id+'">'+
+                        '<i class="fa fa-eye"> </i>View</button></td>'+
+                            '</tr>';  
                         }
                     }
                 }
@@ -374,15 +419,28 @@ getTicketQuery();
         });
     }
 
+
+
+
+    /* Event for Print */
+$(document).on('click ','#printbnt', function () {
+    var app_iid = $(this).attr('data-id');
+    window.open('reception/print_ticket?id='+app_iid,'_blank', 'width=800,height=800,left=300,top=300');
+});
+    /* Event for Print */
+
+
+
 </script>
 
 
 <script type="text/javascript">
-$(document).ready(function () {
-    $(".editbutton").click(function (e) {
-        e.preventDefault(e);
+
+    /* Event for Edit */
+$(document).on('click ','#editbutton', function () {  
         // Get the record's ID via attribute  
         var iid = $(this).attr('data_id');
+
         $('#editTicketForm').trigger("reset");
         $.ajax({
             url: 'reception/editTicketByJason?id=' + iid,
@@ -391,20 +449,46 @@ $(document).ready(function () {
             dataType: 'json',
         }).success(function (editTc) {
             // Populate the form fields with the data returned from server
-            $('#doctor_id option[value='+editTc.app_view.dr_id+']').attr('selected', 'selected');
-            $('#editTicketForm').find('[name="ap_id"]').val(editTc.app_view.app_tc_id).end()
-            $('#editTicketForm').find('[name="p_name"]').val(editTc.app_view.app_patient).end()
-            $('#editTicketForm').find('[name="p_age"]').val(editTc.app_view.age).end()
-            $('#editTicketForm').find('[name="mobile_no"]').val(editTc.app_view.mobile).end()
-            $('#editTicketForm').find('[name="serial_no"]').val(editTc.app_view.app_serial).end()
-            $('#editTicketForm').find('[name="docr_fee"]').val(editTc.app_view.doctor_fee).end()
-            $('#editTicketForm').find('[name="hospl_fee"]').val(editTc.app_view.hospital_fee).end()
-            $('#editTicketForm').find('[name="app_date"]').val(editTc.app_view.ap_date).end()
+            $('#editTicketForm').find('[name="ap_id"]').val(editTc.app_tc_id).end()
+            $('#editTicketForm').find('[name="p_name"]').val(editTc.app_patient).end()
+            $('#editTicketForm').find('[name="p_age"]').val(editTc.age).end()
+            $('#editTicketForm').find('[name="mobile_no"]').val(editTc.mobile).end()
+            $('#editTicketForm').find('[name="serial_no"]').val(editTc.ticket_serial).end()
+            $('#editTicketForm').find('[name="docr_fee"]').val(editTc.doctor_fee).end()
+            $('#editTicketForm').find('[name="hospl_fee"]').val(editTc.hospital_fee).end()
+            $('#editTicketForm').find('[name="app_date"]').val(editTc.ap_date).end()
+            $('#doctor_id option[value='+editTc.dr_id+']').attr('selected', 'selected');
         });
     });
-});
+    /* Event for Edit */
 
 
+    /* Event for Appoinment Serial */
+    $('#appoinment_serial').click(function() {
+        var date = $('#app_date').val();
+        var dr_id = $('#doctor').val();
+        var last_serial = 0;
+        if (date == '' || dr_id == '') {
+            alert('Please Select Doctor and Appointment Date');
+        }else { 
+            $.ajax({
+                url: 'reception/getlastTicketSerial?dr_id='+dr_id+'&app_date='+date,
+                method: 'GET',
+                data: '',
+                dataType: 'json',
+               success: function (getSerialss) {
+                    last_serial = parseInt(getSerialss.ticket_serial);
+                var new_serial = last_serial+1;
+
+                    if (last_serial != 0) {
+                        $('#appoinment_serial').val(new_serial);
+                    }
+                } 
+            })    
+            $('#appoinment_serial').val('001');      
+        }
+    })
+    /* Event for Appoinment Serial */
 
 
 </script>
