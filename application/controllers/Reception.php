@@ -205,6 +205,12 @@ class Reception extends CI_Controller {
         echo json_encode($data);
     }
 
+    function seachTicketID() {
+        $tc_id = $this->input->get('id');
+        $data['tct'] = $this->receptionist_model->searchTicket($tc_id);
+        echo json_encode($data);
+    }
+
     function editTicketByJason() {
         $ap_id = $this->input->get('id');
         $data = $this->receptionist_model->getAppById($ap_id);
@@ -220,7 +226,7 @@ class Reception extends CI_Controller {
 
         $this->load->view('home/dashboard', $data); // just the header file
         
-        $this->load->view('reception/ticket_count', $data);
+        $this->load->view('reception/ticket_statement_view', $data);
         $this->load->view('home/footer'); // just the header file
     }
 
@@ -274,21 +280,15 @@ class Reception extends CI_Controller {
         $this->dompdf->stream("Daily_Attendance.pdf", array("Attachment"=>0)); //Output Line
     }
 
-    public function count_emp() {
-        $emp_id = $this->input->get('emp_id');
-        $date = $this->input->get('date');
-        $t_date = date('Y-m-d', strtotime($date));
+    public function totalticket() {
+        $datefrom = date('Y-m-d', strtotime($this->input->get('date')));
+        $todate = date('Y-m-d', strtotime($this->input->get('todate'))); 
+        $data['s_date'] = date('d-M-y', strtotime($datefrom));
+        $data['l_date'] = date('d-M-y', strtotime($todate));
+        $data['ticket_stmn'] = $this->receptionist_model->get_ticket_date_date($datefrom, $todate);
 
-        $data['ticket_co'] = $this->receptionist_model->getEmpticket($t_date);
-        $data['dr_infos'] = $this->receptionist_model->getDrinfo();
-        $this->load->view('reception/emp_ticket', $data);
+        $this->load->view('reception/ticket_stmnt', $data);
 
-        // HTML to PDF
-        $html = $this->output->get_output();
-        $this->dompdf->loadHtml($html);
-        $this->dompdf->setPaper('A4', 'portrait');
-        $this->dompdf->render();        
-        $this->dompdf->stream("Daily_Attendance.pdf", array("Attachment"=>0)); //Output Line
     }
 
     public function count_e() {

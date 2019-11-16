@@ -24,6 +24,11 @@ class Doctor_model extends CI_model {
         return $query->result();
     }
 
+    function update_dr_pic($dr_main_id, $data) {
+        $this->db->where('dr_auto_id', $dr_main_id);
+        $this->db->update('doctor', $data);
+    }
+
     function getDoctorforDrfee() {
         $this->db->order_by('dr_auto_id', 'DESC');
         $query = $this->db->get('doctor');

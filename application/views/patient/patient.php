@@ -67,11 +67,11 @@
                                     <?php } ?>
 
 
-                                     <button onclick="reply_click(this.id)" type="button" class="btn green" id="<?php echo $patient->p_n_id; ?>" title="" data-toggle="modal" data_id=""><i class="fa fa-stethoscope"></i> <?php echo lang('chart'); ?></button> 
+                                     <button onclick="reply_click(this.id)" type="button" class="btn green" id="<?php echo $patient->p_n_id; ?>" title="" data-toggle="modal" data_id=""><i class="fa fa-stethoscope"></i> </button> 
 
 
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
-                                     <a class="btn delete_button" title="<?php echo lang('delete'); ?>" href="patient/delete?id=<?php echo $patient->p_n_id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                     <a class="btn delete_button btn-danger" title="<?php echo lang('delete'); ?>" href="patient/delete?id=<?php echo $patient->p_n_id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
                                     <?php } ?>
                                    
 

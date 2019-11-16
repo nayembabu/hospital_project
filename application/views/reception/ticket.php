@@ -189,8 +189,8 @@
                             <option value="secondtime"><?php  echo lang('second_ticket'); ?></option>
                         </select>
                     </div>
-                    <input type="text" name="docr_fee" class="docr_fee" value=''>
-                    <input type="text" name="hospl_fee" class="hosp_fee" value=''>
+                    <input type="hidden" name="docr_fee" class="docr_fee" value=''>
+                    <input type="hidden" name="hospl_fee" class="hosp_fee" value=''>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('patient'); ?> <?php  echo lang('name'); ?></label>

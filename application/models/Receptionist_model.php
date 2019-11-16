@@ -89,7 +89,15 @@ class Receptionist_model extends CI_model {
         return $query->result();
     }
 
-
+    function get_ticket_date_date($datefrom, $todate) {
+        $this->db->where('thisdate >=', $datefrom);
+        $this->db->where('thisdate <=', $todate);
+        $this->db->join('doctor', 'doctor.dr_id = appointment.dr_id', 'left');
+        $this->db->join('nurse', 'nurse.emp_id = appointment.emp_id', 'left');
+        $this->db->order_by('app_tc_id', 'DESC');
+        $query = $this->db->get('appointment');
+        return $query->result();
+    }
 
 
     function insertappoint($data) {
@@ -122,7 +130,11 @@ class Receptionist_model extends CI_model {
         return $query->row();
     }
 
-
+    function searchTicket($tc_id) {
+        $this->db->like('app_tc_id', $tc_id);
+        $sql = $this->db->get('appointment');
+        return $sql->result();
+    }
 
 
 

@@ -70,12 +70,13 @@
 		<div class="serial_view_section">
 			<?php echo $app_ticket->ticket_serial; ?>
 		</div>
+        <span style="margin-left: 300px; "><?php echo $app_ticket->app_tc_id; ?></span>
 		<div class="p_info_section">            
 			<table border="1px">
 				<tr>
 					<td>Patient Name</td>
-					<td class="data"><?php echo strtoupper($app_ticket->app_patient); ?><br><sup>
-            <?php echo $app_ticket->app_tc_id; ?></sup></td>
+					<td class="data"><?php echo strtoupper($app_ticket->app_patient); ?>               
+                    </td>
 				</tr>
 				<tr>
 					<td>Doctor Name</td>

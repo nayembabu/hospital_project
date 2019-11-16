@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th><?php echo lang('doctor'); ?> <?php echo lang('id'); ?></th>
+                                <th><?php echo lang('image'); ?></th>
                                 <th><?php echo lang('name'); ?></th>
                                 <th><?php echo lang('chamber'); ?></th>
                                 <th><?php echo lang('phone'); ?></th>
@@ -37,14 +38,19 @@
                         <?php foreach ($doctors as $doctor) { ?>
                             <tr class="">
                                 <td><?php echo $doctor->dr_id; ?></td>
-                                      
+                            <?php if ($doctor->img_url != '') {?>        
+                                <td style="width:10%;"><img width="50px" height="50px" src="<?php echo $doctor->img_url; ?>"></td>
+                            <?php }else { ?>
+                                    <td><?php echo lang('no_photo'); ?></td>
+                            <?php } ?>
                                 <td> <?php echo $doctor->dr_name; ?></td>
                                 <td class="center"><?php echo $doctor->chamber; ?></td>
                                 <td><?php echo $doctor->phone; ?></td>
                                 <td class="center"><?php echo $doctor->dept_name; ?></td>
                                 <td><?php echo $doctor->profile; ?></td>
                                 <td class="no-print">
-                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $doctor->dr_auto_id; ?>"><i class="fa fa-edit"> </i> <?php echo lang('edit'); ?></button>
+                                    <button type="button" class="btn btn-info btn-xs btn_width upload_btn" title="<?php echo lang('upload'); ?>" data-target="#upload_pic" data-toggle="modal" data-id="<?php echo $doctor->dr_auto_id; ?>"><i class="fa fa-upload"> </i> </button>
+                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $doctor->dr_auto_id; ?>"><i class="fa fa-edit"> </i> </button>
                                     <a class="btn btn-info btn-xs btn_width delete_button" title="<?php echo lang('delete'); ?>" href="doctor/delete?id=<?php echo $doctor->dr_auto_id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> </a>
                                 </td>
                             </tr>
@@ -59,10 +65,6 @@
     </section>
 </section>
 <!--main content end-->
-<!--footer start-->
-
-
-
 
 
 
@@ -128,26 +130,7 @@
                             <option value="0"> Inactive </option> 
                         </select>
                     </div>
-
 <br><br><br><br><br>
-
-
-
-<!-- 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1"><?php echo lang('image'); ?></label>
-                        <input style="float: left;" type="file" name="img_url" id="file" onchange="view_loadfile(event)">
-                        <img id="preimage_first" width="100px" height="100px" name="img_url" src="">
-                        <script type="text/javascript">
-                            function view_loadfile(){
-                                var output=document.getElementById('preimage_first');
-                                output.src=URL.createObjectURL(event.target.files[0]);
-                            };
-                        </script>
-                    </div> -->
-
-
-
                     <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
                 </form>
 
@@ -159,8 +142,39 @@
 
 
 
+<!-- Upload Photo Modal-->
+<div class="modal fade" id="upload_pic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><i class="fa fa-plus-circle"></i> <?php echo lang('edit '). ' ' .lang('doctor').' '.lang('info'); ?></h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="doctor/update_pic" id="Upload_Doctor_pic" method="post" enctype="multipart/form-data">
 
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
+                        <input required="" type="text"  class="form-control" name="name" id="exampleInputEmail1" value=''>
+                    </div>
 
+    <br><br><br><br><br>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><?php echo lang('image'); ?></label>
+                        <input required="required" style="float: left;" type="file" name="img_url" id="file" onchange="loadfile(this)" >
+                        <img id="preimage_ss" width="100px" height="100px" name="img_url" src="">
+                    </div>
+
+                    <input type="hidden" name="dr_main_id" value="" >
+                    <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- Upload Photo Modal-->
 
 
 <!-- Edit Event Modal-->
@@ -200,8 +214,6 @@
                         </select>
                     </div>
 
-
-
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('chamber'); ?></label>
                         <input type="text" class="form-control" name="chamber" id="exampleInputEmail1" value='' >
@@ -212,7 +224,6 @@
                         <input required="" type="text" class="form-control" name="phone" id="exampleInputEmail1" value='' >
                     </div>
 
-
                     <div class="form-group">
                         <label for="exampleInputEmail1">Activity</label>
                         <select class="form-control" id="activity_option" name="activity" value=''>
@@ -221,25 +232,6 @@
                         </select>
                     </div>
     <br><br><br><br><br>
-
-
-
-<!-- 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1"><?php echo lang('image'); ?></label>
-                        <input style="float: left;" type="file" name="img_url" id="file" onchange="loadfile(event)">
-                        <img id="preimage_ss" width="100px" height="100px" name="img_url" src="">
-                        <script type="text/javascript">
-                            function loadfile(){
-                                var output=document.getElementById('preimage_ss');
-                                output.src=URL.createObjectURL(event.target.files[0]);
-                            };
-                        </script>
-                    </div>
--->
-
-
-
                     <input type="hidden" name="dr_main_id" value="" >
                     <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
                 </form>
@@ -281,6 +273,63 @@
             });
         });
     });
+
+
+
+
+
+$(".upload_btn").click(function (e) {
+            e.preventDefault(e);
+            // Get the record's ID via attribute
+            var iid = $(this).attr('data-id');
+            $('#Upload_Doctor_pic').trigger("reset");
+            $.ajax({
+                url: 'doctor/editDoctorByJason?id=' + iid,
+                method: 'GET',
+                data: '',
+                dataType: 'json',
+                success: function (response) {
+                    // Populate the form fields with the data returned from server
+                    $('#Upload_Doctor_pic').find('[name="dr_main_id"]').val(response.doctor.dr_auto_id).end()
+                    $('#Upload_Doctor_pic').find('[name="name"]').val(response.doctor.dr_name).end()
+                        
+                }
+            });
+        });
+
+
+    function loadfile(oInput){
+        var output=document.getElementById('preimage_ss');
+        output.src=URL.createObjectURL(event.target.files[0]);
+
+
+        var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+
+        if (oInput.type == "file") {
+        var sFileName = oInput.value;
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+                alert("Sorry, This is invalid file, allowed extensions are: " + _validFileExtensions.join(", "));
+                oInput.value = "";
+                return false;
+            }
+        }
+    }
+    return true; 
+    };
+
+
+
+
 </script>
 <script>
     $(document).ready(function () {

@@ -37,6 +37,12 @@ class Doctor extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
+    function kalam() {
+        $this->load->view('front_view/head');  
+        $this->load->view('front_view/hero');  
+        $this->load->view('front_view/index');        
+    }
+
     public function addNew() {
 
         $name = $this->input->post('name');
@@ -95,6 +101,45 @@ class Doctor extends CI_Controller {
         $this->load->view('doctor/doctor', $data);
     }
 
+    function update_pic() {
+        $dr_main_id = $this->input->post('dr_main_id');
+        $file_name = $_FILES['img_url']['name'];
+        $file_name_pieces = explode('_', $file_name);
+        $new_file_name = '';
+        $count = 1;
+        foreach ($file_name_pieces as $piece) {
+            if ($count !== 1) {
+                $piece = ucfirst($piece);
+            }
+            $new_file_name .= $piece;
+            $count++;
+        }
+        $config = array(
+            'file_name' => $new_file_name,
+            'upload_path' => "./uploads/doctor/",
+            'allowed_types' => "*",
+            'overwrite' => False,
+            'max_size' => "20480000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+            'max_height' => "1768",
+            'max_width' => "2024"
+        );
+        $this->load->library('Upload', $config);
+        $this->upload->initialize($config);
+        if ($this->upload->do_upload('img_url')) {
+            $path = $this->upload->data();
+            $img_url = "uploads/doctor/" . $config['file_name'];
+            $data = array(
+                'img_url' => $img_url                  
+                );
+            $this->doctor_model->update_dr_pic($dr_main_id, $data);
+            $this->session->set_flashdata('feedback', 'Upload Success');
+            redirect('doctor'); 
+
+            } else {
+        $this->session->set_flashdata('feedback', 'Error');
+            redirect('doctor');                
+            }
+    }
 
     function Drfee() {
         $loginId = $this->ion_auth->user()->row()->emp_id;

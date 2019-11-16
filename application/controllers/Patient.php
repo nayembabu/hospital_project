@@ -278,7 +278,7 @@ class Patient extends CI_Controller {
         $p_bed_s        = $this->input->post('b_num');
         $last_patient   = $this->patient_model->get_p_by_ids($p_ids);
         $now_bed_no     = $last_patient->b_num;
-        $p_rand_id      = $last_patient->patient_id;
+        $p_rand_id      = $last_patient->patient_rand_id;
         $this_time      = time();
         $query_last_bed = $this->patient_model->get_previous_bed($p_ids, $now_bed_no);
         $last_bed_id    = $query_last_bed->b_a_id;
@@ -294,11 +294,11 @@ class Patient extends CI_Controller {
         $this->patient_model->update_P_Beds($p_ids, $c_data);
 
         $bed_allocate = array(
-            'patient_rand_id'    => $p_rand_id,
-            'admit_time'    => $this_time,
-            'bed_cat_i'     => $p_bed_s,
-            'bed_no'        => $p_bed_s,
-            'ptn_iid'       => $p_ids
+            'patient_id'       => $p_rand_id,
+            'admit_time'            => $this_time,
+            'bed_cat_i'             => $p_bed_s,
+            'bed_no'                => $p_bed_s,
+            'ptn_iid'               => $p_ids
             );
         $this->patient_model->insert_b_a($bed_allocate);
         $this->session->set_flashdata('feedback', 'Bed Updated');
