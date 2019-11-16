@@ -14,7 +14,7 @@ class Reception extends CI_Controller {
         $this->load->model('receptionist_model');
         $this->load->model('settings_model');
         $this->load->library('upload');
-        $this->load->library('Pdf');
+       // $this->load->library('Pdf');
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
         $this->load->model('ion_auth_model');

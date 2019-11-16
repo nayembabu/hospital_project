@@ -12,7 +12,7 @@ class Patient extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('patient_model');
         $this->load->library('upload');
-        $this->load->library('Pdf');
+       // $this->load->library('Pdf');
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
         $this->load->model('donor_model');
