@@ -5,11 +5,17 @@
             <div class="container">
                 <div class="slider_text">
                     <h3 class="title" style="background: none;"><span>Welcome to</span> <br>
-                        Oreo <strong>Hospital</strong></h3>
-                    <p class="sub-title">Contrary to popular belief, Lorem Ipsum is not simply random text.</p><br>
-                    <button class="btn btn-primary btn-round">View More</button>
+                        <strong><?php echo $site_set->system_vendor; ?></strong></h3>
+                    <!-- <p class="sub-title">Contrary to popular belief, Lorem Ipsum is not simply random text.</p><br>
+                    <button class="btn btn-primary btn-round">View More</button> -->
                 </div>
-                <div class="slider_form row">
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointModal">
+                    Doctor Appoinment Ticket
+                </button>
+
+<!--
+                 <div class="slider_form row">
                     <p class="col-12">Make an Appointment</p>
                     <div class="col-lg-4 col-md-6">
                         <div class="form-group">
@@ -52,8 +58,14 @@
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <button class="btn btn-primary btn-round btn-block m-t-0 m-b-0">Submit</button>
-                    </div>
+                    </div> 
                 </div>
+            -->
+
+
+
+
+
             </div>
         </div>
     </section>

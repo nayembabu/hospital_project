@@ -1,0 +1,63 @@
+<?php 
+
+	/*
+	 * 
+	 */
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Front_view extends CI_Controller {
+	
+	function __construct() {
+    	parent::__construct();
+        $this->load->model('doctor_model');
+        $this->load->model('settings_model');
+        $this->load->model('department_model');
+	}
+
+	function index() {
+        $data['site_set'] = $this->settings_model->getSettings();
+        $data['get_dept'] = $this->department_model->getDepartment();
+        $this->load->view('front_view/head', $data);  
+        $this->load->view('front_view/hero', $data);  
+        $this->load->view('front_view/index', $data);  
+        $this->load->view('front_view/footer', $data); 
+	}
+
+	function doctor_list() {		
+        $data['site_set'] = $this->settings_model->getSettings();
+        $data['get_doctor'] = $this->doctor_model->getDoctorThis();
+        $data['get_dept'] = $this->department_model->getDepartment();
+        $this->load->view('front_view/head', $data); 
+        $this->load->view('front_view/doctors_list', $data);   
+        $this->load->view('front_view/footer', $data); 
+	} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}

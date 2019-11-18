@@ -20,7 +20,7 @@
                     <div class="col-lg-7 col-sm-8">
                         <div class="common-cnt" data-aos="fade-up">
                             <div class="section-top">
-                                <p><strong>Oreo Hospital</strong> isIt is a long established fact that a reader will be
+                                <p><strong><?php echo $site_set->system_vendor; ?></strong> isIt is a long established fact that a reader will be
                                     distracted by the readable content.</p>
                             </div>
                             <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
@@ -30,9 +30,7 @@
                                 undoubtable source.</p>
                             <p>There are many variations of passages of Lorem Ipsum available, but the majority have
                                 suffered alteration in some form, by injected humour</p>
-                            <p>
-                                <a class="btn btn-primary btn-simple btn-round margin-0" data-aos="flip-up">View More</a>
-                            </p>
+                            
                         </div>
                     </div>
                 </div>
@@ -46,92 +44,30 @@
                 <div class="row">
                     <div class="section-title col-12" data-aos="fade-up">
                         <h2><span>Our </span>Best Services</h2>
-                        <p>Description text here...</p>
+                        <p>Our Departnemt</p>
                     </div>
                 </div>
                 <div class="row">
+
+
+                <?php foreach ($get_dept as $depts) { ?>
                     <div class="col-md-4 col-sm-6">
                         <div class="service-box" data-aos="fade-up" data-aos-duration="3000">
-                            <div class="service-icon"><img src="include/front_style/images/icon-cardio-monitoring.png" alt="Cardio Monitoring"></div>
                             <div class="service-cnt">
-                                <div class="service-name">Cardio Monitoring</div>
+                                <div class="service-name"><?php echo $depts->dept_name ; ?></div>
                                 <div class="service-dep">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-                                        in a piece[...]</p>
-                                    <a href="javascript:void(0);">View More</a>
+                                    <p><?php $descr = substr($depts->description,0,150); echo $descr; ?></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="service-box" data-aos="fade-up" data-aos-duration="3000">
-                            <div class="service-icon"><img src="include/front_style/images/icon-orthodontics.png" alt="Orthodontics">
-                            </div>
-                            <div class="service-cnt">
-                                <div class="service-name">Orthodontics</div>
-                                <div class="service-dep">
-                                    <p>It has roots in a piece of classical Latin literature from 45 BC, making it over
-                                        2000 years old [...]</p>
-                                    <a href="javascript:void(0);">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="service-box" data-aos="fade-up"  data-aos-duration="3000">
-                            <div class="service-icon"><img src="include/front_style/images/icon-traumatology.png" alt="Traumatology">
-                            </div>
-                            <div class="service-cnt">
-                                <div class="service-name">Traumatology</div>
-                                <div class="service-dep">
-                                    <p>Contrary to popular belief,literature from 45 BC, making it over 2000 years old
-                                        [...]</p>
-                                    <a href="javascript:void(0);">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="service-box" data-aos="fade-up" data-aos-duration="3000">
-                            <div class="service-icon"><img src="include/front_style/images/icon-cardiology.png" alt="Cardiology">
-                            </div>
-                            <div class="service-cnt">
-                                <div class="service-name">Cardiology</div>
-                                <div class="service-dep">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-                                        in a piece[...]</p>
-                                    <a href="javascript:void(0);">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="service-box" data-aos="fade-up" data-aos-duration="3000">
-                            <div class="service-icon"><img src="include/front_style/images/icon-prostheses.png" alt="Prostheses">
-                            </div>
-                            <div class="service-cnt">
-                                <div class="service-name">Prostheses</div>
-                                <div class="service-dep">
-                                    <p>It has roots in a piece of classical Latin literature from 45 BC, making it over
-                                        2000 years old [...]</p>
-                                    <a href="javascript:void(0);">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="service-box" data-aos="fade-up" data-aos-duration="3000">
-                            <div class="service-icon"><img src="include/front_style/images/icon-pulmonary.png" alt="Pulmonary"></div>
-                            <div class="service-cnt">
-                                <div class="service-name">Pulmonary</div>
-                                <div class="service-dep">
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-                                        in a piece[...]</p>
-                                    <a href="javascript:void(0);">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <?php } ?>
+
+
+
+
+
+
                 </div>
             </div>
         </div>
@@ -183,71 +119,42 @@
             <div class="container">
                 <div class="row justify-content-between">
                     <div class="section-title left col-lg-4" data-aos="fade-up">
-                        <h2><span>Meet </span>Our Team</h2>
-                        <p>Description text here...</p>
+                        <h2>Our Consultant </h2>
+                        <p>All Consultant List with Description</p>
                     </div>
                     <div class="section-title right col-lg-8" data-aos="fade-up">
-                        <p><span class="color-212121">Oreo Hospital</span> The wise man therefore always holds in these
+                        <p><span class="color-212121"><?php echo $site_set->system_vendor; ?></span> The wise man therefore always holds in these
                             matters to this principle of selection: he rejects pleasures to secure.</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="row ">
+
+ 
+
+
+                    <div  class="col-lg-3 col-md-6 col-sm-12">
                         <div class="team-box text-center" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="5000">
                             <div class="doctor-pic"><img src="include/front_style/images/team-member-01.png" alt="Dr. John"></div>
                             <div class="doctor-info">
                                 <h4>Dr. John <span>Dentist</span></h4>
                                 <ul class="clearfix">
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-instagram"></i></a></li>
+                                    
                                 </ul>
                                 <a class="btn btn-simple btn-primary btn-round" href="javascript:void(0);">View More</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="team-box text-center" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="4000">
-                            <div class="doctor-pic"><img src="include/front_style/images/team-member-02.png" alt="Dr. Amelia"></div>
-                            <div class="doctor-info">
-                                <h4>Dr. Amelia <span>Gynecologist</span></h4>
-                                <ul class="clearfix">
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-instagram"></i></a></li>
-                                </ul>
-                                <a class="btn btn-simple btn-primary btn-round" href="javascript:void(0);">View More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="team-box text-center" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="5000">
-                            <div class="doctor-pic"><img src="include/front_style/images/team-member-03.png" alt="Dr. Jack"></div>
-                            <div class="doctor-info">
-                                <h4>Dr. Jack <span>Audiology</span></h4>
-                                <ul class="clearfix">
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-instagram"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-google-plus"></i></a></li>
-                                </ul>
-                                <a class="btn btn-simple btn-primary btn-round" href="javascript:void(0);">View More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="team-box text-center" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="3000">
-                            <div class="doctor-pic"><img src="include/front_style/images/team-member-04.png" alt="Dr. Charlie"></div>
-                            <div class="doctor-info">
-                                <h4>Dr. Charlie<span>Dentist</span></h4>
-                                <ul class="clearfix">
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-instagram"></i></a></li>
-                                </ul>
-                                <a class="btn btn-simple btn-primary btn-round" href="javascript:void(0);">View More</a>
-                            </div>
-                        </div>
-                    </div>
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>
@@ -292,16 +199,4 @@
     </section>
 
     <!-- start footer -->
-    <footer id="footer">
-        
-    </footer>
-</div>
-<!-- start screpting -->
-<script src="include/front_style/bundles/libscripts.bundle.js"></script>
-
-<script src="include/front_style/js/app.js"></script><!-- my js -->
-<script src="include/front_style/js/countto.js"></script>
-</body>
-
-<!-- Mirrored from thememakker.com/templates/oreo/hospital/front/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 15 Nov 2019 09:40:46 GMT -->
-</html>
+    

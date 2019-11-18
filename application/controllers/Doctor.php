@@ -37,12 +37,6 @@ class Doctor extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function kalam() {
-        $this->load->view('front_view/head');  
-        $this->load->view('front_view/hero');  
-        $this->load->view('front_view/index');        
-    }
-
     public function addNew() {
 
         $name = $this->input->post('name');

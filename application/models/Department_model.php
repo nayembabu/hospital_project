@@ -16,6 +16,7 @@ class Department_model extends CI_model {
     }
 
     function getDepartment() {
+        $this->db->order_by('dept_id', 'desc');
         $query = $this->db->get('department');
         return $query->result();
     }
