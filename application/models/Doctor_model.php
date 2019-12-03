@@ -24,6 +24,13 @@ class Doctor_model extends CI_model {
         return $query->result();
     }
 
+    function getDoctorThis() {
+        $this->db->where('stus', '1');
+        $this->db->join('department', 'doctor.department = department.dept_id', 'left');
+        $query = $this->db->get('doctor');
+        return $query->result();
+    }
+
     function update_dr_pic($dr_main_id, $data) {
         $this->db->where('dr_auto_id', $dr_main_id);
         $this->db->update('doctor', $data);
