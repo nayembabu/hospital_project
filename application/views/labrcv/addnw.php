@@ -1,3 +1,176 @@
+<style type="text/css">
+
+    .search_box {
+        width: 250px;
+        margin: 15px 0 0 0; 
+        position: relative;
+    }
+
+    #menu, #menu ul {
+        margin: -130px -20px 0 0;
+        padding: 0;
+        list-style: none;
+        cursor: pointer;
+        float: right;
+    }
+    
+    #menu li {
+        float: left;
+        border-right: 1px solid #222;
+        -moz-box-shadow: 1px 0 0 #444;
+        -webkit-box-shadow: 1px 0 0 #444;
+        box-shadow: 1px 0 0 #444;
+        position: relative;
+    }
+    
+    #menu a {
+        float: left;
+        padding: 12px 30px;
+        color: #999;
+        text-transform: uppercase;
+        font: bold 16px Arial, Helvetica;
+        text-decoration: none;
+        text-shadow: 0 1px 0 #000;
+    }
+    
+    #menu li:hover > a {
+        color: #fafafa;
+    }
+    
+    *html #menu li a:hover { /* IE6 only */
+        color: #fafafa;
+    }
+    
+    #menu ul {
+        margin: 88px 0 0 0;
+        visibility: visible;
+        position: absolute;
+        top: 38px;
+        left: 0;
+        z-index: 1;    
+        background: #444;
+        background: -moz-linear-gradient(#444, #111);
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#444), to(#111));
+        background: -webkit-linear-gradient(#444, #111);    
+        background: -o-linear-gradient(#444, #111); 
+        background: -ms-linear-gradient(#444, #111);    
+        background: linear-gradient(#444, #111);
+        -moz-box-shadow: 0 -1px rgba(255,255,255,.3);
+        -webkit-box-shadow: 0 -1px 0 rgba(255,255,255,.3);
+        box-shadow: 0 -1px 0 rgba(255,255,255,.3);  
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;  
+    }
+
+    #menu ul ul {
+        top: 0;
+        left: 150px;
+        margin: 0 0 0 20px;
+        _margin: 0; /*IE6 only*/
+        -moz-box-shadow: -1px 0 0 rgba(255,255,255,.3);
+        -webkit-box-shadow: -1px 0 0 rgba(255,255,255,.3);
+        box-shadow: -1px 0 0 rgba(255,255,255,.3);      
+    }
+    
+    #menu ul li {
+        float: none;
+        display: block;
+        border: 0;
+        _line-height: 0; /*IE6 only*/
+        -moz-box-shadow: 0 1px 0 #111, 0 2px 0 #666;
+        -webkit-box-shadow: 0 1px 0 #111, 0 2px 0 #666;
+        box-shadow: 0 1px 0 #111, 0 2px 0 #666;
+    }
+    
+    #menu ul li:last-child {   
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;    
+    }
+    
+    #menu ul a {    
+        padding: 10px;
+        width: 250px;
+        _height: 10px; /*IE6 only*/
+        display: block;
+        white-space: nowrap;
+        float: none;
+        text-transform: none;
+    }
+    
+    #menu ul a:hover {
+        background-color: #0186ba;
+        background-image: -moz-linear-gradient(#04acec,  #0186ba);  
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#04acec), to(#0186ba));
+        background-image: -webkit-linear-gradient(#04acec, #0186ba);
+        background-image: -o-linear-gradient(#04acec, #0186ba);
+        background-image: -ms-linear-gradient(#04acec, #0186ba);
+        background-image: linear-gradient(#04acec, #0186ba);
+    }
+    
+    #menu ul li:first-child > a {
+        -moz-border-radius: 3px 3px 0 0;
+        -webkit-border-radius: 3px 3px 0 0;
+        border-radius: 3px 3px 0 0;
+    }
+    
+    #menu ul li:first-child > a:after {
+        content: '';
+        position: absolute;
+        left: 40px;
+        top: -6px;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #444;
+    }
+    
+    #menu ul ul li:first-child a:after {
+        left: -6px;
+        top: 50%;
+        margin-top: 0;
+        border-left: 0; 
+        border-bottom: 6px solid transparent;
+        border-top: 6px solid transparent;
+        border-right: 6px solid #3b3b3b;
+    }
+    
+    #menu ul li:first-child a:hover:after {
+        border-bottom-color: #04acec; 
+    }
+    
+    #menu ul ul li:first-child a:hover:after {
+        border-right-color: #0299d3; 
+        border-bottom-color: transparent;   
+    }
+    
+    #menu ul li:last-child > a {
+        -moz-border-radius: 0 0 3px 3px;
+        -webkit-border-radius: 0 0 3px 3px;
+        border-radius: 0 0 3px 3px;
+    }
+
+    #menu li:hover > .no-transition {
+        display: block;
+    }
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
 <!--sidebar end-->
 <!--main content start-->
 <section id="main-content">
@@ -7,14 +180,23 @@
 
             <header class="panel-heading">
 	            <i class="fa fa-diagnoses"></i>  
-	            Test Receive 
+	            Test Receive                     
+	            <input style="width: 20%; float: right;" type="text" class="form-control" id="search_for_print" name="" value="" placeholder="Search Patient for Print">
+
             </header>
-            <br><br><br>
+            	 <div class="form-group search_box" id="menu">
+                    <label></label><li>
+                        <ul>
+                            <li class="assign_data">
+                            </li>
+                        </ul>
+                    </li>
+                  </div><br>
 
 
 
 			<center>
-				<form action="labrcv/newtest" method="post" style="width: 65%; ">
+				<form action="labrcv/newtest" method="post" enctype="multipart/form-data" style="width: 65%; ">
 
 
 					<div class="input-group">
@@ -49,7 +231,7 @@
                         <select class="form-control custom-select custom-select-lg m-bot15 js-example-basic-single dri_id" required="required" name="dctr_id" value=''>
 						  <option value="">Select.........</option>
 					<?php foreach ($doctor as $dctr) { ?>
-						  <option value="<?php echo $dctr->dr_id; ?>"><?php echo  $dctr->dr_id.'----------'.$dctr->drname; ?></option>
+						  <option value="<?php echo $dctr->dr_id; ?>"><?php echo  $dctr->dr_id.'----------'.$dctr->dr_name; ?></option>
 					<?php } ?>
 						</select>
 					</div><br>
@@ -72,8 +254,12 @@
 							<div style="width: 55%; float: left;">
 		                        <select required="required" class="form-control tstiids custom-select custom-select-lg m-bot15 js-example-basic-single" id="tstiids" name="test_iiddd[]">
 								  <option value="">Select.........</option>
-							<?php foreach ($labtest as $tst) { ?>						
-								  <option value="<?php echo $tst->tstinv_id; ?>"><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option>
+							<?php foreach ($labtest as $tst) {
+								if (!empty($tst->inv_code)) { ?>
+								  <option value="<?php echo $tst->tst_inv_id; ?>"><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option>
+								  <? }else { ?>
+								  <option value="<?php echo $tst->tst_inv_id; ?>"><?php echo $tst->inv_name; ?></option>
+								  <?php } ?>
 							<?php } ?>
 								</select>
 							</div>
@@ -212,7 +398,7 @@ tstttlval();
 	            async: false,
 	            success: function(tstinf){ 
 	            	rrratte = tstinf.tstinfo.rate;
-	            	tsttp = tstinf.tstinfo.repo_type;
+	            	tsttp = tstinf.tstinfo.grup_type;
 	            }
 	        })
 
@@ -241,7 +427,7 @@ chngval();
 
 	$('.plusAddBtn').click(function() {
 
-		var nwtst = "<div class='input-group apndBox' style='margin-top: 10px;'><span style='font-weight: bold; color: black;' class='input-group-addon lanr sp_dr_name' id='basic-addon3'>Test ID / Name</span><div style='width: 55%; float: left;'><select class='form-control tstiids m-bot15 js-example-basic-single' id='tstiids' name='test_iiddd[]'><option value=''>Select......</option><?php foreach ($labtest as $tst) { ?> <option value='<?php echo $tst->tstinv_id; ?>'><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option> <?php } ?></select></div><input type='text' name='testtakk[]' readonly='readonly' class='form-control tstrate tstrtval' style='width: 20%; float: left; text-align: right;' value='0'><input type='hidden' name='testtypss[]' class='form-control tsttypes' ><div class='' style='width: 90px; float: right;'><img style='cursor: pointer; float: right;' class='dltBtnS' width='40px' height='40px' src='uploads/delete.png'></div></div>";
+		var nwtst = "<div class='input-group apndBox' style='margin-top: 10px;'><span style='font-weight: bold; color: black;' class='input-group-addon lanr sp_dr_name' id='basic-addon3'>Test ID / Name</span><div style='width: 55%; float: left;'><select class='form-control tstiids m-bot15 js-example-basic-single' id='tstiids' name='test_iiddd[]'><option value=''>Select......</option><?php foreach ($labtest as $tst) { if (!empty($tst->inv_code)) { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option> <?php }else { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_name; ?></option>  <?php } ?> <?php } ?></select></div><input type='text' name='testtakk[]' readonly='readonly' class='form-control tstrate tstrtval' style='width: 20%; float: left; text-align: right;' value='0'><input type='hidden' name='testtypss[]' class='form-control tsttypes' ><div class='' style='width: 90px; float: right;'><img style='cursor: pointer; float: right;' class='dltBtnS' width='40px' height='40px' src='uploads/delete.png'></div></div>";
 
 		$('.testDivFull').append(nwtst); 
 		chngval();
@@ -305,13 +491,50 @@ chngval();
 
 $('.dri_id').change(function() {
 	var idval = $(this).val();
-	if (idval == 9999) {
+	if (idval == 99) {
 		$('.optdrad').html(optionaldr);
 	}else {
 		$('.optdrassd').remove();
 	}
 });
 
+
+
+
+$('#search_for_print').keyup(function() {
+  var serch_type = $('#search_for_print').val();
+
+      $.ajax({
+          url: 'pathology/search_printID?id=' + serch_type,
+          method: 'GET',
+          data: '',
+          dataType: 'json',
+          success: function (lab_ptn) {
+
+              var html = '';
+              var n;
+              var blank_text = '<a class="s_name_list">Please Type Ticket ID</a>';
+              for (n = 0; n < lab_ptn.length; n++) {
+                  html += '<a class="s_name_list" id="'+lab_ptn[n].lab_rgstr_iidd+'" onclick="open_win(this.id)">'+lab_ptn[n].labpnname+'</a>';
+              }
+
+              if (serch_type != '') {
+                $('.assign_data').html(html);
+              }else {
+                  $('.assign_data').html(blank_text);
+              }
+
+          } 
+      }) 
+})
+
+
+
+
+function open_win(clicked_id){
+        var url = 'labrcv/print_memo?labrcvid='+clicked_id;     
+      window.open(url, '_blank', 'height=800,width=800');
+    }
 
 
 

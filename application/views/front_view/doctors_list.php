@@ -31,7 +31,7 @@
                 if ($depts->dept_id == $dr_info->department) { ?>
                     <div class="col-md-4 col-sm-6">
                         <div class="team-box text-center" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="5000">
-                            <div class="doctor-pic"><img src="<?php 
+                            <div class="doctor-pic"><img style="width:400px; height: 300px;" src="<?php 
                                 if (!empty($dr_info->img_url)){
                                     echo $dr_info->img_url;
                                     }else {
@@ -46,11 +46,26 @@
                                 <ul class="clearfix">
                                     <div>Specialist</div>
                                 </ul>
-                                <a class="btn btn-simple btn-primary btn-round" href="#">View More</a>
+                                <a class="btn btn-simple btn-primary btn-round" href="front_view/doctor_profile?id=<?php echo $dr_info->dr_auto_id; ?>">View More</a>
                             </div>
                         </div>
                     </div>
             <?php } } ?>
+
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="team-box text-center" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="5000">
+                            <div class="doctor-pic"><img style="width:400px; height: 300px;" src="uploads/FemaleDoctor.jpg"></div>
+                            <div class="doctor-info">
+                                <h4> Up Coming <span><?php echo $depts->dept_name; ?></span></h4>
+                                <ul class="clearfix">
+                                    <div>Specialist</div>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
         <?php } ?>

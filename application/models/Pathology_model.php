@@ -10,36 +10,10 @@ class Pathology_model extends CI_model {
         $this->load->database();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // function insertDoctor($data) {
-    //     $this->db->insert('doctor', $data);
-    // }
-
-    // function updateDoctor($id, $data) {
-    //     $this->db->where('id', $id);
-    //     $this->db->update('doctor', $data);
-    // }
-
-    // function delete($id) {
-    //     $this->db->where('id', $id);
-    //     $this->db->delete('doctor');
-    // }
-
-
-
-
+    function searchSinglePrint($pId) {
+        $this->db->like('lab_rgstr_iidd', $pId);
+        $sql = $this->db->get('lab_patient_info');
+        return $sql->result();
+    }
 
 }

@@ -350,7 +350,7 @@
                                     <span><?php echo lang('pathology'); ?></span>
                                 </a>
                                 <ul class="sub">
-                                    <li><a href="pathology"><i class="fa fa-user"></i><?php echo lang('user'); ?></a></li>
+                                    <li><a href="pathology"><i class="fa fa-vial"></i>Test Info</a></li>
                                 </ul>
                             </li>
                         <?php } ?>
@@ -371,6 +371,20 @@
 
 
 
+
+                        <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
+                            <li> <li class="sub-menu navColor">
+                                <a href="javascript:;" >
+                                    <i class="fa fa-x-ray "></i>
+                                    <span>USG</span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a href="usg"><i class="fa fa-hotel"></i>Add Patient Report</a></li>
+                                    <li><a href="usg/print_repo"><i class="fa fa-hotel"></i>Print Report</a></li>
+                                    <li><a href="usg/normal_test"><i class="fa fa-hotel"></i>Test Report</a></li>
+                                </ul>
+                            </li>
+                        <?php } ?>
 
 
 

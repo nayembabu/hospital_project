@@ -23,6 +23,15 @@ class Patient_model extends CI_model {
         return $query->result();
     }
 
+    function getstatementDr($st_date, $last_date, $dr_id) {
+        $this->db->where('dr_id', $dr_id);
+        $this->db->where('add_date >=', $st_date);
+        $this->db->where('add_date <=', $last_date);
+        $this->db->order_by('p_n_id', 'DESC');
+        $sql = $this->db->get('patient');
+        return $sql->result();        
+    }
+
     function getfullpatient($st_date, $last_date) {
         $this->db->where('add_date >=', $st_date);
         $this->db->where('add_date <=', $last_date);
