@@ -27,8 +27,9 @@ class Pathology extends CI_Controller {
         }
     }
 
-    public function index() {
+    function index() {
         $data['ptNInfo'] = $this->labrcv_model->getptninfo();
+
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId);
 
@@ -44,73 +45,77 @@ class Pathology extends CI_Controller {
         echo json_encode($data);
     }
 
+    function test_add() {
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId);
 
+        $data['test_info'] = $this->pathology_model->get_testInfos();
+        $data['test_dept'] = $this->pathology_model->get_testDept();
 
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('pathology/test_add', $data);
+        $this->load->view('home/footer'); // just the header file
+    }
 
+    function get_TestGrup() {
+        $dept_id = $this->input->get('deptId');
+        $data = $this->pathology_model->get_testGrp($dept_id);
+        echo json_encode($data);
+    }
 
+    function get_tst_grup_byID() {
+        $tst_grup = $this->input->get('tst_Grp_id');
+        $data = $this->pathology_model->get_tst_grup($tst_grup);
+        echo json_encode($data);
+    }
 
+    function AddNewTest() {
+        $dep_idi            = $this->input->post('dep_idi');
+        $grup_id            = $this->input->post('grup_id');
+        $test_name          = $this->input->post('test_name');
+        $test_rate_normal   = $this->input->post('test_rate_normal');
+        $test_rate_argnt    = $this->input->post('test_rate_argnt');
+        $test_grup_typ      = $this->input->post('test_grup_typ');
+        $data = array(
+            'dep_id'        => $dep_idi,
+            'grup_iid'      => $grup_id,
+            'inv_name'      => $test_name,
+            'rate'          => $test_rate_normal,
+            'argent_rate'   => $test_rate_argnt,
+            'grup_type'     => $test_grup_typ 
+        );
+        $this->pathology_model->insert_new_test($data);
+        $this->session->set_flashdata('feedback', 'Test Addedd Successfully');
+            redirect('pathology/test_add');
+    }
 
+    function editPathoTest() {
+        $tst_inv_ID = $this->input->post('inv_idi');
+        $tst_Name = $this->input->post('test_name');
+        $tst_NRate = $this->input->post('test_rate_normal');
+        $tst_ARate = $this->input->post('test_rate_argnt');
+        $edata = array(
+            'inv_name'      => $tst_Name,     
+            'rate'          => $tst_NRate,     
+            'argent_rate'   => $tst_ARate     
+        );
+        $this->pathology_model->update_testINV($tst_inv_ID, $edata);
+        $this->session->set_flashdata('feedback', 'Update Successfully');
+            redirect('pathology/test_add');
+    }
 
+    function getTestInfobyID() {
+        $tstID = $this->input->get('tstID');
+        $data = $this->pathology_model->get_tst_byID($tstID);
+        echo json_encode($data);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // public function index() {
-
-    //     $data['doctors'] = $this->doctor_model->updateDoctor();
-    //     $this->load->view('home/dashboard'); // just the header file
-    //     $this->load->view('doctor', $data);
-    //     $this->load->view('home/footer'); // just the header file
-    // }
-
-    // public function addfee() {
-
-    //     $dr_id = $this->input->post('dr_id');
-    //     $dr_firsttime = $this->input->post('dr_firsttime');
-    //     $dr_sectime = $this->input->post('dr_sectime');
-    //     $hospital_first = $this->input->post('hospital_first');
-    //     $hospital_sec = $this->input->post('hospital_sec');
-
-    //             $data = array();
-    //             $data = array(
-    //                 'dr_id' => $dr_id,
-    //                 'dr_firsttime' => $dr_firsttime,
-    //                 'dr_sectime' => $dr_sectime,
-    //                 'hospital_first' => $hospital_first,
-    //                 'hospital_sec' => $hospital_sec
-    //             );
-
-    //         $this->doctor_model->insertDoctorfee($data);
-    //     $this->session->set_flashdata('feedback', 'Added');
-    //         redirect('doctor/drfee');
-    //     }
-
-    // function editDoctorByJason() {
-    //     $id = $this->input->get('id');
-    //     $data['doctor'] = $this->doctor_model->getDoctorById($id);
-    //     echo json_encode($data);
-    // }
-
-
-
+    function deleteTst() {
+        $tstID = $this->input->get('tstid');
+        $this->pathology_model->del_tst_inv($tstID);
+        $this->session->set_flashdata('feedback', 'Deleted');
+            redirect('pathology/test_add');
+    }
 
 }
 

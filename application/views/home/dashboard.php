@@ -351,6 +351,7 @@
                                 </a>
                                 <ul class="sub">
                                     <li><a href="pathology"><i class="fa fa-vial"></i>Test Info</a></li>
+                                    <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Add New Test</a></li>
                                 </ul>
                             </li>
                         <?php } ?>
