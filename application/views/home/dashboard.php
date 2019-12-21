@@ -86,7 +86,7 @@
 
 
                 <!-- Chat Option -->
-                    <div class="msg_box" style="right:10px" rel="skp">
+                    <!-- <div class="msg_box" style="right:10px" rel="skp">
                         <div class="msg_head"><center>Chat </center></div>
                         <div class="msg_wrap" style="display: none;">
                             <div class="msg_body" id="msg_body">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         
-                    </div>
+                    </div> -->
                 <!-- Chat Option -->
 
 
@@ -350,8 +350,10 @@
                                     <span><?php echo lang('pathology'); ?></span>
                                 </a>
                                 <ul class="sub">
-                                    <li><a href="pathology"><i class="fa fa-vial"></i>Test Info</a></li>
-                                    <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Add New Test</a></li>
+                                    <li><a href="pathology"><i class="fa fa-vial"></i>Report Entry</a></li>
+                                    <li><a href="pathology/test_rangeAdd"><i class="fa fa-temperature-high"></i>Test Range Add</a></li>
+                                    <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Test Info </a></li>
+                                    <li><a href="pathology/grp_info"><i class="fa fa-temperature-high"></i>Test Group Info </a></li>
                                 </ul>
                             </li>
                         <?php } ?>

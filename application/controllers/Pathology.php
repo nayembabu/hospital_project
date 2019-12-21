@@ -110,6 +110,20 @@ class Pathology extends CI_Controller {
         echo json_encode($data);
     }
 
+    function addInvTests() {
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId);
+        $data['test_grup'] = $this->pathology_model->get_grupforRange();
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('pathology/addInvTests', $data);
+        $this->load->view('home/footer'); // just the header file        
+    }
+
+    function get_patho_inv_tst() {
+        $patho_inv_idd = $this->input->get('');
+    }
+
     function deleteTst() {
         $tstID = $this->input->get('tstid');
         $this->pathology_model->del_tst_inv($tstID);
@@ -117,7 +131,128 @@ class Pathology extends CI_Controller {
             redirect('pathology/test_add');
     }
 
+    function grp_info() {
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId);
+
+        $data['grp_info'] = $this->pathology_model->get_grup();
+        $data['test_dept'] = $this->pathology_model->get_testDept();
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('pathology/grup_inf', $data);
+        $this->load->view('home/footer'); // just the header file        
+    }
+
+    function deleteGrp() {
+        $g_id = $this->input->get('grpid');
+        $this->pathology_model->del_grup($g_id);
+        $this->session->set_flashdata('feedback', 'Deleted');
+            redirect('pathology/grp_info');        
+    }
+
+    function AddNewGrp() {
+        $dep_idi        = $this->input->post('dep_idi');
+        $grp_name       = $this->input->post('grp_name');
+        $test_grup_typ  = $this->input->post('test_grup_typ');
+        $sata = array(
+            'tst_grp_short'  => $test_grup_typ,
+            'tst_grp_name' => $grp_name,
+            'diag_dept_id'  => $dep_idi 
+        );
+        $this->pathology_model->insert_grup_data($sata);
+        $this->session->set_flashdata('feedback', 'Add Successfully');
+            redirect('pathology/grp_info');    
+    }
+
+    function editGrupByIDD() {
+        $grpID = $this->input->get('grpID');
+        $data = $this->pathology_model->getGrupIDD($grpID);
+        echo json_encode($data);                       
+    }
+
+    function editPathoGrp() {
+        $grp_idi        = $this->input->post('grp_idi');
+        $grp_name       = $this->input->post('grup_name');
+        $test_grup_typ  = $this->input->post('grp_short');
+        $sata = array(
+            'tst_grp_short' => $test_grup_typ,
+            'tst_grp_name'  => $grp_name 
+        );
+        $this->pathology_model->update_grup_data($sata, $grp_idi);
+        $this->session->set_flashdata('feedback', 'Update Successful');
+            redirect('pathology/grp_info');             
+    }
+
+    function test_rangeAdd() {
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId);
+        $data['test_grup'] = $this->pathology_model->get_grupforRange();
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('pathology/tst_range_add', $data);
+        $this->load->view('home/footer'); // just the header file        
+    }
+
+    function get_invBygID() {
+      $grpID = $this->input->get('grpID');
+      $data = $this->pathology_model->get_invBygrpID($grpID);
+      echo json_encode($data);
+    }                    
+
+    function addNewRangess() {
+        $inv_iidd   = $this->input->post('inv_id');
+        $tst_Nam    = $this->input->post('name');
+        $rang_typ   = $this->input->post('type');
+        $gende      = $this->input->post('gend');
+        $ages       = $this->input->post('age');
+        $times      = $this->input->post('time');
+        $weight     = $this->input->post('weigth');
+        $temp       = $this->input->post('temp');
+        $nVal       = $this->input->post('nVal');
+        $gen_per    = $this->input->post('gen_per');
+
+
+        $aData = array(
+            'tst_inv_iid'       => $inv_iidd,
+            'tst_rang_nam'      => $tst_Nam,
+            'rang_type'         => $rang_typ,
+            'gender'            => $gende,
+            'age'               => $ages,
+            'days_time'         => $times,
+            'weight'            => $weight,
+            'temp'              => $temp,
+            'tst_normal_rang'   => $nVal,
+            'gender_period'     => $gen_per     
+        );
+        $this->pathology_model->insert_RangData($aData);
+    }
+
+    function tstRngbyINV() {
+        $inv_ids = $this->input->get('inv_ids');
+        $data = $this->pathology_model->getTstRngByINV($inv_ids);
+        echo json_encode($data);
+    }
 }
+
+
+
+
 
 /* End of file Pathology.php */
 /* Location: ./application/modules/pathology/controllers/pathology.php */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
