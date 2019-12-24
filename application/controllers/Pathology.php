@@ -33,9 +33,8 @@ class Pathology extends CI_Controller {
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId);
 
-
         $this->load->view('home/dashboard', $data); // just the header file
-        $this->load->view('pathology/pathology', $data);
+        $this->load->view('pathology/result_entry', $data);
         $this->load->view('home/footer'); // just the header file
     }
 
@@ -121,7 +120,9 @@ class Pathology extends CI_Controller {
     }
 
     function get_patho_inv_tst() {
-        $patho_inv_idd = $this->input->get('');
+        $patho_inv_idd = $this->input->get('inv_ids');
+        $data = $this->pathology_model->get_invTst_s_($patho_inv_idd);
+        echo json_encode($data);
     }
 
     function deleteTst() {
@@ -211,7 +212,6 @@ class Pathology extends CI_Controller {
         $nVal       = $this->input->post('nVal');
         $gen_per    = $this->input->post('gen_per');
 
-
         $aData = array(
             'tst_inv_iid'       => $inv_iidd,
             'tst_rang_nam'      => $tst_Nam,
@@ -227,9 +227,53 @@ class Pathology extends CI_Controller {
         $this->pathology_model->insert_RangData($aData);
     }
 
+    function addNewINVTest() {
+        $Inv_grup_iid   = $this->input->post('invGRP_id');
+        $inv_iidd       = $this->input->post('inv_id');
+        $tst_Nam        = $this->input->post('name');
+        $rang_typ       = $this->input->post('type');
+
+        $aData = array(
+            'p_inv_id'       => $inv_iidd,
+            'test_name'      => $tst_Nam,
+            'tst_typ'        => $rang_typ,
+            'grup_idid'      => $Inv_grup_iid     
+        );
+        $this->pathology_model->insert_invTstData($aData);
+    }
+
+    function updateINVTest() {
+        $inv_tst_iddd   = $this->input->post('inv_tst_id');
+        $tst_Nam        = $this->input->post('name');
+        $rang_typ       = $this->input->post('type');
+
+        $uData = array(
+            'test_name'      => $tst_Nam,
+            'tst_typ'        => $rang_typ     
+        );
+        $this->pathology_model->update_invTstData($inv_tst_iddd, $uData);
+    }
+
     function tstRngbyINV() {
         $inv_ids = $this->input->get('inv_ids');
         $data = $this->pathology_model->getTstRngByINV($inv_ids);
+        echo json_encode($data);
+    }
+
+    function deleteINVTest() {
+        $inv_tstI = $this->input->post('inv_tst_id');
+        $this->pathology_model->delInvTSTs($inv_tstI);
+    }
+
+    function getPtnByIIDD() {
+        $ptn_ids = $this->input->get('ptn_ids');
+        $data = $this->pathology_model->getPtnByIdds($ptn_ids);
+        echo json_encode($data);
+    }
+
+    function getPtnTstByIIDDD() {
+        $ptn_ids = $this->input->get('ptn_ids');
+        $data = $this->pathology_model->gettstByPtnIDD($ptn_ids);
         echo json_encode($data);
     }
 }

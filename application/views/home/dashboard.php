@@ -352,7 +352,8 @@
                                 <ul class="sub">
                                     <li><a href="pathology"><i class="fa fa-vial"></i>Report Entry</a></li>
                                     <li><a href="pathology/test_rangeAdd"><i class="fa fa-temperature-high"></i>Test Range Add</a></li>
-                                    <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Test Info </a></li>
+                                    <li><a href="pathology/addInvTests"><i class="fa fa-temperature-high"></i>Test Info</a></li>
+                                    <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Test INV Info </a></li>
                                     <li><a href="pathology/grp_info"><i class="fa fa-temperature-high"></i>Test Group Info </a></li>
                                 </ul>
                             </li>

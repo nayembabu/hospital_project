@@ -107,4 +107,47 @@ class Pathology_model extends CI_model {
         $sql = $this->db->get('patho_test_range');
         return $sql->result();        
     }
+
+    function get_invTst_s_($patho_inv_idd) { 
+        $this->db->where('p_inv_id', $patho_inv_idd);
+        $sql = $this->db->get('patho_inv_test');
+        return $sql->result();        
+    }
+
+    function insert_invTstData($aData) {
+        $this->db->insert('patho_inv_test', $aData);
+    }
+
+    function update_invTstData($inv_tst_iddd, $uData) {
+        $this->db->where('tst_auto_iid', $inv_tst_iddd);
+        $this->db->update('patho_inv_test', $uData);
+    }
+
+    function delInvTSTs($inv_tstI) {
+        $this->db->where('tst_auto_iid', $inv_tstI);
+        $this->db->delete('patho_inv_test');        
+    }
+
+    function getPtnByIdds($ptn_ids) {
+        $this->db->where('lab_rgstr_iidd', $ptn_ids);
+        $this->db->join('doctor', 'lab_patient_info.lbpdr_id = doctor.dr_id', 'left');
+        $sql = $this->db->get('lab_patient_info');
+        return $sql->row();                     
+    }
+
+    function gettstByPtnIDD($ptn_ids) {
+        $this->db->where('labptnididid', $ptn_ids);
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
+        $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
+        $this->db->join('patho_inv_test', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
+        $this->db->where('diag_dept_id', '1');
+        $sql = $this->db->get('lavrcv_tstinfo');
+        return $sql->result();
+    }
 }
+
+
+
+
+
