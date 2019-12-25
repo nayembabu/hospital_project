@@ -62,6 +62,16 @@ class Receptionist_model extends CI_model {
         return $query->result();
     }
 
+    function stmn_with_doctor($dr_id, $start_date, $end_date) {
+        $this->db->where('dr_id', $dr_id);
+        $this->db->where('thisdate >=', $start_date);
+        $this->db->where('thisdate <=', $end_date);
+        $this->db->join('nurse', 'nurse.emp_id = appointment.emp_id', 'left');
+        $this->db->order_by('app_tc_id', 'DESC');
+        $query = $this->db->get('appointment');
+        return $query->result();
+    }
+
     function getEmpticket($t_date) {
         $this->db->where('ap_date', $t_date);
         $query = $this->db->get('appointment');
@@ -136,8 +146,6 @@ class Receptionist_model extends CI_model {
         return $sql->result();
     }
 
-
-
     function getticketById($tc_id) {
         $this->db->where('app_tc_id', $tc_id);
         $this->db->join('doctor', 'doctor.dr_id = appointment.dr_id', 'left');
@@ -145,7 +153,15 @@ class Receptionist_model extends CI_model {
         $query = $this->db->get('appointment');
         return $query->row();
     }
-    
+
+    function getticketall($tc_id) {
+        $this->db->like('app_tc_id', $tc_id);
+        $this->db->join('doctor', 'doctor.dr_id = appointment.dr_id', 'left');
+        $this->db->join('nurse', 'nurse.emp_id = appointment.emp_id', 'left');
+        $query = $this->db->get('appointment');
+        return $query->result();
+    }
+        
     function editticketprint($id, $data) {
         $this->db->where('app_tc_id', $id);
         $this->db->update('appointment', $data);

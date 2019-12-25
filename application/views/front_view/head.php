@@ -115,7 +115,7 @@
                     <div class="collapse navbar-collapse" id="navbarMenu">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="index">
+                                <a class="nav-link" href="front_view">
                                     Home
                                 </a>
                             </li>
@@ -125,7 +125,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="front_view/doctors">
+                                <a class="nav-link" href="front_view/doctor_list">
                                     Doctors
                                 </a>
                             </li>

@@ -34,7 +34,17 @@ class Front_view extends CI_Controller {
         $this->load->view('front_view/footer', $data); 
 	} 
 
-
+    function doctor_profile() {
+        $id = $this->input->get('id');
+        $data['site_set'] = $this->settings_model->getSettings();
+        $data['get_doctor'] = $this->doctor_model->getDoctorThis();
+        $data['get_dept'] = $this->department_model->getDepartment();
+        $data['dr_info'] = $this->doctor_model->getDoctorById($id);
+        $data['dr_time'] = $this->doctor_model->getDoctorTime($id);
+        $data['dr_spcl'] = $this->doctor_model->getDoctorOthInfoS($id);
+        $this->load->view('front_view/doctors_detail', $data);   
+        $this->load->view('front_view/footer', $data);         
+    }
 
 
 

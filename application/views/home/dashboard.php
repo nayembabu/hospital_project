@@ -86,7 +86,7 @@
 
 
                 <!-- Chat Option -->
-                    <div class="msg_box" style="right:10px" rel="skp">
+                    <!-- <div class="msg_box" style="right:10px" rel="skp">
                         <div class="msg_head"><center>Chat </center></div>
                         <div class="msg_wrap" style="display: none;">
                             <div class="msg_body" id="msg_body">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         
-                    </div>
+                    </div> -->
                 <!-- Chat Option -->
 
 
@@ -350,7 +350,11 @@
                                     <span><?php echo lang('pathology'); ?></span>
                                 </a>
                                 <ul class="sub">
-                                    <li><a href="pathology"><i class="fa fa-user"></i><?php echo lang('user'); ?></a></li>
+                                    <li><a href="pathology"><i class="fa fa-vial"></i>Report Entry</a></li>
+                                    <li><a href="pathology/test_rangeAdd"><i class="fa fa-temperature-high"></i>Test Range Add</a></li>
+                                    <li><a href="pathology/addInvTests"><i class="fa fa-temperature-high"></i>Test Info</a></li>
+                                    <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Test INV Info </a></li>
+                                    <li><a href="pathology/grp_info"><i class="fa fa-temperature-high"></i>Test Group Info </a></li>
                                 </ul>
                             </li>
                         <?php } ?>
@@ -371,6 +375,20 @@
 
 
 
+
+                        <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
+                            <li> <li class="sub-menu navColor">
+                                <a href="javascript:;" >
+                                    <i class="fa fa-x-ray "></i>
+                                    <span>USG</span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a href="usg"><i class="fa fa-hotel"></i>Add Patient Report</a></li>
+                                    <li><a href="usg/print_repo"><i class="fa fa-hotel"></i>Print Report</a></li>
+                                    <li><a href="usg/normal_test"><i class="fa fa-hotel"></i>Test Report</a></li>
+                                </ul>
+                            </li>
+                        <?php } ?>
 
 
 

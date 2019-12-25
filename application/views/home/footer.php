@@ -182,18 +182,17 @@
                 'csvHtml5',
                 'pdfHtml5',
                 'print'
-
             ],
 
             aLengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
-            iDisplayLength: -1,
+            iDisplayLength: 50,
 
             "order": [[0, "desc"]],
             
-            <?php if ($this->router->fetch_method() == 'sent') { ?>
+<?php if ($this->router->fetch_method() == 'sent') { ?>
         "order": [[ 0, "asc" ]],
 <?php } ?>
 <?php if ($this->router->fetch_method() == 'upcoming') { ?>
@@ -204,10 +203,6 @@
                 "lengthMenu": "_MENU_ records per page",
 
             }
-
-
-
-
 
         });
     });

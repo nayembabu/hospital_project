@@ -71,7 +71,7 @@
                             <tr>
                                 <td><?php echo $pninf->labpn_id; ?></td>
                                 <td><?php echo $pninf->labpnname; ?></td>
-                                <td><?php echo $pninf->drname; ?></td>
+                                <td><?php echo $pninf->dr_name; ?></td>
                                 <td><?php echo $pninf->lab_rgstr_iidd; ?></td>
                                 <td></td>
                             </tr>

@@ -49,6 +49,12 @@ class Reception extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function search_ticketID() {
+        $tc_id = $this->input->get('id');
+        $data = $this->receptionist_model->getticketall($tc_id);        
+        echo json_encode($data);
+    }
+
     public function allticket() {
         $data['tickets'] = $this->receptionist_model->getAllTicket();
         $data['settings'] = $this->settings_model->getSettings();
@@ -142,6 +148,17 @@ class Reception extends CI_Controller {
         $data['app_ticket'] = $this->receptionist_model->getAppById($ap_id);
         $this->load->view('reception/ticket_print', $data);
 
+    }
+
+    function stmnt_with_dr() {
+        $dr_id = $this->input->get('dr_id');
+        $start_date = date('Y-m-d', strtotime($this->input->get('startdate')));
+        $end_date = date('Y-m-d', strtotime($this->input->get('enddate')));
+        $data['s_date'] = date('d-M-y', strtotime($start_date));
+        $data['l_date'] = date('d-M-y', strtotime($end_date));
+        $data['all_ticket'] = $this->receptionist_model->stmn_with_doctor($dr_id, $start_date, $end_date);    
+        $data['user_data'] = $this->receptionist_model->getUsers();    
+        $this->load->view('reception/stmn_with_dr', $data);
     }
 
     function editticketprint() {

@@ -24,13 +24,12 @@ class Labrcv_model extends CI_model {
     }
 
     function getlabtest() {
-        $this->db->where('repo_type', 'XRA');
         $query = $this->db->get('patho_inv');
         return $query->result();
 
     }
     function gettestforrate($tstiid) {
-        $this->db->where('tstinv_id', $tstiid);
+        $this->db->where('tst_inv_id', $tstiid);
         $query = $this->db->get('patho_inv');
         return $query->row();
     }
@@ -53,7 +52,7 @@ class Labrcv_model extends CI_model {
     }
 
     function insert_rcvtstinfo($f_data) {
-        $this->db->insert_batch('lavptn_rcvinfo', $f_data);
+        $this->db->insert_batch('lavrcv_tstinfo', $f_data);
     }
 
     function getLabPatient($labrcvidii) {
@@ -65,15 +64,19 @@ class Labrcv_model extends CI_model {
 
     function getLabTestforP($labrcvidii) {
         $this->db->where('labptnididid', $labrcvidii);
-        $this->db->join('patho_inv', 'patho_inv.tstinv_id = lavptn_rcvinfo.tstiiddid', 'left');
-        $this->db->join('patho_dep', 'patho_dep.dpsl_idds = patho_inv.dep_id', 'left');
-        $sql = $this->db->get('lavptn_rcvinfo');
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
+        $this->db->join('diagonostic_dept', 'diagonostic_dept.diag_dept_idii = patho_inv.dep_id', 'left');
+        $sql = $this->db->get('lavrcv_tstinfo');
         return $sql->result();        
     }
 
     function getLabDepartment() {
-        $sql = $this->db->get('patho_dep');
+        $sql = $this->db->get('diagonostic_dept');
         return $sql->result();
+    }
+
+    function insert_rcvttkdata($tk_data) {
+        $this->db->insert_batch('test_receive_amnt', $tk_data);
     }
 
 

@@ -10,36 +10,144 @@ class Pathology_model extends CI_model {
         $this->load->database();
     }
 
+    function searchSinglePrint($pId) {
+        $this->db->like('lab_rgstr_iidd', $pId);
+        $sql = $this->db->get('lab_patient_info');
+        return $sql->result();
+    }
 
+    function get_testInfos() {
+        $this->db->join('diagonostic_dept', 'diagonostic_dept.diag_dept_idii = patho_inv.dep_id', 'left');
+        $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
+        $sql = $this->db->get('patho_inv');
+        return $sql->result();
+    }
 
+    function get_testDept() {
+        $query = $this->db->get('diagonostic_dept');
+        return $query->result();
+    }
 
+    function get_testGrp($dept_id) {
+        $this->db->where('diag_dept_id', $dept_id);
+        $sql = $this->db->get('patho_test_group');
+        return $sql->result();
+    }
 
+    function get_tst_grup($tst_grup) {
+        $this->db->where('tst_grp_iddi', $tst_grup);
+        $sql = $this->db->get('patho_test_group');
+        return $sql->row();
+    }
 
+    function insert_new_test($data) {
+        $this->db->insert('patho_inv', $data);
+    }
 
+    function get_tst_byID($tstID) {
+        $this->db->where('tst_inv_id', $tstID);
+        $sql = $this->db->get('patho_inv');
+        return $sql->row();
+    }
 
+    function del_tst_inv($tstID) {
+        $this->db->where('tst_inv_id', $tstID);
+        $this->db->delete('patho_inv');
+    }
 
+    function update_testINV($tst_inv_ID, $edata) {
+        $this->db->where('tst_inv_id', $tst_inv_ID);
+        $this->db->update('patho_inv', $edata);
+    }
 
+    function get_grup() {
+        $this->db->join('diagonostic_dept', 'diagonostic_dept.diag_dept_idii = patho_test_group.diag_dept_id', 'left');
+        $sql = $this->db->get('patho_test_group');
+        return $sql->result();
+    }
 
+    function del_grup($g_id) {
+        $this->db->where('tst_grp_iddi', $g_id);
+        $this->db->delete('patho_test_group');        
+    }
 
+    function insert_grup_data($sata) {
+        $this->db->insert('patho_test_group', $sata);
+    }
 
+    function getGrupIDD($grpID) {
+        $this->db->where('tst_grp_iddi', $grpID);
+        $sql = $this->db->get('patho_test_group');
+        return $sql->row();
+    }
 
+    function update_grup_data($sata, $grp_idi) {
+        $this->db->where('tst_grp_iddi', $grp_idi);
+        $this->db->update('patho_test_group', $sata);        
+    }
 
-    // function insertDoctor($data) {
-    //     $this->db->insert('doctor', $data);
-    // }
+    function get_grupforRange() {
+        $this->db->where('diag_dept_id', '1');
+        $sql = $this->db->get('patho_test_group');
+        return $sql->result();
+    }
 
-    // function updateDoctor($id, $data) {
-    //     $this->db->where('id', $id);
-    //     $this->db->update('doctor', $data);
-    // }
+    function get_invBygrpID($grpID) {
+        $this->db->where('grup_iid', $grpID);
+        $sql = $this->db->get('patho_inv');
+        return $sql->result();
+    }
 
-    // function delete($id) {
-    //     $this->db->where('id', $id);
-    //     $this->db->delete('doctor');
-    // }
+    function insert_RangData($aData) {
+        $this->db->insert('patho_test_range', $aData);
+    }
 
+    function getTstRngByINV($inv_ids) {
+        $this->db->where('tst_inv_iid', $inv_ids);
+        $sql = $this->db->get('patho_test_range');
+        return $sql->result();        
+    }
 
+    function get_invTst_s_($patho_inv_idd) { 
+        $this->db->where('p_inv_id', $patho_inv_idd);
+        $sql = $this->db->get('patho_inv_test');
+        return $sql->result();        
+    }
 
+    function insert_invTstData($aData) {
+        $this->db->insert('patho_inv_test', $aData);
+    }
 
+    function update_invTstData($inv_tst_iddd, $uData) {
+        $this->db->where('tst_auto_iid', $inv_tst_iddd);
+        $this->db->update('patho_inv_test', $uData);
+    }
 
+    function delInvTSTs($inv_tstI) {
+        $this->db->where('tst_auto_iid', $inv_tstI);
+        $this->db->delete('patho_inv_test');        
+    }
+
+    function getPtnByIdds($ptn_ids) {
+        $this->db->where('lab_rgstr_iidd', $ptn_ids);
+        $this->db->join('doctor', 'lab_patient_info.lbpdr_id = doctor.dr_id', 'left');
+        $sql = $this->db->get('lab_patient_info');
+        return $sql->row();                     
+    }
+
+    function gettstByPtnIDD($ptn_ids) {
+        $this->db->where('labptnididid', $ptn_ids);
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
+        $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
+        $this->db->join('patho_inv_test', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
+        $this->db->where('diag_dept_id', '1');
+        $sql = $this->db->get('lavrcv_tstinfo');
+        return $sql->result();
+    }
 }
+
+
+
+
+

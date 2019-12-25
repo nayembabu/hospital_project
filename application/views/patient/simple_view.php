@@ -7,14 +7,6 @@
         position: relative;
     }
 
-
-
-
-
-
-
-
-
     #menu, #menu ul {
         margin: 0;
         padding: 0;
@@ -218,12 +210,31 @@
             </center>
 
 
+                </div><br><br><br>
 
 
 
 
 
+<label for="exampleInputEmail1"> Statement With Doctor </label>
+                <div class="adv-table editable-table ">
+                    <div class="form-group" style="width: 300px; float: left;">
+                        
+                        <select required="required" class="form-control m-bot15 js-example-basic-single" id="dr_idss" name="" value=''>
+                            <option value="">Select....</option>
+                        <?php foreach ($doctors as $doctor) { ?>
+                            <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
+                        <?php } ?>
+                        </select>
+                    </div>
+
+                    <input style="width: 200px; float: left;" class="form-control dtpic form-control-lg" id="stdatess" type="text" placeholder="Start Date">
+
+                    <input style="width: 200px; float: left; margin: 0 0 0 10px;" class="form-control dtpic form-control-lg" id="lastdatesss" type="text" placeholder="End Date">
+
+                    <button style="margin: 0 0 0 10px;" onclick="with_doctor()" class="btn btn-info">View</button>
                 </div>
+
 
 
 
@@ -246,18 +257,16 @@
 
 
 <script type="text/javascript">
-    function daily_report() {
-        var url = 'patient/reports_P?st_date='+document.getElementById("stdate").value;     
+
+    function with_doctor() {
+        var url = 'patient/report_with_doctor?st_date='+document.getElementById("stdatess").value+'&last_date='+document.getElementById("lastdatesss").value+'&dr_id='+document.getElementById("dr_idss").value;   
       window.open(url, '_blank', 'height=800,width=800');
     }
-
 
     function monthly_report() {
         var url = 'patient/report_p_m?st_date='+document.getElementById("stdate").value+'&last_date='+document.getElementById("lastdate").value;    
       window.open(url, '_blank', 'height=800,width=800');
     }
-
-
 
     function findID() {
         var serch_type = $('#search_P_id').val();
@@ -281,21 +290,14 @@
                 }else {
                     $('.assign_data').html(blank_text);
                 }
-
             } 
         })            
     }
 
-
-
-
-
 function open_win(clicked_id){
-        var url = 'patient/reports_P?p_id='+clicked_id;     
-      window.open(url, '_blank', 'height=800,width=800');
-    }
-
-
+    var url = 'patient/reports_P?p_id='+clicked_id;     
+  window.open(url, '_blank', 'height=800,width=800');
+}
 
 </script>
 

@@ -16,6 +16,7 @@ class Labrcv extends CI_Controller {
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
         $this->load->model('ion_auth_model');
+        $this->load->model('settings_model');
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -81,14 +82,17 @@ class Labrcv extends CI_Controller {
         $ttrate         = $this->input->post('ttlrattte');
         $dscntamnt      = $this->input->post('discnt');
         $ttlrcvtaka     = $this->input->post('ttlrcvamnt');
-        $outdrnam       = $this->input->post('optdrname');
-        $outdrdegre     = $this->input->post('optdrdgre');
+
         $duerfr         = $this->input->post('hsprfrname');
         $ptnmblno       = $this->input->post('ptnmblno');
         $discntrfstxs   = $this->input->post('discntrfstxs');
+
         $thistims       = time();
         $thssdateee     = date('Y-m-d', time());
 
+        $outdrnam       = $this->input->post('optdrname');
+        $outdrdegre     = $this->input->post('optdrdgre');
+        
         $dscntamtk = $ttrate - $dscntamnt;
         $dscnt123 = $dscntamtk * 100 / $ttrate;
         $dscntprcntgs = 100 - $dscnt123;
@@ -109,7 +113,7 @@ class Labrcv extends CI_Controller {
             'outdr_degree'          => $outdrdegre, 
             'gndr'                  => $sex, 
             'ptnmbl'                => $ptnmblno, 
-            'emp_id'                => $emp_id, 
+            'tst_rcv_emp'           => $emp_id, 
             'this_tim'              => $thistims, 
             'this_date'             => $thssdateee, 
             'thsyear'               => $thsyer, 
@@ -134,12 +138,22 @@ class Labrcv extends CI_Controller {
                     'tsttype'           => $tstyp[$key][$key1], 
                     'labptnididid'      => $newlabiidi, 
                     'thssdate'          => $thssdateee, 
-                    'thsstimess'        => $thistims
+                    'thsstimess'        => $thistims,
+                    'user_emp_id'       => $emp_id 
                 ];
             }
         }
 
         $this->labrcv_model->insert_rcvtstinfo($f_data);        
+
+        $tk_data = array(
+            'lbpn_iiddd'       => $newlabiidi,
+            'rcv_amont'        => $ttlrcvtaka,
+            'thssstime'        => $thistims,
+            'thssdatee'        => $thssdateee,
+            'emp_id_user'      => $emp_id 
+        );
+        $this->labrcv_model->insert_rcvttkdata($tk_data);
 
         $this->session->set_flashdata('feedback', 'Test Added'); 
 
@@ -162,20 +176,6 @@ class Labrcv extends CI_Controller {
         $data['labtest_forprint'] = $this->labrcv_model->getLabTestforP($labrcvidii);        
         $data['department'] = $this->labrcv_model->getLabDepartment();   
         $this->load->view('labrcv/memoprint', $data); 
-
-
-/*
-        // HTML to PDF
-        $html = $this->output->get_output();
-        $this->dompdf->loadHtml($html);
-        $this->dompdf->setPaper('A4', 'portrait');
-        $this->dompdf->render();        
-        $this->dompdf->stream("Patient_memo.pdf", array("Attachment"=>0));
-        //Output Line
-
-
-*/
-
     }
 
 

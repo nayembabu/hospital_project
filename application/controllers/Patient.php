@@ -12,6 +12,7 @@ class Patient extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('patient_model');
         $this->load->library('upload');
+        $this->load->library('pdf');
        // $this->load->library('Pdf');
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
@@ -46,9 +47,10 @@ class Patient extends CI_Controller {
         
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId); 
+        $data['doctors'] = $this->doctor_model->getDoctor();
 
         $this->load->view('home/dashboard', $data); // just the header file   
-        $this->load->view('patient/simple_view');
+        $this->load->view('patient/simple_view', $data);
         $this->load->view('home/footer'); // just the header file
     }
 // Patient Admmission Statement View
@@ -96,6 +98,15 @@ class Patient extends CI_Controller {
     }
 // Patient Admmission Statement
 
+    public function report_with_doctor() {
+        $dr_id = $this->input->get('dr_id');
+        $st_date = date('Y-m-d', strtotime($this->input->get('st_date')));
+        $last_date = date('Y-m-d', strtotime($this->input->get('last_date')));
+        $data['patient_data'] = $this->patient_model->getstatementDr($st_date, $last_date, $dr_id);
+        $data['s_date'] = date('d-M-Y', strtotime($st_date));
+        $data['l_date'] = date('d-M-Y', strtotime($last_date));
+        $this->load->view('patient/with_doctor', $data);
+}
 
 // Patient Medicine Chart
     public function printchart() {
