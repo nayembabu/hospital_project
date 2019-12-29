@@ -60,15 +60,15 @@
                         <button type="button" class="btn button green search_btn_byid">SEARCH</button>
                     </center>
 
-
-
-
                     <div class="input-group ptnInfos"></div>
 
                     <div class="input-group drInfos"></div>
 
+                    <div class="input-group btnAddInfo">
+                        <br><br><button type="button" class="btn btn-info thoughtbot" style="font-size: 20px; font-weight: bold;">Submit</button>
+                    </div>
 
-
+                    <div class="reportPrintOpt"></div>
 
                     <div class="ptn_tst_infos" style="width: 80%; margin-top: 50px;"></div>
                     <div class="submit_btn_assgn"></div>
@@ -83,7 +83,39 @@
 
 
 <script type="text/javascript">
+    var tstGrpOpt = '<select class="form-control select" id="" name="dep_idi" value=""><option value="">Select....</option>';
+    var checkrepoEntry;
     $('.search_btn_byid').click(function() {
+        ptnInfoViewF();
+    })
+
+
+    function checkTstGrup() {
+        var PtnTypID = $('.typPTNID').val();
+        $.ajax({
+            url: 'pathology/gettstGrupforCheck?ptn_ids='+PtnTypID,
+            method: 'GET',
+            data: '',
+            dataType: 'json',
+            success: function(data_f) {
+                var i;
+                var html = '';
+                for (i=0; i<data_f.length; i++) {
+                    html += '<option value="'+data_f[i].tst_grp_iddi+'">'+data_f[i].tst_grp_name+'</option>';
+
+                }
+  
+                $('.reportPrintOpt').html(tstGrpOpt+''+html+'</select>');
+                // Sibling the remove duplicate 
+$(".select option").val(function(idx, val) {
+  $(this).siblings('[value="'+ val +'"]').remove();
+});
+            }
+        })
+
+    }
+
+    function ptnInfoViewF() {
         var PtnTypID = $('.typPTNID').val();
         if (PtnTypID == '') {
             $('.ptnInfos').html('<h1>ID is Empty? Type Patient ID....</h1>');
@@ -101,12 +133,29 @@
                     var ptnInf = '<input type="hidden" name="lab_ptn_iidds" value="'+ptn_infos.labpn_id+'" ><input type="hidden" name="lab_ptn_Rgstrid" value="'+ptn_infos.lab_rgstr_iidd+'" ><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Name</span><div class="form-control"><b>'+ptn_infos.labpnname+'</b></div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Age</span><div class="form-control">'+ptn_infos.labpn_age+'</div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Gender</span><div class="form-control">'+ptn_infos.gndr+'</div>';
 
                     drInf = '<span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Doctor Name</span><div class="form-control"><b>'+ptn_infos.dr_name+'</b></div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Doctor Degree</span><div class="form-control">'+ptn_infos.profile+'</div>';
+                    checkrepoEntry = ptn_infos.patho_entry_userIIDD;  
                     $('.ptnInfos').html(ptnInf);
                     $('.drInfos').html(drInf);
+
+
+                if (checkrepoEntry == 0) {
+                    tstInfoView();
+                    $('.submit_btn_assgn').html('<br><br><center><button type="submit" class="btn btn-info sbmtbtn punch" style="font-size: 42px; font-weight: bold;">Submit</button></center>');
+                }else {
+                    checkTstGrup();
                   }
+                }
                 }
             })
 
+     
+        }
+    }
+
+
+    function tstInfoView() {
+
+        var PtnTypID = $('.typPTNID').val();
             $.ajax({
                 url: 'pathology/getPtnTstByIIDDD?ptn_ids='+PtnTypID,
                 method: 'get',
@@ -119,11 +168,9 @@
                         full_data += '<div class="input-group " style="margin: 5px 0 0 0;"><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+ptn_tst_inf[n].test_name+'</span><input type="hidden" class="form-control" name="test_idii_auto[]" value="'+ptn_tst_inf[n].tst_auto_iid+'" ><input type="text" class="form-control" name="lab_tst_result[]" required="required" placeholder="Type Result" ><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+ptn_tst_inf[n].tst_normal_rang+'</span></div>';
                     }
                     $('.ptn_tst_infos').html(full_data);
-                    $('.submit_btn_assgn').html('<br><br><center><button type="submit" class="btn btn-info sbmtbtn" style="font-size: 42px; font-weight: bold;">Submit</button></center>');
                 }
             })
-        }
-    })
+    }
 
     $('form').submit(function() {
         $('.sbmtbtn').css('display', 'none');

@@ -130,7 +130,7 @@ class Pathology_model extends CI_model {
 
     function getPtnByIdds($ptn_ids) {
         $this->db->where('lab_rgstr_iidd', $ptn_ids);
-        $this->db->join('doctor', 'lab_patient_info.lbpdr_id = doctor.dr_id', 'left');
+        $this->db->join('doctor', 'lab_patient_info.lbpdr_id = doctor.dr_id', 'left');  
         $sql = $this->db->get('lab_patient_info');
         return $sql->row();                     
     }
@@ -144,6 +144,23 @@ class Pathology_model extends CI_model {
         $this->db->where('diag_dept_id', '1');
         $sql = $this->db->get('lavrcv_tstinfo');
         return $sql->result();
+    }
+
+    function getTstGrp($ptn_ids) {
+        $this->db->where('labptnididid', $ptn_ids);
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
+        $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
+        $this->db->join('patho_inv_test', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
+        $this->db->join('lab_patient_info', 'lab_patient_info.lab_rgstr_iidd = lavrcv_tstinfo.labptnididid', 'left');
+        $this->db->join('patho_ptn_result_entry', 'patho_ptn_result_entry.ptn_auto_iiddd = lab_patient_info.labpn_id', 'left');
+        $this->db->where('diag_dept_id', '1');
+        $sql = $this->db->get('lavrcv_tstinfo');
+        return $sql->result();
+    }
+
+    function insert_tstResult($eData) {
+        $this->db->insert_batch('patho_ptn_result_entry', $eData);
     }
 }
 

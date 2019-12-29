@@ -49,7 +49,7 @@
 
 
 
-            <form action="pathology/tst_result_entry" method="post"  enctype="multipart/form-data" class="" style="width: 85%; margin: ">
+            <div class="" style="width: 85%; ">
                     <center>
                     <div class="input-group" style="width: 50%;">
                         <span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">
@@ -74,11 +74,10 @@
                     <div class="submit_btn_assgn"></div>
 
                     
-            </form>    
+            </div>    
         </section>
     </section>
 </section>
-
 
 
 
@@ -108,7 +107,7 @@
             })
 
             $.ajax({
-                url: 'pathology/getPtnTstByIIDDD?ptn_ids='+PtnTypID,
+                url: 'pathology/getPtnTDDD?ptn_ids='+PtnTypID,
                 method: 'get',
                 data: '',
                 dataType: 'json',
@@ -116,28 +115,25 @@
                     var full_data = '';
                     var n;
                     for (n=0; n<ptn_tst_inf.length; n++) {
-                        full_data += '<div class="input-group " style="margin: 5px 0 0 0;"><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+ptn_tst_inf[n].test_name+'</span><input type="hidden" class="form-control" name="test_idii_auto[]" value="'+ptn_tst_inf[n].tst_auto_iid+'" ><input type="text" class="form-control" name="lab_tst_result[]" required="required" placeholder="Type Result" ><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+ptn_tst_inf[n].tst_normal_rang+'</span></div>';
+                        full_data += '<option value="'+ptn_tst_inf[n].tst_grp_iddi+'">'+ptn_tst_inf[n].tst_grp_name+'</option>';
                     }
-                    $('.ptn_tst_infos').html(full_data);
-                    $('.submit_btn_assgn').html('<br><br><center><button type="submit" class="btn btn-info sbmtbtn" style="font-size: 42px; font-weight: bold;">Submit</button></center>');
+                    $('.ptn_tst_infos').html('<select class="" id="" name=""><option value="">Select...</option>'+full_data+'</select>');
+                    
                 }
             })
         }
     })
 
-    $('form').submit(function() {
-        $('.sbmtbtn').css('display', 'none');
-    })
 </script>
 
 
 
 
 
+<!-- 
+$('.submit_btn_assgn').html('<br><br><center><button type="button" class="btn btn-info sbmtbtn" style="font-size: 42px; font-weight: bold;">SUBMIT</button></center>'); 
 
-
-
-
+ -->
 
 
 

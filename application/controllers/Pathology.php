@@ -34,7 +34,7 @@ class Pathology extends CI_Controller {
         $data['user_P'] = $this->settings_model->get_log_user($loginId);
 
         $this->load->view('home/dashboard', $data); // just the header file
-        $this->load->view('pathology/result_entry', $data);
+        $this->load->view('pathology/result_entry2', $data);
         $this->load->view('home/footer'); // just the header file
     }
 
@@ -272,6 +272,57 @@ class Pathology extends CI_Controller {
     }
 
     function getPtnTstByIIDDD() {
+        $ptn_ids = $this->input->get('ptn_ids');
+        $data = $this->pathology_model->gettstByPtnIDD($ptn_ids);
+        echo json_encode($data);
+    }
+
+    function getPtnTDDD() {
+        $ptn_ids = $this->input->get('ptn_ids');
+        $data = $this->pathology_model->getTstGrp($ptn_ids);
+        echo json_encode($data);
+    }
+
+    function tst_result_entry() {
+        $lab_ptnid  = $this->input->post('lab_ptn_iidds');
+        $lab_rgstID = $this->input->post('lab_ptn_Rgstrid');
+        $emp_id     = $this->ion_auth->user()->row()->emp_id;
+        $thisTim    = time();
+
+        $inv_tst_id_ = array($this->input->post('test_idii_auto'));
+        $tst_result_ = array($this->input->post('lab_tst_result'));
+
+        $eData = [];
+        foreach ($inv_tst_id_ as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                $eData[] = [
+                    'inv_tst_idsss_'    =>  $inv_tst_id_[$key][$key1],
+                    'Inv_tst_result_'   =>  $tst_result_[$key][$key1],
+                    'ptn_auto_iiddd'    =>  $lab_ptnid,
+                    'lab_ptn_rgts_iid_' =>  $lab_rgstID,
+                    'this_Emp_IDs'      =>  $emp_id,
+                    'thisTime'          =>  $thisTim
+                ];
+            }
+         } 
+
+         $this->pathology_model->insert_tstResult($eData);
+        $this->session->set_flashdata('feedback', 'Result Entry');
+            redirect('pathology');             
+    }
+
+    function printRepoView() {
+        $data['ptNInfo'] = $this->labrcv_model->getptninfo();
+
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId);
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('pathology/tst_repo_view', $data);
+        $this->load->view('home/footer'); // just the header file        
+    }
+
+    function gettstGrupforCheck() {
         $ptn_ids = $this->input->get('ptn_ids');
         $data = $this->pathology_model->gettstByPtnIDD($ptn_ids);
         echo json_encode($data);

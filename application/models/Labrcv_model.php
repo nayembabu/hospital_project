@@ -29,6 +29,7 @@ class Labrcv_model extends CI_model {
 
     }
     function gettestforrate($tstiid) {
+        $this->db->join('diagonostic_dept', 'diagonostic_dept.diag_dept_idii = patho_inv.dep_id', 'left');
         $this->db->where('tst_inv_id', $tstiid);
         $query = $this->db->get('patho_inv');
         return $query->row();
