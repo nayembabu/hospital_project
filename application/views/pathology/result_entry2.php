@@ -77,7 +77,7 @@
                     <center><div class="input-group btnPrintView"></div></center>
 
                     <div class="ptn_tst_infos" style="width: 80%; margin-top: 50px;"></div>
-                    <center><div class="submit_btn_assgn"></div></center>
+                    <center><div class="submit_btn_assgn"></div><div class="cancel_btn"></div></center>
                     
             </div>    
 
@@ -92,9 +92,10 @@
 
 <script type="text/javascript">
     var tstGrpOpt = '<select class="form-control select TstGrupSelect" id="" name="dep_idi" value=""><option value="">Select....</option>';
-    var view_PrintBtn = '<button type="button" class="btn btn-info thoughtbot" style="font-size: 20px; font-weight: bold; margin-top: 4px;">VIEW</button>';
+    var view_PrintBtn = '<button type="button" class="btn btn-info thoughtbot PrintReportBTN" style="font-size: 20px; font-weight: bold; margin-top: 4px;">VIEW</button>';
     var UpdateTstBtn = '<button type="button" class="btn btn-info purple-candy updateBtnData" style="font-size: 20px; margin: 15px 0 0 50px; font-weight: bold;">UPDATE</button>';
-    var UpdateTstBtnSubmit = '<button type="button" class="btn btn-info cupid-green updateBtnSubmit" style="font-size: 20px; margin: 15px 0 0 50px; font-weight: bold;">Submit</button>';
+    var UpdateTstBtnSubmit = '<button type="button" class="btn btn-info cupid-green updateBtnSubmit" style="font-size: 20px; margin: 15px 0 0 50px; font-weight: bold;">Submit</button>';    
+    var CancelBTN = '<button type="button" class="btn btn-info cnclBTN blue-pill" style="font-size: 20px; font-weight: bold; margin-top: 4px;">Cancel</button>';
     var checkrepoEntry;
 
     function checkTstGrup() {
@@ -152,6 +153,7 @@
                     checkrepoEntry = ptn_infos.patho_entry_userIIDD;  
                     $('.ptnInfos').html(ptnInf);
                     $('.drInfos').html(drInf);
+                    $('.cancel_btn').html('');
 
 
                 if (checkrepoEntry == 0) {
@@ -194,9 +196,9 @@
 
     function tstInfoViewForUpdate() {
 
-        var PtnTypID = $('.typPTNID').val();
+        var ptn_auto_idd = $('.ptn_auto_idd').val();
             $.ajax({
-                url: 'pathology/TstResultViewforUpdate?ptn_ids='+PtnTypID,
+                url: 'pathology/TstResultViewforUpdate?ptn_ids='+ptn_auto_idd,
                 method: 'get',
                 data: '',
                 dataType: 'json',
@@ -208,6 +210,7 @@
                     }
                     $('.ptn_tst_infos').html(full_data);
                     $('.submit_btn_assgn').html(UpdateTstBtnSubmit);
+                    $('.cancel_btn').html(CancelBTN);
                     $('.btnUpdateInvTst').html('');
                     $('.reportPrintOpt').html('');
                     $('.btnPrintView').html('');
@@ -264,13 +267,75 @@
 
 
     $(document).on('click', '.sbmtbtn', function() {
-        var tstRslt = [];
-        $("input[name^='lab_tst_result']").each(function () {
-           tstRslt = $(this).val();
-        })      
-        var uuu = 'pathology/tst_result_entry';
+        if(confirm("Are you sure you want to Entry This Result ??")){
+
+            var lab_tst_result = $('input[name="lab_tst_result[]"]').map(function(){ return this.value; }).get();
+            var test_idii_auto = $('input[name="test_idii_auto[]"]').map(function(){ return this.value; }).get();
+            var ptn_auto_idd = $('.ptn_auto_idd').val();
+            var lab_ptn_Rgstrid = $('input[name="lab_ptn_Rgstrid"]').val();
+            
+            $.ajax({
+                url: 'pathology/tst_result_entry',
+                method: 'POST',
+                data: {
+                    'test_idii_auto[]': test_idii_auto,
+                    'lab_tst_result[]': lab_tst_result,
+                    'lab_ptn_iidds': ptn_auto_idd,
+                    'lab_ptn_Rgstrid': lab_ptn_Rgstrid
+                },
+                dataType: 'text',
+                success: function() {
+                ptnInfoViewF(); 
+                } 
+            })         
+            $('.submit_btn_assgn').html('');           
+        }else {
+            return false;
+        }      
+ 
     })
 
+
+
+    $(document).on('click', '.updateBtnSubmit', function() {
+        if(confirm("Are you sure you want to UPDATE ?")){
+
+            var lab_tst_result = $('input[name="lab_tst_result[]"]').map(function(){ return this.value; }).get();
+            var test_idii_auto = $('input[name="test_idii_auto[]"]').map(function(){ return this.value; }).get();
+            var ptn_auto_idd = $('.ptn_auto_idd').val();
+            var lab_ptn_Rgstrid = $('input[name="lab_ptn_Rgstrid"]').val();
+            
+            $.ajax({
+                url: 'pathology/updateTstResults',
+                method: 'POST',
+                data: {
+                    'test_idii_auto[]': test_idii_auto,
+                    'lab_tst_result[]': lab_tst_result,
+                    'lab_ptn_iidds': ptn_auto_idd,
+                    'lab_ptn_Rgstrid': lab_ptn_Rgstrid
+                },
+                dataType: 'text',
+                success: function() {
+                ptnInfoViewF(); 
+                } 
+            })         
+            $('.submit_btn_assgn').html('');           
+        }else {
+            return false;
+        }      
+ 
+    })
+
+    $(document).on('click', '.cnclBTN', function() {
+        ptnInfoViewF();         
+    })
+
+    $(document).on('click', '.PrintReportBTN', function() {       
+        var ptn_auto_idd = $('.ptn_auto_idd').val();
+        var grupIds = $('.TstGrupSelect').val();
+        var url = 'pathology/printReport?ptnId='+ptn_auto_idd+'&grupID='+grupIds;     
+        window.open(url, '_blank', 'height=800,width=800');
+       })
 </script>
 
 

@@ -307,6 +307,11 @@ class Pathology extends CI_Controller {
          } 
 
          $this->pathology_model->insert_tstResult($eData);
+
+         $upData = array(
+                'patho_entry_userIIDD' => $emp_id, 
+            );
+         $this->pathology_model->update_ptn_table($upData, $lab_ptnid);
         $this->session->set_flashdata('feedback', 'Result Entry');
             redirect('pathology');             
     }
@@ -338,7 +343,37 @@ class Pathology extends CI_Controller {
         $ptnIds = $this->input->get('ptnIds');
         $grupIDss = $this->input->get('grupIDss');
         $data = $this->pathology_model->getTstInvResult($ptnIds, $grupIDss);
+        echo json_encode($data);
     }
+
+    function updateTstResults() {
+        $lab_ptnid  = $this->input->post('lab_ptn_iidds');
+        $thisTim    = time();
+
+        $inv_tst_id_ = array($this->input->post('test_idii_auto'));
+        $tst_result_ = array($this->input->post('lab_tst_result'));
+
+        $eData = [];
+        foreach ($inv_tst_id_ as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                $eData[] = [
+                    'inv_tst_idsss_'    =>  $inv_tst_id_[$key][$key1],
+                    'Inv_tst_result_'   =>  $tst_result_[$key][$key1],
+                    'thisTime'          =>  $thisTim
+                ];
+            }
+         } 
+
+         $this->pathology_model->UpdateTstResultss($eData, $lab_ptnid);
+
+        // $this->session->set_flashdata('feedback', 'Result Entry');
+        //     redirect('pathology');             
+    }
+
+    function printReport() {
+        $ptnId = $this->input->get('ptnId');
+        $grupID = $this->input->get('grupID');
+    } 
 }
 
 
