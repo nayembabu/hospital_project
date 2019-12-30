@@ -327,7 +327,22 @@ class Pathology extends CI_Controller {
         $data = $this->pathology_model->gettstByPtnIDD($ptn_ids);
         echo json_encode($data);
     }
+
+    function TstResultViewforUpdate() {
+        $ptn_ids = $this->input->get('ptn_ids');
+        $data = $this->pathology_model->getTstDataForUpdate($ptn_ids);
+        echo json_encode($data);
+    }
+
+    function getTstResultForPrint() {
+        $ptnIds = $this->input->get('ptnIds');
+        $grupIDss = $this->input->get('grupIDss');
+        $data = $this->pathology_model->getTstInvResult($ptnIds, $grupIDss);
+    }
 }
+
+
+
 
 
 
@@ -335,19 +350,3 @@ class Pathology extends CI_Controller {
 
 /* End of file Pathology.php */
 /* Location: ./application/modules/pathology/controllers/pathology.php */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

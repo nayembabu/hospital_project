@@ -13,6 +13,10 @@
       margin-top: 10px;
     }
 
+    .reportPrintOpt {
+        margin-top: 50px;
+    }
+
     .button:hover {
         background-color: #FFFFFF;
         color: #000000;
@@ -49,7 +53,7 @@
 
 
 
-            <form action="pathology/tst_result_entry" method="post"  enctype="multipart/form-data" class="" style="width: 85%; margin: ">
+            <div class="" style="width: 85%; ">
                     <center>
                     <div class="input-group" style="width: 50%;">
                         <span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">
@@ -64,17 +68,21 @@
 
                     <div class="input-group drInfos"></div>
 
-                    <div class="input-group btnAddInfo">
-                        <br><br><button type="button" class="btn btn-info thoughtbot" style="font-size: 20px; font-weight: bold;">Submit</button>
-                    </div>
+                    <center><div class="input-group btnUpdateInvTst"></div></center>
+                    
+                    <div class="reportPrintOpt"></div><br>
 
-                    <div class="reportPrintOpt"></div>
+                    <div class="TotalTstResultView"></div>
+ 
+                    <center><div class="input-group btnPrintView"></div></center>
 
                     <div class="ptn_tst_infos" style="width: 80%; margin-top: 50px;"></div>
-                    <div class="submit_btn_assgn"></div>
-
+                    <center><div class="submit_btn_assgn"></div></center>
                     
-            </form>    
+            </div>    
+
+
+
         </section>
     </section>
 </section>
@@ -83,12 +91,11 @@
 
 
 <script type="text/javascript">
-    var tstGrpOpt = '<select class="form-control select" id="" name="dep_idi" value=""><option value="">Select....</option>';
+    var tstGrpOpt = '<select class="form-control select TstGrupSelect" id="" name="dep_idi" value=""><option value="">Select....</option>';
+    var view_PrintBtn = '<button type="button" class="btn btn-info thoughtbot" style="font-size: 20px; font-weight: bold; margin-top: 4px;">VIEW</button>';
+    var UpdateTstBtn = '<button type="button" class="btn btn-info purple-candy updateBtnData" style="font-size: 20px; margin: 15px 0 0 50px; font-weight: bold;">UPDATE</button>';
+    var UpdateTstBtnSubmit = '<button type="button" class="btn btn-info cupid-green updateBtnSubmit" style="font-size: 20px; margin: 15px 0 0 50px; font-weight: bold;">Submit</button>';
     var checkrepoEntry;
-    $('.search_btn_byid').click(function() {
-        ptnInfoViewF();
-    })
-
 
     function checkTstGrup() {
         var PtnTypID = $('.typPTNID').val();
@@ -102,14 +109,23 @@
                 var html = '';
                 for (i=0; i<data_f.length; i++) {
                     html += '<option value="'+data_f[i].tst_grp_iddi+'">'+data_f[i].tst_grp_name+'</option>';
-
                 }
   
                 $('.reportPrintOpt').html(tstGrpOpt+''+html+'</select>');
+
                 // Sibling the remove duplicate 
-$(".select option").val(function(idx, val) {
-  $(this).siblings('[value="'+ val +'"]').remove();
-});
+                var map = {};
+                    $('.select option').each(function () {
+                        if (map[this.value]) {
+                            $(this).remove()
+                        }
+                        map[this.value] = true;
+                    })
+
+                $('.btnPrintView').html('');
+                $('.btnUpdateInvTst').html(UpdateTstBtn);
+                $('.ptn_tst_infos').html('');
+                $('.submit_btn_assgn').html('');
             }
         })
 
@@ -130,7 +146,7 @@ $(".select option").val(function(idx, val) {
                     $('.ptnInfos').html('<h1>Type Correct ID.....</h1>');
                     $('.drInfos').html('');
                   }else {
-                    var ptnInf = '<input type="hidden" name="lab_ptn_iidds" value="'+ptn_infos.labpn_id+'" ><input type="hidden" name="lab_ptn_Rgstrid" value="'+ptn_infos.lab_rgstr_iidd+'" ><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Name</span><div class="form-control"><b>'+ptn_infos.labpnname+'</b></div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Age</span><div class="form-control">'+ptn_infos.labpn_age+'</div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Gender</span><div class="form-control">'+ptn_infos.gndr+'</div>';
+                    var ptnInf = '<input type="hidden" name="lab_ptn_iidds" value="'+ptn_infos.labpn_id+'" class="ptn_auto_idd" ><input type="hidden" name="lab_ptn_Rgstrid" value="'+ptn_infos.lab_rgstr_iidd+'" ><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Name</span><div class="form-control"><b>'+ptn_infos.labpnname+'</b></div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Age</span><div class="form-control">'+ptn_infos.labpn_age+'</div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Patient Gender</span><div class="form-control">'+ptn_infos.gndr+'</div>';
 
                     drInf = '<span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Doctor Name</span><div class="form-control"><b>'+ptn_infos.dr_name+'</b></div><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Doctor Degree</span><div class="form-control">'+ptn_infos.profile+'</div>';
                     checkrepoEntry = ptn_infos.patho_entry_userIIDD;  
@@ -168,17 +184,101 @@ $(".select option").val(function(idx, val) {
                         full_data += '<div class="input-group " style="margin: 5px 0 0 0;"><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+ptn_tst_inf[n].test_name+'</span><input type="hidden" class="form-control" name="test_idii_auto[]" value="'+ptn_tst_inf[n].tst_auto_iid+'" ><input type="text" class="form-control" name="lab_tst_result[]" required="required" placeholder="Type Result" ><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+ptn_tst_inf[n].tst_normal_rang+'</span></div>';
                     }
                     $('.ptn_tst_infos').html(full_data);
+                    $('.btnUpdateInvTst').html('');
+                    $('.reportPrintOpt').html('');
+                    $('.btnPrintView').html('');
                 }
             })
     }
 
+
+    function tstInfoViewForUpdate() {
+
+        var PtnTypID = $('.typPTNID').val();
+            $.ajax({
+                url: 'pathology/TstResultViewforUpdate?ptn_ids='+PtnTypID,
+                method: 'get',
+                data: '',
+                dataType: 'json',
+                success: function(tst_result) {
+                    var full_data = '';
+                    var n;
+                    for (n=0; n<tst_result.length; n++) {
+                        full_data += '<div class="input-group " style="margin: 5px 0 0 0;"><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+tst_result[n].test_name+'</span><input type="hidden" class="form-control" name="test_idii_auto[]" value="'+tst_result[n].tst_auto_iid+'" ><input type="text" class="form-control" name="lab_tst_result[]" required="required" value="'+tst_result[n].Inv_tst_result_+'" placeholder="Type Result" ><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+tst_result[n].tst_normal_rang+'</span></div>';
+                    }
+                    $('.ptn_tst_infos').html(full_data);
+                    $('.submit_btn_assgn').html(UpdateTstBtnSubmit);
+                    $('.btnUpdateInvTst').html('');
+                    $('.reportPrintOpt').html('');
+                    $('.btnPrintView').html('');
+                }
+            })
+    }
+
+    function TotalTstResultView() {
+        var ptnIds = $('.ptn_auto_idd').val();
+        var grupIds = $('.TstGrupSelect').val();
+        $.ajax({
+            url: 'pathology/getTstResultForPrint?ptnIds='+ptnIds+'&grupIDss='+grupIds,
+            method: 'GET',
+            data: '',
+            dataType: 'json',
+            success: function(all_data) {
+                var i;
+                var tdata = '';
+                for (i=0; i<all_data.length; i++) {
+                    tdata += '<div class="input-group PrintViewTstData" style="margin: 5px 0 0 0;"><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+all_data[i].test_name+'</span><span style="font-weight: bold; color: black; border: 1px black dashed; background: white;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+all_data[i].Inv_tst_result_+'</span><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">'+all_data[i].tst_normal_rang+'</span></div>';
+                }
+                $('.TotalTstResultView').html(tdata);
+            }
+        })
+    }
+
+    $('.search_btn_byid').click(function() {
+        ptnInfoViewF();
+    })
+
+    $(document).on('click', '.updateBtnData', function() {
+        tstInfoViewForUpdate();
+    })
+
     $('form').submit(function() {
         $('.sbmtbtn').css('display', 'none');
     })
+
+    $(document).on('change', '.TstGrupSelect', function() {
+        var grupId = $(this).children("option:selected").val();
+        if (grupId == '') {
+            $('.btnPrintView').html('');
+            $('.btnUpdateInvTst').html(UpdateTstBtn);
+            $('.ptn_tst_infos').html('');
+            $('.submit_btn_assgn').html('');
+        }else {
+            TotalTstResultView();
+            $('.btnPrintView').html(view_PrintBtn);
+            $('.btnUpdateInvTst').html('');
+            $('.ptn_tst_infos').html('');
+            $('.submit_btn_assgn').html('');
+        }
+    })
+
+
+    $(document).on('click', '.sbmtbtn', function() {
+        var tstRslt = [];
+        $("input[name^='lab_tst_result']").each(function () {
+           tstRslt = $(this).val();
+        })      
+        var uuu = 'pathology/tst_result_entry';
+    })
+
 </script>
 
 
 
+
+
+
+                        
 
 
 

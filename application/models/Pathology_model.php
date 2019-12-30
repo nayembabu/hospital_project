@@ -146,6 +146,18 @@ class Pathology_model extends CI_model {
         return $sql->result();
     }
 
+    function getTstDataForUpdate($ptn_ids) {        
+        $this->db->where('lab_rgstr_iidd', $ptn_ids);
+        $this->db->join('lavrcv_tstinfo', 'lavrcv_tstinfo.labptnididid = lab_patient_info.lab_rgstr_iidd', 'left');
+        $this->db->join('patho_ptn_result_entry', 'patho_ptn_result_entry.ptn_auto_iiddd = lab_patient_info.labpn_id', 'left');
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
+        $this->db->join('patho_inv_test', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
+        $this->db->where('tstDeptI', '1');
+        $sql = $this->db->get('lab_patient_info');
+        return $sql->result();
+    }
+
     function getTstGrp($ptn_ids) {
         $this->db->where('labptnididid', $ptn_ids);
         $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
@@ -161,6 +173,15 @@ class Pathology_model extends CI_model {
 
     function insert_tstResult($eData) {
         $this->db->insert_batch('patho_ptn_result_entry', $eData);
+    }
+
+    function getTstInvResult($ptnIds, $grupIDss) {
+        $this->db->where('ptn_auto_iiddd', $ptnIds);
+        $this->db->join('patho_inv_test', 'patho_inv_test.tst_auto_iid = patho_ptn_result_entry.inv_tst_idsss_', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
+        $this->db->where('grup_idid', $grupIDss);
+        $sql = $this->db->get('patho_ptn_result_entry');
+        return $sql->result();
     }
 }
 
