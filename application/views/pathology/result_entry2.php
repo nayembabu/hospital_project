@@ -256,6 +256,7 @@
             $('.btnUpdateInvTst').html(UpdateTstBtn);
             $('.ptn_tst_infos').html('');
             $('.submit_btn_assgn').html('');
+            $('.TotalTstResultView').html('');
         }else {
             TotalTstResultView();
             $('.btnPrintView').html(view_PrintBtn);
