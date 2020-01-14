@@ -77,7 +77,7 @@ class Labrcv_model extends CI_model {
     }
 
     function insert_rcvttkdata($tk_data) {
-        $this->db->insert_batch('test_receive_amnt', $tk_data);
+        $this->db->insert('test_receive_amnt', $tk_data);
     }
 
 

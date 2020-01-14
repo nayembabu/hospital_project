@@ -154,6 +154,7 @@
                     $('.ptnInfos').html(ptnInf);
                     $('.drInfos').html(drInf);
                     $('.cancel_btn').html('');
+                    $('.TotalTstResultView').html('');
 
 
                 if (checkrepoEntry == 0) {
@@ -243,6 +244,7 @@
 
     $(document).on('click', '.updateBtnData', function() {
         tstInfoViewForUpdate();
+        $('.TotalTstResultView').html('');
     })
 
     $('form').submit(function() {

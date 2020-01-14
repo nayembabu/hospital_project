@@ -265,7 +265,6 @@
 							</div>
 							<input type="text" name="testtakk[]" readonly="readonly" class="form-control tstrate tstrtval" style="width: 20%; float: left; text-align: right;" >
 							<input type="hidden" name="testtypss[]" class="form-control tsttypes" >
-                            <input type="hidden" name="testdeptIdi[]" class="form-control deptIDSS" >
 
 
 
@@ -400,14 +399,12 @@ tstttlval();
 	            success: function(tstinf){ 
 	            	rrratte   = tstinf.tstinfo.rate;
 	            	tsttp     = tstinf.tstinfo.grup_type;
-                    dept_idi  = tstinf.tstinfo.diag_dept_idii;
 	            }
 	        })
 
 
 	        $(this).parents('.apndBox').find('.tstrate').val(rrratte);
 	        $(this).parents('.apndBox').find('.tsttypes').val(tsttp);
-            $(this).parents('.apndBox').find('.deptIDSS').val(dept_idi);
 			tstttlval();
 
 

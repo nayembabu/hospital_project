@@ -12,6 +12,7 @@ class Pathology extends CI_Controller {
         $this->load->library('session');
         $this->load->library('form_validation');
         $this->load->model('labrcv_model');
+        $this->load->library('Ciqrcode');
         $this->load->library('upload');
         $this->load->library('Pdf');
         $this->load->model('pathology_model');
@@ -312,6 +313,7 @@ class Pathology extends CI_Controller {
                 'patho_entry_userIIDD' => $emp_id, 
             );
          $this->pathology_model->update_ptn_table($upData, $lab_ptnid);
+
         $this->session->set_flashdata('feedback', 'Result Entry');
             redirect('pathology');             
     }
@@ -371,8 +373,13 @@ class Pathology extends CI_Controller {
     }
 
     function printReport() {
-        $ptnId = $this->input->get('ptnId');
-        $grupID = $this->input->get('grupID');
+        $ptn_ids = $this->input->get('ptnId');
+        $tst_grup = $this->input->get('grupID');
+        $data['report_vw'] = $this->pathology_model->TstReportPrint_ss($ptn_ids, $tst_grup);
+        $data['grup'] = $this->pathology_model->get_tst_grup($tst_grup);
+        $data['ptn_infos'] = $this->pathology_model->getPtnByAIddsss($ptn_ids);
+
+        $this->load->view('pathology/TstReport_Print', $data);
     } 
 }
 

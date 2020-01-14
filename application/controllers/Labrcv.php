@@ -160,8 +160,6 @@ class Labrcv extends CI_Controller {
         $this->session->set_flashdata('feedback', 'Test Added'); 
 
 
-
-
         $link = "<script>window.open('print_memo?labrcvid=$newlabiidi','_blank', 'width=700,height=700,left=260,top=270');window.location.href = 'addnew';</script>";
         echo $link;
 
