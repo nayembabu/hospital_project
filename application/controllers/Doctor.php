@@ -155,13 +155,13 @@ class Doctor extends CI_Controller {
         $hospital_first = $this->input->post('hospital_first');
         $hospital_sec   = $this->input->post('hospital_sec');
 
-                $data = array(
-                    'dr_id'             => $dr_id,
-                    'dr_firsttime'      => $dr_firsttime,
-                    'dr_sectime'        => $dr_sectime,
-                    'hospital_first'    => $hospital_first,
-                    'hospital_sec'      => $hospital_sec
-                );
+            $data = array(
+                'dr_a_idid_auto'    => $dr_id,
+                'dr_firsttime'      => $dr_firsttime,
+                'dr_sectime'        => $dr_sectime,
+                'hospital_first'    => $hospital_first,
+                'hospital_sec'      => $hospital_sec
+            );
 
             $this->doctor_model->insertDoctorfee($data);
             $this->session->set_flashdata('feedback', 'Added');
@@ -196,7 +196,7 @@ class Doctor extends CI_Controller {
         $dr_fee_id      = $this->input->post('dr_fee_id');
 
                 $data = array(
-                    'dr_id'             => $dr_id,
+                    'dr_a_idid_auto'    => $dr_id,
                     'dr_firsttime'      => $dr_firsttime,
                     'dr_sectime'        => $dr_sectime,
                     'hospital_first'    => $hospital_first,
@@ -215,6 +215,28 @@ class Doctor extends CI_Controller {
         $this->doctor_model->delete_fee($id);
         $this->session->set_flashdata('feedback', 'Deleted');
         redirect('doctor/drfee');
+    }
+
+    function dr_spclty() {
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId); 
+        $data['doctors'] = $this->doctor_model->getDoctorforDrfee();
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('doctor/dr_spclty', $data);
+        $this->load->view('home/footer'); // just the footer file        
+    }
+
+    function setDoctorSpeciality() {
+        $drIdd = $this->input->post('drIddII');
+        $drAutoIdd = $this->input->post('dr_at_idd');
+        $dr_sp_text = $this->input->post('dr_sp_txt');
+        $data = array(
+            'dr_id'         => $drIdd, 
+            'dr_auto_id'    => $drAutoIdd, 
+            'dr_special'    => $dr_sp_text 
+            );
+        $this->doctor_model->setDoctorSpeciality($data);
     }
 
 }

@@ -76,7 +76,7 @@
 <script type="text/javascript">
     var headofEntry = '<table border="1px"><tr><th>Test Name</th><th>Test Type</th><th>Action</th></tr>';
 
-    var AddNewForm = '<tr class="tstRangInfoCls"><td><input type="text" id="" class="form-control tstName" ></td><td><input type="text" id="" class="form-control rangType" ></td><td><button type="button" class="btn btn-info addBtnSave" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
+    var AddNewForm = '<tr class="tstRangInfoCls"><td><input type="text" id="" class="form-control tstName" ></td><td><input type="text" id="" class="form-control rangType" ></td><td><button type="button" class="btn btn-info addBtnSave"  style="margin-top: -30px;" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
 
     $('.tstgrp').change(function() {
         var tstgrp = $(this).val();
@@ -149,7 +149,7 @@
                 var i;
                 for (i=0; i<tstRng.length; i++) {
 
-                    datass += '<tr class="inv_tst_infos"><td><input type="text" readonly="readonly" id="inlineFormCustomSelect" class="form-control tstName inputboxs" value="'+tstRng[i].test_name+'"> </td><td><input type="text"  id="inlineFormCustomSelect" class="form-control rangType inputboxs" readonly="readonly" value="'+tstRng[i].tst_typ+'"> </td> <td> <button type="button" dataID="'+tstRng[i].tst_auto_iid+'" class="btn btn-info btn-xs EditBtns" title="Edit" id="inlineFormCustomSelect" ><i class="fa fa-edit"></i> </button> <button type="button" class="btn btn-info btn-xs DelBtns delete_button" dataID="'+tstRng[i].tst_auto_iid+'" title="Delete" id="inlineFormCustomSelect" ><i class="fa fa-trash"></i> </button> </td> </tr>';
+                    datass += '<tr class="inv_tst_infos"><td><input type="text" readonly="readonly" id="inlineFormCustomSelect" class="form-control tstName inputboxs" value="'+tstRng[i].test_name+'"> </td><td><input type="text"  id="inlineFormCustomSelect" class="form-control rangType inputboxs" readonly="readonly" value="'+tstRng[i].tst_typ+'"> </td> <td> <button type="button" style="margin-top: -30px;" dataID="'+tstRng[i].tst_auto_iid+'" class="btn btn-info btn-xs EditBtns" title="Edit" id="inlineFormCustomSelect" ><i class="fa fa-edit"></i> </button> <button type="button" style="margin-top: -30px;" class="btn btn-info btn-xs DelBtns delete_button" dataID="'+tstRng[i].tst_auto_iid+'" title="Delete" id="inlineFormCustomSelect" ><i class="fa fa-trash"></i> </button> </td> </tr>';
                 }
         $('.inv_test_ad').html(headofEntry+' '+datass+'</table>');
             }

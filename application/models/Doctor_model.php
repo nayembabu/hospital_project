@@ -44,13 +44,13 @@ class Doctor_model extends CI_model {
 
     function getDoctorfeeById($id) {
         $this->db->where('dr_fee_id', $id);
-        $this->db->join('doctor', 'dr_fee.dr_id = doctor.dr_id');
+        $this->db->join('doctor', 'dr_fee.dr_iidd_manaual = doctor.dr_id');
         $query = $this->db->get('dr_fee');
         return $query->row();
     }
 
     function drfee() {
-        $this->db->join('doctor', 'dr_fee.dr_id = doctor.dr_id');
+        $this->db->join('doctor', 'dr_fee.dr_iidd_manaual = doctor.dr_id');
         $query = $this->db->get('dr_fee');
         return $query->result();
     }
@@ -58,19 +58,19 @@ class Doctor_model extends CI_model {
     function getDoctorById($id) {
         $this->db->where('dr_auto_id', $id);
         $this->db->join('department', 'doctor.department = department.dept_id', 'left');
-        $this->db->join('dr_fee', 'doctor.dr_id = dr_fee.dr_id', 'left');
+        $this->db->join('dr_fee', 'doctor.dr_auto_id = dr_fee.dr_a_idid_auto', 'left');
         $query = $this->db->get('doctor');
         return $query->row();
     }
 
     function getDoctorTime($id) {
-        $this->db->where('dr_auto_id', $id); 
+        $this->db->where('dr_auto_iidd_a', $id); 
         $query = $this->db->get('dr_time');
         return $query->result();       
     }
 
     function getDoctorOthInfoS($id) {
-        $this->db->where('dr_auto_id', $id); 
+        $this->db->where('dr_a_id_auto', $id); 
         $query = $this->db->get('dr_all_info');
         return $query->result(); 
     }
@@ -105,6 +105,10 @@ class Doctor_model extends CI_model {
     function delete_doctor($id) {
         $this->db->where('dr_auto_id', $id);
         $this->db->delete('doctor');
+    }
+
+    function setDoctorSpeciality($data) {
+        $this->db->insert('dr_all_info', $data);
     }
 
 }

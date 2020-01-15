@@ -130,7 +130,7 @@ class Pathology_model extends CI_model {
 
     function getPtnByIdds($ptn_ids) {
         $this->db->where('lab_rgstr_iidd', $ptn_ids);
-        $this->db->join('doctor', 'lab_patient_info.lbpdr_id = doctor.dr_id', 'left');
+        $this->db->join('doctor', 'lab_patient_info.lbpdr_id = doctor.dr_id', 'left');  
         $sql = $this->db->get('lab_patient_info');
         return $sql->row();                     
     }
@@ -144,6 +144,69 @@ class Pathology_model extends CI_model {
         $this->db->where('diag_dept_id', '1');
         $sql = $this->db->get('lavrcv_tstinfo');
         return $sql->result();
+    }
+
+    function getTstDataForUpdate($ptn_ids) {        
+        $this->db->where('ptn_auto_iiddd', $ptn_ids);
+        $this->db->join('patho_inv_test', 'patho_inv_test.tst_auto_iid = patho_ptn_result_entry.inv_tst_idsss_', 'left');
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');        
+        $sql = $this->db->get('patho_ptn_result_entry');
+        return $sql->result();
+    }
+
+    function getTstGrp($ptn_ids) {
+        $this->db->where('labptnididid', $ptn_ids);
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
+        $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
+        $this->db->join('patho_inv_test', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
+        $this->db->join('lab_patient_info', 'lab_patient_info.lab_rgstr_iidd = lavrcv_tstinfo.labptnididid', 'left');
+        $this->db->join('patho_ptn_result_entry', 'patho_ptn_result_entry.ptn_auto_iiddd = lab_patient_info.labpn_id', 'left');
+        $this->db->where('diag_dept_id', '1');
+        $sql = $this->db->get('lavrcv_tstinfo');
+        return $sql->result();
+    }
+
+    function insert_tstResult($eData) {
+        $this->db->insert_batch('patho_ptn_result_entry', $eData);
+    }
+
+    function UpdateTstResultss($eData, $lab_ptnid) {
+        $this->db->where('ptn_auto_iiddd', $lab_ptnid);
+        $this->db->update_batch('patho_ptn_result_entry', $eData, 'inv_tst_idsss_');        
+    }
+
+    function getTstInvResult($ptnIds, $grupIDss) {        
+        $this->db->where('ptn_auto_iiddd', $ptnIds);
+        $this->db->join('patho_inv_test', 'patho_inv_test.tst_auto_iid = patho_ptn_result_entry.inv_tst_idsss_', 'left');
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');        
+        $this->db->where('grup_idid', $grupIDss);
+        $sql = $this->db->get('patho_ptn_result_entry');
+        return $sql->result();
+    }
+
+    function update_ptn_table($upData, $lab_ptnid) {
+        $this->db->where('labpn_id', $lab_ptnid);
+        $this->db->update('lab_patient_info', $upData);
+    }
+
+    function TstReportPrint_ss($ptn_ids, $tst_grup) {             
+        $this->db->where('ptn_auto_iiddd', $ptn_ids);
+        $this->db->join('patho_inv_test', 'patho_inv_test.tst_auto_iid = patho_ptn_result_entry.inv_tst_idsss_', 'left');
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
+        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');        
+        $this->db->where('grup_idid', $tst_grup);
+        $sql = $this->db->get('patho_ptn_result_entry');
+        return $sql->result();
+    }
+
+    function getPtnByAIddsss($ptn_ids) {
+        $this->db->where('labpn_id', $ptn_ids);
+        $this->db->join('doctor', 'lab_patient_info.lbpdr_id = doctor.dr_id', 'left');  
+        $sql = $this->db->get('lab_patient_info');
+        return $sql->row();                     
     }
 }
 

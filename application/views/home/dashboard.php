@@ -10,6 +10,10 @@
         <link rel="shortcut icon" href="<?php echo $this->db->get('settings')->row()->logo; ?> ">
         <title><?php echo $this->db->get('settings')->row()->system_vendor; ?> </title>
 
+        <!-- Button Style -->
+        <link href="include/css/buttons.css" rel="stylesheet">
+        <!-- Button Style -->
+
         <!-- Bootstrap core CSS -->
         <link href="include/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="include/bootstrap/css/bootstrap-reset.css" rel="stylesheet">
@@ -45,7 +49,6 @@
 
         <!-- jQuery  for all page  -->
         <script src="include/js/jquery-3.4.1.min.js"></script>
-        <script src="include/js/jquery-1.8.3.min.js"></script>
         <!-- jQuery  for all page  -->
 
 
@@ -227,6 +230,8 @@
                                     <li><a href="doctor"><i class="fa fa-user"></i><?php echo lang('list_of_doctors'); ?></a></li>
                                     
                                     <li><a href="doctor/drfee"><i class="fa fa-money"></i><?php echo lang('dr_fee'); ?></a></li>
+
+                                    <li><a href="doctor/dr_spclty"><i class="fa fa-user"></i><?php echo 'Doctor Speciality'; ?></a></li>
                                 </ul>
                             </li>
                         <?php } ?>
@@ -351,6 +356,7 @@
                                 </a>
                                 <ul class="sub">
                                     <li><a href="pathology"><i class="fa fa-vial"></i>Report Entry</a></li>
+                                    <li><a href="pathology/printRepoView"><i class="fa fa-vial"></i>Report Print</a></li>
                                     <li><a href="pathology/test_rangeAdd"><i class="fa fa-temperature-high"></i>Test Range Add</a></li>
                                     <li><a href="pathology/addInvTests"><i class="fa fa-temperature-high"></i>Test Info</a></li>
                                     <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Test INV Info </a></li>

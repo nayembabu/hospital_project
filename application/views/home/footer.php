@@ -3,9 +3,7 @@
 
     <div style="font-size: 22px; color: #000;" class="text-center">
             <?php echo 'Hospital Software Copyright @ Sound Health Hospital'?>
-        <a href="<?php echo base_url() . '#'; ?>" class="go-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
+        
     </div>
 
 </footer>

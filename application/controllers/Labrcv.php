@@ -102,6 +102,7 @@ class Labrcv extends CI_Controller {
         $tstidid        = array($this->input->post('test_iiddd'));
         $tstyp          = array($this->input->post('testtypss'));
         $tstamntk       = array($this->input->post('testtakk'));
+        $tst_dep        = array($this->input->post('testdeptIdi'));
 
 
         $data = array(
@@ -135,7 +136,8 @@ class Labrcv extends CI_Controller {
                 $f_data[] = [
                     'tstamnttaka'       => $tstamntk[$key][$key1],
                     'tstiiddid'         => $tstidid[$key][$key1],
-                    'tsttype'           => $tstyp[$key][$key1], 
+                    'tsttype'           => $tstyp[$key][$key1],
+                    'tstDeptI'          => $tst_dep[$key][$key1], 
                     'labptnididid'      => $newlabiidi, 
                     'thssdate'          => $thssdateee, 
                     'thsstimess'        => $thistims,
@@ -156,8 +158,6 @@ class Labrcv extends CI_Controller {
         $this->labrcv_model->insert_rcvttkdata($tk_data);
 
         $this->session->set_flashdata('feedback', 'Test Added'); 
-
-
 
 
         $link = "<script>window.open('print_memo?labrcvid=$newlabiidi','_blank', 'width=700,height=700,left=260,top=270');window.location.href = 'addnew';</script>";

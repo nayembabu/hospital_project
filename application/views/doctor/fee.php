@@ -85,7 +85,7 @@
                         <label for="exampleInputEmail1"><?php echo lang('doctor'); ?></label>
                         <select class="form-control m-bot15 js-example-basic-single" name="dr_id" value=''>
                         <?php foreach ($doctors as $doctor) { ?>
-                            <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
+                            <option value="<?php echo $doctor->dr_auto_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
                         <?php } ?>
 
                         </select>
@@ -141,7 +141,7 @@
                         <label for="exampleInputEmail1"><?php echo lang('doctor'); ?></label>
                         <select class="form-control " id="dr_fee_id" name="dr_id" value=''>
                         <?php foreach ($doctors as $doctor) { ?>
-                            <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
+                            <option value="<?php echo $doctor->dr_auto_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
                         <?php } ?>
 
                         </select>
@@ -200,7 +200,7 @@ $(document).ready(function () {
             $('#doctorupdateform').find('[name="hospital_first"]').val(response.dr_fee.hospital_first).end()
             $('#doctorupdateform').find('[name="hospital_sec"]').val(response.dr_fee.hospital_sec).end()
 
-            $('#dr_fee_id option[value='+response.dr_fee.dr_id+']').attr('selected', 'selected'); 
+            $('#dr_fee_id option[value='+response.dr_fee.dr_a_idid_auto+']').attr('selected', 'selected'); 
         });
     });
 });

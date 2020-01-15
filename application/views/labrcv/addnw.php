@@ -397,8 +397,8 @@ tstttlval();
 	            dataType: 'json',
 	            async: false,
 	            success: function(tstinf){ 
-	            	rrratte = tstinf.tstinfo.rate;
-	            	tsttp = tstinf.tstinfo.grup_type;
+	            	rrratte   = tstinf.tstinfo.rate;
+	            	tsttp     = tstinf.tstinfo.grup_type;
 	            }
 	        })
 
