@@ -230,6 +230,8 @@
                                     <li><a href="doctor"><i class="fa fa-user"></i><?php echo lang('list_of_doctors'); ?></a></li>
                                     
                                     <li><a href="doctor/drfee"><i class="fa fa-money"></i><?php echo lang('dr_fee'); ?></a></li>
+
+                                    <li><a href="doctor/dr_spclty"><i class="fa fa-user"></i><?php echo 'Doctor Speciality'; ?></a></li>
                                 </ul>
                             </li>
                         <?php } ?>
