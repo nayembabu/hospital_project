@@ -14,7 +14,7 @@ class Pathology extends CI_Controller {
         $this->load->model('labrcv_model');
         $this->load->library('Ciqrcode');
         $this->load->library('upload');
-        $this->load->library('Pdf');
+        // $this->load->library('Pdf');
         $this->load->model('pathology_model');
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);

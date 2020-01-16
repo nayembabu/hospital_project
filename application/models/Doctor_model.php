@@ -3,59 +3,70 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Doctor_model extends CI_model {
+class Doctor_model extends CI_model
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->database();
     }
 
-    function insertDoctor($data) {
+    function insertDoctor($data)
+    {
         $this->db->insert('doctor', $data);
     }
 
-    function insertDoctorfee($data) {
+    function insertDoctorfee($data)
+    {
         $this->db->insert('dr_fee', $data);
     }
 
-    function getDoctor() {
+    function getDoctor()
+    {
         $this->db->join('department', 'doctor.department = department.dept_id', 'left');
         $query = $this->db->get('doctor');
         return $query->result();
     }
 
-    function getDoctorThis() {
+    function getDoctorThis()
+    {
         $this->db->where('stus', '1');
         $this->db->join('department', 'doctor.department = department.dept_id', 'left');
         $query = $this->db->get('doctor');
         return $query->result();
     }
 
-    function update_dr_pic($dr_main_id, $data) {
+    function update_dr_pic($dr_main_id, $data)
+    {
         $this->db->where('dr_auto_id', $dr_main_id);
         $this->db->update('doctor', $data);
     }
 
-    function getDoctorforDrfee() {
+    function getDoctorforDrfee()
+    {
         $this->db->order_by('dr_auto_id', 'DESC');
         $query = $this->db->get('doctor');
         return $query->result();
     }
 
-    function getDoctorfeeById($id) {
+    function getDoctorfeeById($id)
+    {
         $this->db->where('dr_fee_id', $id);
         $this->db->join('doctor', 'dr_fee.dr_iidd_manaual = doctor.dr_id');
         $query = $this->db->get('dr_fee');
         return $query->row();
     }
 
-    function drfee() {
+    function drfee()
+    {
         $this->db->join('doctor', 'dr_fee.dr_iidd_manaual = doctor.dr_id');
         $query = $this->db->get('dr_fee');
         return $query->result();
     }
 
-    function getDoctorById($id) {
+    function getDoctorById($id)
+    {
         $this->db->where('dr_auto_id', $id);
         $this->db->join('department', 'doctor.department = department.dept_id', 'left');
         $this->db->join('dr_fee', 'doctor.dr_auto_id = dr_fee.dr_a_idid_auto', 'left');
@@ -63,55 +74,60 @@ class Doctor_model extends CI_model {
         return $query->row();
     }
 
-    function getDoctorTime($id) {
-        $this->db->where('dr_auto_iidd_a', $id); 
+    function getDoctorTime($id)
+    {
+        $this->db->where('dr_auto_iidd_a', $id);
         $query = $this->db->get('dr_time');
-        return $query->result();       
+        return $query->result();
     }
 
-    function getDoctorOthInfoS($id) {
-        $this->db->where('dr_a_id_auto', $id); 
+    function getDoctorOthInfoS($id)
+    {
+        $this->db->where('dr_a_id_auto', $id);
         $query = $this->db->get('dr_all_info');
-        return $query->result(); 
+        return $query->result();
     }
 
-    function updateDoctor($dr_main_id, $data) {
+    function updateDoctor($dr_main_id, $data)
+    {
         $this->db->where('dr_auto_id', $dr_main_id);
         $this->db->update('doctor', $data);
     }
 
-    function delete($id) {
+    function delete($id)
+    {
         $this->db->where('dr_auto_id', $id);
         $this->db->delete('doctor');
     }
 
-    function get_doctor_dr_id() {
+    function get_doctor_dr_id()
+    {
         $this->db->limit(1);
         $this->db->order_by('dr_id', 'DESC');
         $sql = $this->db->get('doctor');
         return $sql->row();
     }
 
-    function updateDoctorfee($dr_fee_id, $data) {
+    function updateDoctorfee($dr_fee_id, $data)
+    {
         $this->db->where('dr_fee_id', $dr_fee_id);
         $this->db->update('dr_fee', $data);
     }
-    
-    function delete_fee($id) {
+
+    function delete_fee($id)
+    {
         $this->db->where('dr_fee_id', $id);
         $this->db->delete('dr_fee');
     }
 
-    function delete_doctor($id) {
+    function delete_doctor($id)
+    {
         $this->db->where('dr_auto_id', $id);
         $this->db->delete('doctor');
     }
 
-    function setDoctorSpeciality($data) {
+    function setDoctorSpeciality($data)
+    {
         $this->db->insert('dr_all_info', $data);
     }
-
 }
-
-
-
