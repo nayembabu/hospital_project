@@ -239,6 +239,12 @@ class Doctor extends CI_Controller {
         $this->doctor_model->setDoctorSpeciality($data);
     }
 
+    function getDoctorAllSpeciality() {
+        $dr_a_id = $this->input->get('dr_a_iidd');
+        $data = $this->doctor_model->getDrAllSpeciality($dr_a_id);
+        echo json_encode($data);
+    }
+
 }
 
 /* End of file doctor.php */

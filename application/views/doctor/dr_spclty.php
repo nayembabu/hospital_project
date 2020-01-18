@@ -1,5 +1,25 @@
 <!--sidebar end-->
+
 <!--main content start-->
+
+
+<style type="text/css">
+    
+    .adv-table table tr td {
+        margin: 0;
+        padding: 0;
+    }
+
+    th {
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+</style>
+
+
+
 <section id="main-content">
     <section class="wrapper site-min-height">
         <!-- page start-->
@@ -38,12 +58,25 @@
 
     var view_btn_s = '<button type="button" style="font-size: 15px; margin: 0 0 0 70px;" class="btn btn-info view_sp_btn" title="View All" ><i class="fa fa-eye"> VIEW </i> </button>';
 
-    var data_top = '<table><tr><td align="center">Doctor Speciality</td><td>Save</td></tr><tr>';
+    var data_top = '<table><tr><th>Doctor Speciality</th><th>Action</th></tr>';
 
-    var emptyBox = '<td><input type="text" size="100" id="" class="form-control inputboxs" value=""></td><td><button type="button" style="margin-top: -30px;" class="btn btn-info save_btn_s" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
+    var emptyBox = '<tr><td><input type="text" size="100" id="" class="form-control inputboxs" value=""></td><td><button type="button" style="margin-top: -30px;" class="btn btn-info save_btn_s" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
 
     function getDoctorSpecility(){
-
+    var dr_auto_id = $('.dr_selects').val();
+        $.ajax({
+            url: 'doctor/getDoctorAllSpeciality?dr_a_iidd='+dr_auto_id,
+            method: 'GET',
+            data: '',
+            dataType: 'json',
+            success: function(dr_sp_all) {
+                var html = '';
+                for (var i=0; i<dr_sp_all.length; i++) {
+                    html += '<tr class="dr_spc_tble_tr"><td><input type="text" readonly size="90" id="" class="form-control inputboxs_data" value="'+dr_sp_all[i].dr_special+'"></td><td style="width:80px;" align="center"><button type="button" style="margin-top: -30px;" class="btn btn-xs btn-primary edit_btn_s" title="Edit" id="" ><i class="fa fa-edit"></i></button><button type="button" style="margin-top: -30px;" class="btn btn-info btn-xs delete_button del_btn_ss" title="Delete" id="" ><i class="fa fa-trash"></i></button></td></tr>';
+                }
+        $('.data_view_opt').html(data_top+''+html+'</table>');
+            }
+        })
     }
 
     $('.dr_selects').change(function() {
@@ -83,21 +116,19 @@
     })
 
     $(document).on('click', '.view_sp_btn', function() {
-        var dr_auto_id = $('.dr_selects').val();
-            $.ajax({
-                url: 'doctor/setDoctorSpeciality',
-                method: 'POST',
-                data: {
-                    dr_at_idd: dr_auto_id,
-                    drIddII: dr_iddr,
-                    dr_sp_txt: dr_spe
-                    },
-                success: function() {
-                    $('.data_view_opt').html('');
-                }
-            })
+        getDoctorSpecility();
     })
 
+    $(document).on('click', '.edit_btn_s', function() {
+        $(this).parents('.dr_spc_tble_tr').find('.inputboxs_data').removeAttr('readonly');
+
+        $(this).parents('.dr_spc_tble_tr').find('.edit_btn_s').html('<i class="fa fa-arrow-right"></i>');   
+        $(this).parents('.dr_spc_tble_tr').find('.edit_btn_s').addClass('updateDrSpclty');
+    })
+
+    $(document).on('click', '.updateDrSpclty', function() {
+        
+    })
 </script>
 
 

@@ -15,6 +15,7 @@ class Pharmacist extends CI_Controller {
         $this->load->library('Pdf');
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
+        $this->load->model('settings_model');
         $this->load->model('ion_auth_model');
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -164,7 +165,15 @@ class Pharmacist extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
+    function attnProcess() {
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId); 
 
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('pharmacist/attnProcess', $data);
+        $this->load->view('home/footer'); // just the footer file    
+
+    }
 
 
 
@@ -412,6 +421,68 @@ class Pharmacist extends CI_Controller {
         $this->pharmacist_model->delete($id);
         $this->session->set_flashdata('feedback', 'Deleted');
         redirect('pharmacist');
+    }
+
+    function checkAttnProcess() {
+       $get_date = $this->input->get('date');
+       $this_date = date('Y-m-d', strtotime($get_date));
+       $data = $this->pharmacist_model->getAttnProccess($this_date);
+       echo json_encode($data);
+    }
+
+    function getTempAttn_Log() {
+       // $t_date_ = $this->input->get('temp_date');
+       // $temp_date = date('Y-m-d', strtotime($t_date_));
+       $data = $this->pharmacist_model->getemps();
+       echo json_encode($data);        
+    } 
+
+    function getTempAttn_Log_sub_query(){
+        $attn_temp_date = $this->input->get('temp_date');
+        $temp_date = date('Y-m-d', strtotime($attn_temp_date));
+        $empUser = $this->input->get('empUser');
+        $data = $this->pharmacist_model->getTempAttn_Log_sub_query($empUser, $temp_date);
+        echo json_encode($data);        
+   }
+
+    function print_temp_attn() {
+        $temp_date = $this->input->get('temp_date');
+        $data['date_tmp'] = date('Y-m-d', strtotime($temp_date));
+        $this->load->view('pharmacist/print_tmp_attn_ss', $data);
+    }
+
+    function InsertAnntTtl() {
+        $TempPrcssDate  = $this->input->post('prcssDate');
+        $prcssDate      = date('Y-m-d', strtotime($TempPrcssDate));
+        $user_empIddd   = array($this->input->post('user_empIdd'));
+        $userInTime     = array($this->input->post('user_in_time'));
+        $userOutTime    = array($this->input->post('userOut_time'));
+
+        $emp_id         = $this->ion_auth->user()->row()->emp_id;
+        $thisTim        = time();
+        $thisDates      = date('Y-m-d', time());
+
+        $eData = [];
+        foreach ($user_empIddd as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                $eData[] = [
+                    'emp_id'        =>  $user_empIddd[$key][$key1],
+                    'intim'         =>  $userInTime[$key][$key1],
+                    'outtim'        =>  $userOutTime[$key][$key1],
+                    'attn_date'     =>  $prcssDate
+                ];
+            }
+         } 
+          $this->pharmacist_model->insert_attnTotal($eData);
+
+        $prData = array(
+            'temp_process_date'     => $prcssDate, 
+            'this_date_t'           => $thisDates, 
+            'this_timestamp_t'      => $thisTim, 
+            'this_emp_userss'       => $emp_id 
+        );
+          $this->pharmacist_model->insert_processData($prData);
+
     }
 
 }

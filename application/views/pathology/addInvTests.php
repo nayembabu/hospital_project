@@ -99,7 +99,7 @@
     $('.invInfo').change(function() {
         var inv_idii = $(this).val();
         if (inv_idii != '') {
-            $('.work_btn').html('<button type="button" style="font-size: 25px; margin: 0 0 0 70px;" class="btn btn-info addTestRange" title="Add New" ><i class="fa fa-plus-circle"> ADD NEW </i> </button><button type="button" style="font-size: 25px; margin: 0 0 0 70px;" class="btn btn-info TestRangeView" title="Add New" ><i class="fa fa-eye"> VIEW </i> </button>');
+            $('.work_btn').html('<button type="button" style="font-size: 25px; margin: 0 0 0 70px;" class="btn btn-info addTestRange" title="Add New" ><i class="fa fa-plus-circle"> ADD NEW </i> </button><button type="button" style="font-size: 25px; margin: 0 0 0 70px;" class="btn btn-info TestRangeView" title="VIEW" ><i class="fa fa-eye"> VIEW </i> </button>');
             $('.inv_test_ad').html('');
         }else {
             $('.work_btn').html('<h2> Please Select a Investigation.... </h2>');
@@ -183,7 +183,7 @@
                 success: function () {
                     tstRangView();
                 }
-            })
+        })
     })
 
         $(document).on('click ','.DelBtns', function () {        

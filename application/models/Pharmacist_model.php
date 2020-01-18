@@ -188,16 +188,35 @@ class Pharmacist_model extends CI_model {
         $this->db->where('id', $id);
         $this->db->delete('attn');
     }
-/**
-    function updateIonUser($username, $email, $password, $ion_user_id) {
-        $uptade_ion_user = array(
-            'username' => $username,
-            'email' => $email,
-            'password' => $password
-        );
-        $this->db->where('id', $ion_user_id);
-        $this->db->update('users', $uptade_ion_user);
-    }
-    **/
 
+    function getAttnProccess($this_date) {
+        $this->db->where('temp_process_date', $this_date);
+        $this->db->join('nurse', 'nurse.emp_id = attn_proccess_date.this_emp_userss', 'left');
+        $sql = $this->db->get('attn_proccess_date');
+        return $sql->row();
+    }
+
+    function getTmp_Attn_Log($temp_date) { 
+        $this->db->group_by(array('attn_log_temp.user_e_idd', 'attn_log_temp.attn_log_date'));   
+        $this->db->where('attn_log_date', $temp_date);
+        $this->db->join('nurse', 'nurse.emp_id = attn_log_temp.user_e_idd', 'left');  
+        $this->db->order_by('eid', 'asc');   
+        $sql = $this->db->get('attn_log_temp');
+        return $sql->result();
+    }
+
+    function getTempAttn_Log_sub_query($empUser, $temp_date) {
+        $this->db->where('user_e_idd', $empUser);
+        $this->db->where('attn_log_date', $temp_date);
+        $sql = $this->db->get('attn_log_temp');
+        return $sql->result();
+    }
+
+    function insert_attnTotal($eData) {
+        $this->db->insert_batch('attn', $eData);
+    }
+
+    function insert_processData($prData) {
+        $this->db->insert('attn_proccess_date', $prData);
+    }
 }

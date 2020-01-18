@@ -292,14 +292,7 @@
 
                         <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
                                     <li><a href="reception/allticket"><i class="fa fa-check"></i><?php echo lang('all').' '.lang('ticket'); ?></a></li>
-
-
-
                                     <li><a href="labrcv/addnew"><i class="fa fa-dollar"></i><?php echo lang('add').' '.lang('test'); ?></a></li>
-
-
-
-
                         <?php }?>
                                 </ul>
                             </li>
@@ -317,6 +310,7 @@
                                     <li><a href="nurse"><i class="fa fa-user"></i><?php echo lang('emp'); ?></a></li>
                                     <li><a href="nurse/info"><i class="fa fa-info"></i><?php echo lang('empinfo'); ?></a></li>
                                     <li><a href="nurse/nursebnInfo"><i class="fa fa-money"></i>Bangla Entry</a></li>
+                                    <li><a href="pharmacist/attnProcess"><i class="fa fa-spinner"></i>Attend Processing</a></li>
                                     <li><a href="pharmacist/alup"><i class="fa fa-upload"></i><?php echo lang('uploadattn'); ?></a></li>
                                     <li><a href="pharmacist"><i class="fa fa-th-list "></i><?php echo lang('attend'); ?></a></li>
                                     <li><a href="pharmacist/job_card"><i class="fa fa-align-justify"></i><?php echo lang('job_card'); ?></a></li>

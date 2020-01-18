@@ -111,6 +111,11 @@ class Doctor_model extends CI_model {
         $this->db->insert('dr_all_info', $data);
     }
 
+    function getDrAllSpeciality($dr_a_id) {
+        $this->db->where('dr_a_id_auto', $dr_a_id);
+        $sql = $this->db->get('dr_all_info');
+        return $sql->result();
+    }
 }
 
 
