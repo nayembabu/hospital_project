@@ -16,6 +16,7 @@ class Pathology_model extends CI_model {
         return $sql->result();
     }
 
+
     function get_testInfos() {
         $this->db->join('diagonostic_dept', 'diagonostic_dept.diag_dept_idii = patho_inv.dep_id', 'left');
         $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
@@ -96,6 +97,12 @@ class Pathology_model extends CI_model {
         $this->db->where('grup_iid', $grpID);
         $sql = $this->db->get('patho_inv');
         return $sql->result();
+    }
+
+    function get_tstInvQuery() {
+        $this->db->where('dep_id', '1');
+        $sql = $this->db->get('patho_inv');
+        return $sql->result();        
     }
 
     function insert_RangData($aData) {

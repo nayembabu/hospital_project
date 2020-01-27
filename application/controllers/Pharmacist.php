@@ -482,10 +482,27 @@ class Pharmacist extends CI_Controller {
             'this_emp_userss'       => $emp_id 
         );
           $this->pharmacist_model->insert_processData($prData);
+    }
 
+    function EditEmpJobCardView() {
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId);
+        $data['getemp'] = $this->pharmacist_model->getemp(); 
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('pharmacist/emp_job_card_edit', $data);
+        $this->load->view('home/footer'); // just the footer file            
+    }
+
+    function getAttnFullEmpData() {
+        $emp_iddii = $this->input->post('ProssEMP_ID');
+        $getMonth = $this->input->post('getMonthss');
+        $getYear = $this->input->post('getYearss');
+        $data = $this->pharmacist_model->getAttnFullEmpData($emp_iddii, $getMonth, $getYear); 
+        echo json_encode($data);
     }
 
 }
 
-/* End of file pharmacist.php */
-/* Location: ./application/modules/pharmacist/controllers/pharmacist.php */
+
+

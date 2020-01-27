@@ -32,6 +32,9 @@
                         </span>
                         <select class="form-control custom-select custom-select-lg m-bot15 js-example-basic-single invInfo" required="required" name="lab_ptn_id" value=''>
                             <option value="">Select...........</option>
+                        <?php foreach ($test_Inv as $val) { ?>
+                            <option value="<?php echo $val->tst_inv_id; ?>"><?php echo $val->inv_name; ?></option>
+                        <?php } ?>
                         </select>
                     </div><br>
                     <div class="work_btn"></div>
@@ -149,7 +152,7 @@
                 var i;
                 for (i=0; i<tstRng.length; i++) {
 
-                    datass += '<tr class="inv_tst_infos"><td><input type="text" readonly="readonly" id="inlineFormCustomSelect" class="form-control tstName inputboxs" value="'+tstRng[i].test_name+'"> </td><td><input type="text"  id="inlineFormCustomSelect" class="form-control rangType inputboxs" readonly="readonly" value="'+tstRng[i].tst_typ+'"> </td> <td> <button type="button" style="margin-top: -30px;" dataID="'+tstRng[i].tst_auto_iid+'" class="btn btn-info btn-xs EditBtns" title="Edit" id="inlineFormCustomSelect" ><i class="fa fa-edit"></i> </button> <button type="button" style="margin-top: -30px;" class="btn btn-info btn-xs DelBtns delete_button" dataID="'+tstRng[i].tst_auto_iid+'" title="Delete" id="inlineFormCustomSelect" ><i class="fa fa-trash"></i> </button> </td> </tr>';
+                    datass += '<tr class="inv_tst_infos"><td><input type="text" readonly="readonly" id="inlineFormCustomSelect" class="form-control tstName inputboxs" value="'+tstRng[i].test_name+'"> <input type="text" value="'+tstRng[i].tst_auto_iid+'" ></td><td><input type="text"  id="inlineFormCustomSelect" class="form-control rangType inputboxs" readonly="readonly" value="'+tstRng[i].tst_typ+'"> </td> <td> <button type="button" style="margin-top: -30px;" dataID="'+tstRng[i].tst_auto_iid+'" class="btn btn-info btn-xs EditBtns" title="Edit" id="inlineFormCustomSelect" ><i class="fa fa-edit"></i> </button> <button type="button" style="margin-top: -30px;" class="btn btn-info btn-xs DelBtns delete_button" dataID="'+tstRng[i].tst_auto_iid+'" title="Delete" id="inlineFormCustomSelect" ><i class="fa fa-trash"></i> </button> </td> </tr>';
                 }
         $('.inv_test_ad').html(headofEntry+' '+datass+'</table>');
             }

@@ -167,13 +167,10 @@ class Receptionist_model extends CI_model {
         $this->db->update('appointment', $data);
     }
 
-
-
     function updateAppointTicket($id, $data) {
         $this->db->where('app_tc_id', $id);
         $this->db->update('appointment', $data);
     }
-
 
     function deleteticket($id) {
         $this->db->where('app_tc_id', $id);

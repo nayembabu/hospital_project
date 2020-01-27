@@ -32,6 +32,9 @@
                         </span>
                         <select class="form-control custom-select custom-select-lg m-bot15 js-example-basic-single invInfo" required="required" name="lab_ptn_id" value=''>
                             <option value="">Select...........</option>
+                        <?php foreach ($test_Inv as $val) { ?>
+                            <option value="<?php echo $val->tst_inv_id; ?>"><?php echo $val->inv_name; ?></option>
+                        <?php } ?>
                         </select>
                     </div><br>
                     <div class="work_btn"></div>
@@ -40,10 +43,6 @@
 
 <br><br><br>
                     <div class="rng_Info_ad"></div>
-
-
-
-
 
 
 
@@ -74,21 +73,9 @@
 
 
 <script type="text/javascript">
-    var headofEntry = '<table border="1px"><tr><th>Test Name</th><th>Range Type</th><th>Gender</th><th>Period</th><th>Age</th><th>Time</th><th>Weight</th><th>Tempature</th><th>Normal Range</th><th>Action</th></tr>';
+    var headofEntry = '<table border="1px"><tr><th align="center">Test Name</th><th align="center">Units</th><th align="center">Normal Range</th><th align="center">Action</th></tr>';
 
-    var AddNewForm = '<tr class="tstRangInfoCls"><td><input type="text" id="" class="form-control tstName" ></td><td><input type="text" id="" class="form-control rangType" ></td><td><select class="gender"><option value="">Select.......</option><option value="Male">Male</option><option value="Female">Female</option></select></td><td><input type="text" id="" class="form-control gen_per" ></td><td><input type="text" id="" class="form-control agess" ></td><td><input type="text" id="" class="form-control var_Time" ></td><td><input type="text" id="" class="form-control var_weight" ></td><td><input type="text" id="" class="form-control man_temp" ></td><td><input id="" class="form-control orgnal_rng"  ></td><td><button type="button" class="btn btn-info addBtnSave" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
-
-
-
-
-
-
-
-
-
-  
-
-
+    var AddNewForm = '<tr class="tstRangInfoCls"><td><input type="text" id="" class="form-control tstName" ></td><td><input type="text" id="" class="form-control Tst_Units" ></td><td><input id="" class="form-control orgnal_rng"  ></td><td><button style="margin-top:-40px;" type="button" class="btn btn-info addBtnSave" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
 
 
 
@@ -119,6 +106,7 @@
             $('.rng_Info_ad').html('');
         }else {
             $('.work_btn').html('<h2> Please Select a Investigation.... </h2>');
+            $('.rng_Info_ad').html('');
         }
     })
 
@@ -128,15 +116,9 @@
 
     $(document).on('click ','.addBtnSave', function () {
         var tst_inv_iids = $('.invInfo').val();
-        var tstNamess = $(this).parents('.tstRangInfoCls').find('.tstName').val();
-        var rng_typ = $(this).parents('.tstRangInfoCls').find('.rangType').val();
-        var gender = $(this).parents('.tstRangInfoCls').find('.gender').val();
-        var agess = $(this).parents('.tstRangInfoCls').find('.agess').val();
-        var times = $(this).parents('.tstRangInfoCls').find('.var_Time').val();
-        var Weight = $(this).parents('.tstRangInfoCls').find('.var_weight').val();
-        var Temp_man = $(this).parents('.tstRangInfoCls').find('.man_temp').val();
+        var tst_a_idds = $(this).parents('.tstRangInfoCls').find('.tst_a_idds').val();
+        var Tst_Units = $(this).parents('.tstRangInfoCls').find('.Tst_Units').val();
         var normalVal = $(this).parents('.tstRangInfoCls').find('.orgnal_rng').val();
-        var gen_per = $(this).parents('.tstRangInfoCls').find('.gen_per').val();
 
 
         $.ajax({
@@ -144,15 +126,9 @@
             type: 'POST',
             data: { 
                 inv_id: tst_inv_iids, 
-                name: tstNamess, 
-                type: rng_typ, 
-                gend: gender, 
-                age: agess, 
-                time: times, 
-                weigth: Weight, 
-                temp: Temp_man, 
-                nVal: normalVal, 
-                gen_per: gen_per
+                Tst_Units: Tst_Units, 
+                tst_a_idds: tst_a_idds,
+                nVal: normalVal
             },
             cache: false,
             success: function () {

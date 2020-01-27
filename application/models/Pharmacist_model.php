@@ -48,9 +48,6 @@ class Pharmacist_model extends CI_model {
         return $query->row();
     }
 
-
-
-
     function updatePharmacist($id, $data) {
         $this->db->where('id', $id);
         $this->db->update('attn', $data);
@@ -218,5 +215,11 @@ class Pharmacist_model extends CI_model {
 
     function insert_processData($prData) {
         $this->db->insert('attn_proccess_date', $prData);
+    }
+
+    function getAttnFullEmpData($emp_iddii, $getMonth, $getYear) {
+        $this->db->where('MONTH(attn_date)', $getMonth)->where('YEAR(attn_date)', $getYear)->where('emp_id', $emp_iddii);
+        $sql = $this->db->get('attn');
+        return $sql->result();
     }
 }

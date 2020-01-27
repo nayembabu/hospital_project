@@ -114,6 +114,7 @@ class Pathology extends CI_Controller {
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId);
         $data['test_grup'] = $this->pathology_model->get_grupforRange();
+        $data['test_Inv'] = $this->pathology_model->get_tstInvQuery();
 
         $this->load->view('home/dashboard', $data); // just the header file
         $this->load->view('pathology/addInvTests', $data);
@@ -189,6 +190,7 @@ class Pathology extends CI_Controller {
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId);
         $data['test_grup'] = $this->pathology_model->get_grupforRange();
+        $data['test_Inv'] = $this->pathology_model->get_tstInvQuery();
 
         $this->load->view('home/dashboard', $data); // just the header file
         $this->load->view('pathology/tst_range_add', $data);
@@ -203,27 +205,15 @@ class Pathology extends CI_Controller {
 
     function addNewRangess() {
         $inv_iidd   = $this->input->post('inv_id');
-        $tst_Nam    = $this->input->post('name');
-        $rang_typ   = $this->input->post('type');
-        $gende      = $this->input->post('gend');
-        $ages       = $this->input->post('age');
-        $times      = $this->input->post('time');
-        $weight     = $this->input->post('weigth');
-        $temp       = $this->input->post('temp');
+        $Tst_Units  = $this->input->post('Tst_Units');
         $nVal       = $this->input->post('nVal');
-        $gen_per    = $this->input->post('gen_per');
+        $tst_a_idds = $this->input->post('tst_a_idds');
 
         $aData = array(
-            'tst_inv_iid'       => $inv_iidd,
-            'tst_rang_nam'      => $tst_Nam,
-            'rang_type'         => $rang_typ,
-            'gender'            => $gende,
-            'age'               => $ages,
-            'days_time'         => $times,
-            'weight'            => $weight,
-            'temp'              => $temp,
+            'inv_tst_a_idd'     => $tst_a_idds,
+            'Test_Units'        => $Tst_Units,
             'tst_normal_rang'   => $nVal,
-            'gender_period'     => $gen_per     
+            'tst_inv_iid'       => $inv_iidd   
         );
         $this->pathology_model->insert_RangData($aData);
     }
