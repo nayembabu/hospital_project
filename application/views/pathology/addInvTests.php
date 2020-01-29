@@ -67,19 +67,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
 <script type="text/javascript">
-    var headofEntry = '<table border="1px"><tr><th>Test Name</th><th>Test Type</th><th>Action</th></tr>';
+    var headofEntry = '<table border="1px"><tr style="text-align:center;"><th >Test Name</th><th>Test Type</th><th>Test Normal Range</th><th>Test Unit</th><th>Action</th></tr>';
 
-    var AddNewForm = '<tr class="tstRangInfoCls"><td><input type="text" id="" class="form-control tstName" ></td><td><input type="text" id="" class="form-control rangType" ></td><td><button type="button" class="btn btn-info addBtnSave"  style="margin-top: -30px;" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
+    var AddNewForm = '<tr class="tstRangInfoCls"><td><input type="text" id="" class="form-control tstName" placeholder="Type Test Name"></td><td><input type="text" id="" placeholder="Test Type" class="form-control rangType" ></td><td><textarea class="tst_Normal_Range" placeholder="Type Test Normal Value/Range" rows="1" cols="30"></textarea></td><td><input type="text" class="form-control Test_Unitss" placeholder="Type Test Units" name=""></td><td><button type="button" class="btn btn-info addBtnSave"  style="margin-top: -30px;" title="Add" id="" ><i class="fa fa-save"></i> </button></td></tr></table>';
 
     $('.tstgrp').change(function() {
         var tstgrp = $(this).val();
@@ -118,6 +109,8 @@
         var tst_inv_iids = $('.invInfo').val();
         var tstNamess = $(this).parents('.tstRangInfoCls').find('.tstName').val();
         var rng_typ = $(this).parents('.tstRangInfoCls').find('.rangType').val();                 
+        var tst_Normal_Range = $(this).parents('.tstRangInfoCls').find('.tst_Normal_Range').val();                 
+        var Test_Unitss = $(this).parents('.tstRangInfoCls').find('.Test_Unitss').val();                 
 
         if (tstNamess != '') {
             $.ajax({
@@ -127,7 +120,9 @@
                     inv_id: tst_inv_iids, 
                     name: tstNamess, 
                     type: rng_typ, 
-                    invGRP_id: tst_group
+                    invGRP_id: tst_group, 
+                    test_no_range: tst_Normal_Range, 
+                    Test_Unitss: Test_Unitss
                 },
                 cache: false,
                 success: function () {
@@ -152,7 +147,7 @@
                 var i;
                 for (i=0; i<tstRng.length; i++) {
 
-                    datass += '<tr class="inv_tst_infos"><td><input type="text" readonly="readonly" id="inlineFormCustomSelect" class="form-control tstName inputboxs" value="'+tstRng[i].test_name+'"> <input type="text" value="'+tstRng[i].tst_auto_iid+'" ></td><td><input type="text"  id="inlineFormCustomSelect" class="form-control rangType inputboxs" readonly="readonly" value="'+tstRng[i].tst_typ+'"> </td> <td> <button type="button" style="margin-top: -30px;" dataID="'+tstRng[i].tst_auto_iid+'" class="btn btn-info btn-xs EditBtns" title="Edit" id="inlineFormCustomSelect" ><i class="fa fa-edit"></i> </button> <button type="button" style="margin-top: -30px;" class="btn btn-info btn-xs DelBtns delete_button" dataID="'+tstRng[i].tst_auto_iid+'" title="Delete" id="inlineFormCustomSelect" ><i class="fa fa-trash"></i> </button> </td> </tr>';
+                    datass += '<tr class="inv_tst_infos"><td><input type="text" readonly="readonly" id="inlineFormCustomSelect" class="form-control tstName inputboxs" value="'+tstRng[i].test_name+'"> </td><td><input type="text"  id="inlineFormCustomSelect" class="form-control rangType inputboxs" readonly="readonly" value="'+tstRng[i].tst_typ+'"></td>      <td><textarea class="test_Normal_Rng inputboxs" readonly="readonly" rows="1" cols="30">'+tstRng[i].tst_normal_rang+'</textarea></td><td><input type="text" class="form-control Tst_s_Unit inputboxs" readonly="readonly" name="" value="'+tstRng[i].Test_Units+'"></td>      <td><button type="button" style="margin-top: -30px;" dataID="'+tstRng[i].tst_auto_iid+'" class="btn btn-info btn-xs EditBtns" title="Edit" id="inlineFormCustomSelect" ><i class="fa fa-edit"></i> </button> <button type="button" style="margin-top: -30px;" class="btn btn-info btn-xs DelBtns delete_button" dataID="'+tstRng[i].tst_auto_iid+'" title="Delete" id="inlineFormCustomSelect" ><i class="fa fa-trash"></i> </button> </td> </tr>';
                 }
         $('.inv_test_ad').html(headofEntry+' '+datass+'</table>');
             }
@@ -173,14 +168,19 @@
     $(document).on('click ','.updateINVtst', function () {        
         var tstNamess = $(this).parents('.inv_tst_infos').find('.tstName').val();
         var rng_typ = $(this).parents('.inv_tst_infos').find('.rangType').val();                 
+        var tst_Rangess = $(this).parents('.inv_tst_infos').find('.test_Normal_Rng').val();
+        var tst_unit_s = $(this).parents('.inv_tst_infos').find('.Tst_s_Unit').val();
+
         var INVtstIDD = $(this).attr('dataID');
         $.ajax({
                 url: 'pathology/updateINVTest',
                 type: 'POST',
                 data: { 
                     inv_tst_id: INVtstIDD, 
-                    name: tstNamess, 
-                    type: rng_typ   
+                    tst_name: tstNamess, 
+                    tst_type: rng_typ, 
+                    tst_Rang: tst_Rangess, 
+                    tst_Unit: tst_unit_s      
                 },
                 cache: false,
                 success: function () {

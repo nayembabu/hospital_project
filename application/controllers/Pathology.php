@@ -223,24 +223,32 @@ class Pathology extends CI_Controller {
         $inv_iidd       = $this->input->post('inv_id');
         $tst_Nam        = $this->input->post('name');
         $rang_typ       = $this->input->post('type');
+        $tst_Range      = $this->input->post('test_no_range');
+        $tst_unit       = $this->input->post('Test_Unitss');
 
         $aData = array(
             'p_inv_id'       => $inv_iidd,
             'test_name'      => $tst_Nam,
             'tst_typ'        => $rang_typ,
-            'grup_idid'      => $Inv_grup_iid     
+            'grup_idid'      => $Inv_grup_iid,
+            'tst_normal_rang'=> $tst_Range,
+            'Test_Units'     => $tst_unit     
         );
         $this->pathology_model->insert_invTstData($aData);
     }
 
     function updateINVTest() {
         $inv_tst_iddd   = $this->input->post('inv_tst_id');
-        $tst_Nam        = $this->input->post('name');
-        $rang_typ       = $this->input->post('type');
+        $tst_Nam        = $this->input->post('tst_name');
+        $rang_typ       = $this->input->post('tst_type');
+        $tst_rang       = $this->input->post('tst_Rang');
+        $tst_unit       = $this->input->post('tst_Unit');
 
         $uData = array(
-            'test_name'      => $tst_Nam,
-            'tst_typ'        => $rang_typ     
+            'test_name'             => $tst_Nam,
+            'tst_typ'               => $rang_typ,
+            'tst_normal_rang'       => $tst_rang,
+            'Test_Units'            => $tst_unit     
         );
         $this->pathology_model->update_invTstData($inv_tst_iddd, $uData);
     }
