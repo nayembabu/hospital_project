@@ -15,7 +15,7 @@
 
                 <div style="width: 90%; ">
 
-                    <div class="input-group">
+                    <div class="input-group" style="width: 50%; float: left;">
                         <span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">
                             Test Group
                         </span>
@@ -25,18 +25,19 @@
                             <option value="<?php echo $grup->tst_grp_iddi ; ?>"><?php echo $grup->tst_grp_name ; ?></option>
                     <?php } ?>
                         </select>
+                    </div>
 
-
+                    <div class="input-group" style="width: 45%; float: left;">
                         <span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">
                             INV Name
                         </span>
                         <select class="form-control custom-select custom-select-lg m-bot15 js-example-basic-single invInfo" required="required" name="lab_ptn_id" value=''>
                             <option value="">Select...........</option>
-                        <?php foreach ($test_Inv as $val) { ?>
+<!--                         <?php foreach ($test_Inv as $val) { ?>
                             <option value="<?php echo $val->tst_inv_id; ?>"><?php echo $val->inv_name; ?></option>
-                        <?php } ?>
+                        <?php } ?> -->
                         </select>
-                    </div><br>
+                    </div><br><br><br>
                     <div class="work_btn"></div>
 
                     <div class="patho_inv_test_vw">

@@ -100,20 +100,11 @@ class Pathology_model extends CI_model {
     }
 
     function get_tstInvQuery() {
-        $this->db->where('dep_id', '1');
         $sql = $this->db->get('patho_inv');
         return $sql->result();        
     }
 
-    function insert_RangData($aData) {
-        $this->db->insert('patho_test_range', $aData);
-    }
 
-    function getTstRngByINV($inv_ids) {
-        $this->db->where('tst_inv_iid', $inv_ids);
-        $sql = $this->db->get('patho_test_range');
-        return $sql->result();        
-    }
 
     function get_invTst_s_($patho_inv_idd) { 
         $this->db->where('p_inv_id', $patho_inv_idd);
@@ -147,7 +138,6 @@ class Pathology_model extends CI_model {
         $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
         $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
         $this->db->join('patho_inv_test', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
-        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
         $this->db->where('diag_dept_id', '1');
         $sql = $this->db->get('lavrcv_tstinfo');
         return $sql->result();
@@ -156,8 +146,7 @@ class Pathology_model extends CI_model {
     function getTstDataForUpdate($ptn_ids) {        
         $this->db->where('ptn_auto_iiddd', $ptn_ids);
         $this->db->join('patho_inv_test', 'patho_inv_test.tst_auto_iid = patho_ptn_result_entry.inv_tst_idsss_', 'left');
-        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
-        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');        
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');       
         $sql = $this->db->get('patho_ptn_result_entry');
         return $sql->result();
     }
@@ -167,7 +156,6 @@ class Pathology_model extends CI_model {
         $this->db->join('patho_inv', 'patho_inv.tst_inv_id = lavrcv_tstinfo.tstiiddid', 'left');
         $this->db->join('patho_test_group', 'patho_test_group.tst_grp_iddi = patho_inv.grup_iid', 'left');
         $this->db->join('patho_inv_test', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
-        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');
         $this->db->join('lab_patient_info', 'lab_patient_info.lab_rgstr_iidd = lavrcv_tstinfo.labptnididid', 'left');
         $this->db->join('patho_ptn_result_entry', 'patho_ptn_result_entry.ptn_auto_iiddd = lab_patient_info.labpn_id', 'left');
         $this->db->where('diag_dept_id', '1');
@@ -187,8 +175,7 @@ class Pathology_model extends CI_model {
     function getTstInvResult($ptnIds, $grupIDss) {        
         $this->db->where('ptn_auto_iiddd', $ptnIds);
         $this->db->join('patho_inv_test', 'patho_inv_test.tst_auto_iid = patho_ptn_result_entry.inv_tst_idsss_', 'left');
-        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
-        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');        
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');     
         $this->db->where('grup_idid', $grupIDss);
         $sql = $this->db->get('patho_ptn_result_entry');
         return $sql->result();
@@ -202,8 +189,7 @@ class Pathology_model extends CI_model {
     function TstReportPrint_ss($ptn_ids, $tst_grup) {             
         $this->db->where('ptn_auto_iiddd', $ptn_ids);
         $this->db->join('patho_inv_test', 'patho_inv_test.tst_auto_iid = patho_ptn_result_entry.inv_tst_idsss_', 'left');
-        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');
-        $this->db->join('patho_test_range', 'patho_test_range.inv_tst_a_idd = patho_inv_test.tst_auto_iid', 'left');        
+        $this->db->join('patho_inv', 'patho_inv.tst_inv_id = patho_inv_test.p_inv_id', 'left');       
         $this->db->where('grup_idid', $tst_grup);
         $sql = $this->db->get('patho_ptn_result_entry');
         return $sql->result();

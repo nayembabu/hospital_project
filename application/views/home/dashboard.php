@@ -276,6 +276,12 @@
                                     <span><?php echo lang('reception'); ?></span>
                                 </a>
                                 <ul class="sub">
+
+                        <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
+                                    <li><a href="labrcv/addnew"><i class="fa fa-dollar"></i><?php echo lang('add').' '.lang('test'); ?></a></li>
+                                    <li><a href="reception/allticket"><i class="fa fa-check"></i><?php echo lang('all').' '.lang('ticket'); ?></a></li>
+                        <?php }?>
+                        
                                     <li><a href="reception"><i class="fa fa-check"></i><?php echo lang('ticket'); ?></a></li>
                                     <li><a href="reception/print_total"><i class="fa fa-check"></i>Ticket Statement</a></li>
 
@@ -290,10 +296,6 @@
                                     <li><a href="bill/statmnt"><i class="fa fa-dollar"></i><?php echo lang('bill').' '.lang('statement'); ?></a></li>
 
 
-                        <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
-                                    <li><a href="reception/allticket"><i class="fa fa-check"></i><?php echo lang('all').' '.lang('ticket'); ?></a></li>
-                                    <li><a href="labrcv/addnew"><i class="fa fa-dollar"></i><?php echo lang('add').' '.lang('test'); ?></a></li>
-                        <?php }?>
                                 </ul>
                             </li>
                         <?php } ?>

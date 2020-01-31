@@ -114,7 +114,6 @@ class Pathology extends CI_Controller {
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId);
         $data['test_grup'] = $this->pathology_model->get_grupforRange();
-        $data['test_Inv'] = $this->pathology_model->get_tstInvQuery();
 
         $this->load->view('home/dashboard', $data); // just the header file
         $this->load->view('pathology/addInvTests', $data);
