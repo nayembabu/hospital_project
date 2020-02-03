@@ -223,7 +223,7 @@
                         <select required="required" class="form-control m-bot15 js-example-basic-single" id="dr_idss" name="" value=''>
                             <option value="">Select....</option>
                         <?php foreach ($doctors as $doctor) { ?>
-                            <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
+                            <option value="<?php echo $doctor->dr_auto_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
                         <?php } ?>
                         </select>
                     </div>
@@ -259,7 +259,7 @@
 <script type="text/javascript">
 
     function with_doctor() {
-        var url = 'patient/report_with_doctor?st_date='+document.getElementById("stdatess").value+'&last_date='+document.getElementById("lastdatesss").value+'&dr_id='+document.getElementById("dr_idss").value;   
+        var url = 'patient/report_with_doctor?st_date='+document.getElementById("stdatess").value+'&last_date='+document.getElementById("lastdatesss").value+'&dr_a_id='+document.getElementById("dr_idss").value;   
       window.open(url, '_blank', 'height=800,width=800');
     }
 

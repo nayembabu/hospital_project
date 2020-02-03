@@ -99,10 +99,10 @@ class Patient extends CI_Controller {
 // Patient Admmission Statement
 
     public function report_with_doctor() {
-        $dr_id = $this->input->get('dr_id');
+        $dr_a_id = $this->input->get('dr_a_id');
         $st_date = date('Y-m-d', strtotime($this->input->get('st_date')));
         $last_date = date('Y-m-d', strtotime($this->input->get('last_date')));
-        $data['patient_data'] = $this->patient_model->getstatementDr($st_date, $last_date, $dr_id);
+        $data['patient_data'] = $this->patient_model->getstatementDr($st_date, $last_date, $dr_a_id);
         $data['s_date'] = date('d-M-Y', strtotime($st_date));
         $data['l_date'] = date('d-M-Y', strtotime($last_date));
         $this->load->view('patient/with_doctor', $data);
@@ -169,7 +169,7 @@ class Patient extends CI_Controller {
         $data = array(
                 'ptnname'           => $name,
                 'f_s_name'          => $f_name,
-                'dr_id'             => $dr_id,
+                'dr_a_iniq_idd'     => $dr_id,
                 'pn_address'        => $address,
                 'mobile'            => $mobile,
                 'sex'               => $sex,
@@ -216,7 +216,7 @@ class Patient extends CI_Controller {
         $data = array(
                     'ptnname'       => $name,
                     'f_s_name'      => $f_name,
-                    'dr_id'         => $dr_id,
+                    'dr_a_iniq_idd' => $dr_id,
                     'pn_address'    => $address,
                     'mobile'        => $mobile,
                     'sex'           => $sex,
@@ -228,7 +228,7 @@ class Patient extends CI_Controller {
             $data = array(
                         'ptnname'       => $name,
                         'f_s_name'      => $f_name,
-                        'dr_id'         => $dr_id,
+                        'dr_a_iniq_idd' => $dr_id,
                         'pn_address'    => $address,
                         'mobile'        => $mobile,
                         'sex'           => $sex,

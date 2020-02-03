@@ -110,7 +110,7 @@
                         <select required="required" class="form-control m-bot15 js-example-basic-single" id="doctor" name="dr_id" value=''>
                             <option value="">Select....</option>
                         <?php foreach ($doctors as $doctor) { ?>
-                            <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
+                            <option value="<?php echo $doctor->dr_auto_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
                         <?php } ?>
                         </select>
                     </div>
@@ -233,7 +233,7 @@
                                 <div class="col-md-9"> 
                                     <select style="width: 300px;" class="form-control m-bot15" name="doctor_p" id="doctor_p" value=''> 
                                         <?php foreach ($doctors as $doctor) { ?>
-                                            <option value="<?php echo $doctor->dr_id; ?>">
+                                            <option value="<?php echo $doctor->dr_auto_id; ?>">
                                                 <?php echo $doctor->dr_id.'---'.$doctor->dr_name; ?> 
                                             </option>
                                         <?php } ?>
@@ -253,6 +253,7 @@
                     </div>
 
                     <div class="form-group">
+                        
             <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
                         <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
                         <input required="required" type="text" class="form-control default-date-picker" name="date" id="admit_date" value='' placeholder="">
@@ -291,7 +292,6 @@
                     </div>
 
                     <input type="hidden" name="id" value=''>
-                    <input type="hidden" name="p_id" value=''>
                     <section class="">
                         <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
                     </section>
@@ -401,13 +401,12 @@ $(document).ready(function () {
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (response) {
+        success: function (response) {
             // Populate the form fields with the data returned from server
 
             $('#editPatientForm').find('[name="id"]').val(response.patient.p_n_id).end()
             $('#editPatientForm').find('[name="name"]').val(response.patient.ptnname).end()
-            $('#editPatientForm').find('[name="p_id"]').val(response.patient.patient_id).end() 
-            $('#doctor_p option[value='+response.patient.dr_id+']').attr('selected', 'selected');
+            $('#doctor_p option[value='+response.patient.dr_a_iniq_idd+']').attr('selected', 'selected');
             $('#sex option[value='+response.patient.sex+']').attr('selected', 'selected');
             $('#editPatientForm').find('[name="address"]').val(response.patient.pn_address).end()
             $('#editPatientForm').find('[name="phone"]').val(response.patient.mobile).end()
@@ -434,6 +433,7 @@ $(document).ready(function () {
             var times_formates = hours + ':' + minutes + ' ' + meridiem;
 
             $('#admit_date').val(dateformt);
+        }
         });
     });
 });

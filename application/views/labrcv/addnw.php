@@ -231,17 +231,12 @@
                         <select class="form-control custom-select custom-select-lg m-bot15 js-example-basic-single dri_id" required="required" name="dctr_id" value=''>
 						  <option value="">Select.........</option>
 					<?php foreach ($doctor as $dctr) { ?>
-						  <option value="<?php echo $dctr->dr_id; ?>"><?php echo  $dctr->dr_id.'----------'.$dctr->dr_name; ?></option>
+						  <option value="<?php echo $dctr->dr_auto_id; ?>"><?php echo  $dctr->dr_id.'----------'.$dctr->dr_name; ?></option>
 					<?php } ?>
 						</select>
 					</div><br>
 
-				<div class="optdrad">
-
-					
-				</div>
-
-
+				<div class="optdrad"></div>
 
 
 					<br><br>
@@ -264,7 +259,7 @@
 								</select>
 							</div>
 							<input type="text" name="testtakk[]" readonly="readonly" class="form-control tstrate tstrtval" style="width: 20%; float: left; text-align: right;" >
-							<input type="hidden" name="testtypss[]" class="form-control tsttypes" >
+<!-- 							<input type="hidden" name="testtypss[]" class="form-control tsttypes" > -->
 
 
 
@@ -354,14 +349,9 @@ var dscntprsntg;
 
 var optionaldr = '<div class="optdrassd"><div class="input-group"><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Doctor Name</span><input type="text" name="optdrname" required="required" class="form-control" placeholder="Type Doctor Name" aria-describedby="basic-addon3"></div><br><div class="input-group"><span style="font-weight: bold; color: black;" class="input-group-addon lanr sp_dr_name" id="basic-addon3">Doctor Degree</span><input type="text" required="required" name="optdrdgre" class="form-control" placeholder="Type Doctor Degree" aria-describedby="basic-addon3"></div></div>';
 
-
-
-
 var rfrtxtvl = '<div class="rfrbxtxt"><span style="font-weight: bold; color: black;" class="input-group-addon" id="basic-addon3"> Name of Reffer</span><input type="text"  required="required" name="hsprfrname" style="text-align: right; font-weight: bold; border: 1px solid black" class="form-control " aria-describedby="basic-addon3"><span style="font-weight: bold; color: black;" class="input-group-addon" id="basic-addon3"> Mobile No </span><input type="text" required="required" name="ptnmblno" style="text-align: right; font-weight: bold; border: 1px solid black" class="form-control " aria-describedby="basic-addon3"></div>';
 
 var discntrfr = '<div class="duerfrtxt"><span style="font-weight: bold; color: black;" class="input-group-addon" id="basic-addon3"> Discount Reffer Name </span><input type="text" required="required" name="discntrfstxs" style=" font-weight: bold; border: 2px solid black" class="form-control " aria-describedby="basic-addon3"></div>'; 
-
-
 
 	function tstttlval() {
 		var sum_tss = 0;
@@ -385,7 +375,7 @@ tstttlval();
 
 
 	function chngval() {
-       $('.tstiids').off('change').on('change', function(){
+       $(document).on('change', '.tstiids', function(){
         var tstsiid = $(this).children("option:selected").val();
         var rrratte = 0;
         var tsttp = 0;
@@ -398,13 +388,11 @@ tstttlval();
 	            async: false,
 	            success: function(tstinf){ 
 	            	rrratte   = tstinf.tstinfo.rate;
-	            	tsttp     = tstinf.tstinfo.grup_type;
 	            }
 	        })
 
 
 	        $(this).parents('.apndBox').find('.tstrate').val(rrratte);
-	        $(this).parents('.apndBox').find('.tsttypes').val(tsttp);
 			tstttlval();
 
 
@@ -427,7 +415,7 @@ chngval();
 
 	$('.plusAddBtn').click(function() {
 
-		var nwtst = "<div class='input-group apndBox' style='margin-top: 10px;'><span style='font-weight: bold; color: black;' class='input-group-addon lanr sp_dr_name' id='basic-addon3'>Test ID / Name</span><div style='width: 55%; float: left;'><select class='form-control tstiids m-bot15 js-example-basic-single' id='tstiids' name='test_iiddd[]'><option value=''>Select......</option><?php foreach ($labtest as $tst) { if (!empty($tst->inv_code)) { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option> <?php }else { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_name; ?></option>  <?php } ?> <?php } ?></select></div><input type='text' name='testtakk[]' readonly='readonly' class='form-control tstrate tstrtval' style='width: 20%; float: left; text-align: right;' value='0'><input type='hidden' name='testtypss[]' class='form-control tsttypes' ><div class='' style='width: 90px; float: right;'><img style='cursor: pointer; float: right;' class='dltBtnS' width='40px' height='40px' src='uploads/delete.png'></div></div>";
+		var nwtst = "<div class='input-group apndBox' style='margin-top: 10px;'><span style='font-weight: bold; color: black;' class='input-group-addon lanr sp_dr_name' id='basic-addon3'>Test ID / Name</span><div style='width: 55%; float: left;'><select class='form-control tstiids m-bot15 js-example-basic-single' id='tstiids' name='test_iiddd[]'><option value=''>Select......</option><?php foreach ($labtest as $tst) { if (!empty($tst->inv_code)) { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option> <?php }else { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_name; ?></option>  <?php } ?> <?php } ?></select></div><input type='text' name='testtakk[]' readonly='readonly' class='form-control tstrate tstrtval' style='width: 20%; float: left; text-align: right;' value='0'><div class='' style='width: 90px; float: right;'><img style='cursor: pointer; float: right;' class='dltBtnS' width='40px' height='40px' src='uploads/delete.png'></div></div>";
 
 		$('.testDivFull').append(nwtst); 
 		chngval();

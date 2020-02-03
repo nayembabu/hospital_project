@@ -53,6 +53,11 @@
 
 
 
+        <!-- Toastr Js & Css -->
+        <link href="include/toastr/toastr.min.css" rel="stylesheet" />
+        <script src="include/toastr/toastr.min.js"></script>
+        <!-- Toastr Js & Css -->
+
 
 
 
@@ -232,6 +237,7 @@
                                     <li><a href="doctor/drfee"><i class="fa fa-money"></i><?php echo lang('dr_fee'); ?></a></li>
 
                                     <li><a href="doctor/dr_spclty"><i class="fa fa-user"></i><?php echo 'Doctor Speciality'; ?></a></li>
+                                    <li><a href="doctor/dr_chamber"><i class="fa fa-clock"></i>Chamber Time</a></li>
                                 </ul>
                             </li>
                         <?php } ?>
@@ -353,7 +359,7 @@
                                 <ul class="sub">
                                     <li><a href="pathology"><i class="fa fa-vial"></i>Report Entry</a></li>
                                     <li><a href="pathology/printRepoView"><i class="fa fa-vial"></i>Report Print</a></li>
-                                    <li><a href="pathology/test_rangeAdd"><i class="fa fa-temperature-high"></i>Test Range Add</a></li>
+                                    <!-- <li><a href="pathology/test_rangeAdd"><i class="fa fa-temperature-high"></i>Test Range Add</a></li> -->
                                     <li><a href="pathology/addInvTests"><i class="fa fa-temperature-high"></i>Test Info</a></li>
                                     <li><a href="pathology/test_add"><i class="fa fa-thermometer-empty"></i>Test INV Info </a></li>
                                     <li><a href="pathology/grp_info"><i class="fa fa-temperature-high"></i>Test Group Info </a></li>

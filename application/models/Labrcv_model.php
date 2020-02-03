@@ -13,7 +13,7 @@ class Labrcv_model extends CI_model {
     function getptninfo() {
         $tody = date('Y-m-d', time());
       	$this->db->where('this_date', $tody);
-    	$this->db->join('doctor', 'doctor.dr_id = lab_patient_info.lbpdr_id', 'left');
+    	$this->db->join('doctor', 'doctor.dr_auto_id = lab_patient_info.lbpdr_id', 'left');
     	$query = $this->db->get('lab_patient_info');
     	return $query->result();
     }
@@ -58,7 +58,7 @@ class Labrcv_model extends CI_model {
 
     function getLabPatient($labrcvidii) {
         $this->db->where('lab_rgstr_iidd', $labrcvidii);
-        $this->db->join('doctor', 'doctor.dr_id = lab_patient_info.lbpdr_id', 'left');
+        $this->db->join('doctor', 'doctor.dr_auto_id = lab_patient_info.lbpdr_id', 'left');
         $query = $this->db->get('lab_patient_info');
         return $query->row();
     }

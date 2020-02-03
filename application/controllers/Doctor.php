@@ -206,8 +206,6 @@ class Doctor extends CI_Controller {
             $this->doctor_model->updateDoctorfee($dr_fee_id, $data);
             $this->session->set_flashdata('feedback', 'Update');
             redirect('doctor/drfee');
-        
-
     }
 
     function deletedr_fee() {
@@ -231,10 +229,11 @@ class Doctor extends CI_Controller {
         $drIdd = $this->input->post('drIddII');
         $drAutoIdd = $this->input->post('dr_at_idd');
         $dr_sp_text = $this->input->post('dr_sp_txt');
+
         $data = array(
-            'dr_id'         => $drIdd, 
-            'dr_auto_id'    => $drAutoIdd, 
-            'dr_special'    => $dr_sp_text 
+            'dr_id_m'         => $drIdd, 
+            'dr_a_id_auto'    => $drAutoIdd, 
+            'dr_special'      => $dr_sp_text 
             );
         $this->doctor_model->setDoctorSpeciality($data);
     }
@@ -245,6 +244,74 @@ class Doctor extends CI_Controller {
         echo json_encode($data);
     }
 
+    function update_Dr_Speciality() {
+        $drSpcl = $this->input->post('drSpcl');
+        $iniq_id = $this->input->post('iniq_id');
+
+        $data_dr_speciality = array(
+                                'dr_special' => $drSpcl, 
+                            );
+
+        $this->doctor_model->updateSpclty($data_dr_speciality, $iniq_id);
+    }
+
+    function delete_Dr_Speciality() {
+        $iniq_id = $this->input->post('iniq_id');
+        $this->doctor_model->deleteSpclty($iniq_id);
+    }
+
+    function dr_chamber() {        
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId); 
+        $data['doctors'] = $this->doctor_model->getDoctorforDrfee();
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('doctor/dr_chamber', $data);
+        $this->load->view('home/footer'); // just the footer file        
+    }
+
+    function setDoctorTimable() {
+        $dr_a_Idd       = $this->input->post('dr_at_idd');   
+        $drIddII        = $this->input->post('drIddII');
+        $daysSelect     = $this->input->post('daysSelect');
+        $timeStarts     = $this->input->post('timeStarts');
+        $timeEnds       = $this->input->post('timeEnds'); 
+
+        $all_data = array(
+                    'dr_auto_iidd_a' => $dr_a_Idd, 
+                    'dr_iiddd_man' => $drIddII, 
+                    'day' => $daysSelect, 
+                    'timestart' => $timeStarts, 
+                    'timeend' => $timeEnds
+                );
+        $this->doctor_model->setDoctorTimeable($all_data);
+    }
+
+    function getDoctorTimeable() {
+        $dr_a_idd = $this->input->get('dr_a_idd');
+        $data = $this->doctor_model->getDoctorTimeable($dr_a_idd);
+        echo json_encode($data);
+    } 
+
+    function update_Dr_Timabless() {
+        $drDays = $this->input->post('drDays');
+        $drTimeStart = $this->input->post('drTimeStart');
+        $drTimeEnd = $this->input->post('drTimeEnd');
+        $iniq_id = $this->input->post('iniq_id');
+
+        $f_data = array(
+                    'day' => $drDays,
+                    'timestart' => $drTimeStart,
+                    'timeend' => $drTimeEnd 
+                );
+        $this->doctor_model->updateDoctorTime_able($f_data, $iniq_id);
+
+    }
+
+    function delete_Dr_Time_able() {
+        $iniq_id = $this->input->post('iniq_id');
+        $this->doctor_model->deleteDRTime_able($iniq_id);        
+    }
 }
 
 /* End of file doctor.php */

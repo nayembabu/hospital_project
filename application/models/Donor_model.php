@@ -52,4 +52,6 @@ class Donor_model extends CI_model {
         $this->db->update('bankb', $data);
     }
 
+
+
 }

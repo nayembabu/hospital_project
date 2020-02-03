@@ -90,8 +90,9 @@
     <div class="header">
         <h1 style="font-size: 40px; margin: 0; "><?php echo $this->db->get('settings')->row()->system_vendor; ?></h1>
         <p style="font-size: 20px; margin: 0;"><?php echo $this->db->get('settings')->row()->address; ?></p>
-        <p style="font-size: 20px; margin: 0;">Admition Patient Report</p>
+        <p style="font-size: 20px; margin: 0;">Admition Patient Statement with Doctor</p>
         <p style="font-size: 15px; margin: 0 0 0 0;">Date : <?php echo $s_date; ?> to <?php echo $l_date;?></p>
+        <p style="font-size: 15px; margin: 0 0 0 0;">Doctor Name : </p>
 
     </div>
 </center>

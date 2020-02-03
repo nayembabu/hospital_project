@@ -27,10 +27,10 @@
                                 <th><?php echo lang('doctor'); ?> <?php echo lang('id'); ?></th>
                                 <th><?php echo lang('image'); ?></th>
                                 <th><?php echo lang('name'); ?></th>
-                                <th><?php echo lang('chamber'); ?></th>
                                 <th><?php echo lang('phone'); ?></th>
                                 <th><?php echo lang('department'); ?></th>
                                 <th><?php echo lang('profile'); ?></th>
+                                <th>Activity</th>
                                 <th class="no-print"><?php echo lang('options'); ?></th>
                             </tr>
                         </thead>
@@ -46,10 +46,12 @@
                                     <td><?php echo lang('no_photo'); ?></td>
                             <?php } ?>
                                 <td> <?php echo $doctor->dr_name; ?></td>
-                                <td class="center"><?php echo $doctor->chamber; ?></td>
                                 <td><?php echo $doctor->phone; ?></td>
                                 <td class="center"><?php echo $doctor->dept_name; ?></td>
                                 <td><?php echo $doctor->profile; ?></td>
+                                <td><?php if ($doctor->stus == '1') {
+                                    echo 'Active';
+                                    }else { echo 'Inactive'; }  ?></td>
                                 <td class="no-print">
                                     <button type="button" class="btn btn-info btn-xs btn_width upload_btn" title="<?php echo lang('upload'); ?>" data-target="#upload_pic" data-toggle="modal" data-id="<?php echo $doctor->dr_auto_id; ?>"><i class="fa fa-upload"> </i> </button>
                                     <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $doctor->dr_auto_id; ?>"><i class="fa fa-edit"> </i> </button>

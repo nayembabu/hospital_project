@@ -100,7 +100,7 @@ class Labrcv extends CI_Controller {
         $ttlduetk = $dscntamtk - $ttlrcvtaka;
 
         $tstidid        = array($this->input->post('test_iiddd'));
-        $tstyp          = array($this->input->post('testtypss'));
+        //$tstyp          = array($this->input->post('testtypss'));
         $tstamntk       = array($this->input->post('testtakk'));
         $tst_dep        = array($this->input->post('testdeptIdi'));
 
@@ -136,7 +136,7 @@ class Labrcv extends CI_Controller {
                 $f_data[] = [
                     'tstamnttaka'       => $tstamntk[$key][$key1],
                     'tstiiddid'         => $tstidid[$key][$key1],
-                    'tsttype'           => $tstyp[$key][$key1],
+                   // 'tsttype'           => $tstyp[$key][$key1],
                     'tstDeptI'          => $tst_dep[$key][$key1], 
                     'labptnididid'      => $newlabiidi, 
                     'thssdate'          => $thssdateee, 

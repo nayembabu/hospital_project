@@ -18,13 +18,13 @@ class Patient_model extends CI_model {
         $this->db->order_by('p_n_id', 'desc');
         $this->db->where('ok', 0);
         $this->db->join('nurse', 'nurse.emp_id = patient.emp_id', 'left');
-        $this->db->join('doctor', 'doctor.dr_id = patient.dr_id', 'left');
+        $this->db->join('doctor', 'doctor.dr_auto_id = patient.dr_a_iniq_idd', 'left');
         $query = $this->db->get('patient');
         return $query->result();
     }
 
-    function getstatementDr($st_date, $last_date, $dr_id) {
-        $this->db->where('dr_id', $dr_id);
+    function getstatementDr($st_date, $last_date, $dr_a_id) {
+        $this->db->where('dr_a_iniq_idd', $dr_a_id);
         $this->db->where('add_date >=', $st_date);
         $this->db->where('add_date <=', $last_date);
         $this->db->order_by('p_n_id', 'DESC');
@@ -35,7 +35,7 @@ class Patient_model extends CI_model {
     function getfullpatient($st_date, $last_date) {
         $this->db->where('add_date >=', $st_date);
         $this->db->where('add_date <=', $last_date);
-        $this->db->join('doctor', 'doctor.dr_id = patient.dr_id', 'left');
+        $this->db->join('doctor', 'doctor.dr_auto_id = patient.dr_a_iniq_idd', 'left');
         $this->db->order_by('p_n_id', 'DESC');
         $sql = $this->db->get('patient');
         return $sql->result();
@@ -71,7 +71,7 @@ class Patient_model extends CI_model {
 
     function get_p_full_infobyId($p_id) {
         $this->db->where('p_n_id', $p_id);
-        $this->db->join('doctor', 'doctor.dr_id = patient.dr_id', 'left');
+        $this->db->join('doctor', 'doctor.dr_auto_id = patient.dr_a_iniq_idd', 'left');
         $sql = $this->db->get('patient');
         return $sql->row();
     }
@@ -90,7 +90,7 @@ class Patient_model extends CI_model {
 
     function getPatientById($id) {
         $this->db->where('p_n_id', $id);
-        $this->db->join('doctor', 'doctor.dr_id = patient.dr_id', 'left');
+        $this->db->join('doctor', 'doctor.dr_auto_id = patient.dr_a_iniq_idd', 'left');
         $query = $this->db->get('patient');
         return $query->row();
     }

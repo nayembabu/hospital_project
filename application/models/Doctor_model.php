@@ -116,6 +116,36 @@ class Doctor_model extends CI_model {
         $sql = $this->db->get('dr_all_info');
         return $sql->result();
     }
+
+    function updateSpclty($data_dr_speciality, $iniq_id) {
+        $this->db->where('iniq_id', $iniq_id);
+        $this->db->update('dr_all_info', $data_dr_speciality);
+    }
+
+    function deleteSpclty($iniq_id) {
+        $this->db->where('iniq_id', $iniq_id);
+        $this->db->delete('dr_all_info');
+    }
+
+    function setDoctorTimeable($all_data) {
+        $this->db->insert('dr_time', $all_data);
+    }
+
+    function getDoctorTimeable($dr_a_idd) {
+        $this->db->where('dr_auto_iidd_a', $dr_a_idd);
+        $sql = $this->db->get('dr_time');
+        return $sql->result();
+    }
+
+    function updateDoctorTime_able($f_data, $iniq_id) {
+        $this->db->where('dr_time_id', $iniq_id);
+        $this->db->update('dr_time', $f_data);        
+    }
+
+    function deleteDRTime_able($iniq_id) {        
+        $this->db->where('dr_time_id', $iniq_id);
+        $this->db->delete('dr_time');        
+    }
 }
 
 
