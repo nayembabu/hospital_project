@@ -35,20 +35,6 @@ class Pdf
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php
 /*
  * Function to convert a number to the string literal for the number

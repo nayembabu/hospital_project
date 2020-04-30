@@ -49,13 +49,13 @@
                         </style>
                         <?php foreach ($paitents as $patient) { ?>
                             <tr class="">
-                                <td> <?php echo $patient->id; ?></td>
+                                <td> <?php echo $patient->p_n_id; ?></td>
                                 <td> <?php echo $patient->ptnname; ?></td>
                                 <td><?php 
                                         $this->db->where('dr_id', $patient->dr_id);
                                         $query = $this->db->get('doctor');
                                         $eml = $query->row();
-                                                echo  $eml->drname;
+                                                echo  $eml->dr_name;
                                  ?></td>
                                 <td> <?php echo $patient->patient_id; ?></td>
                                 <td> <?php echo $patient->b_num; ?></td>
@@ -65,17 +65,17 @@
                                 <td class="no-print">
                             <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
                                 <?php if (empty($patient->dis_time)) {?>
-                                     <a type="button" class="btn editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $patient->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('bill'); ?></a>
+                                     <a type="button" class="btn editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $patient->p_n_id; ?>"><i class="fa fa-edit"></i> <?php echo lang('bill'); ?></a>
                                 <?php }?>
-							<?php } ?>
+                            <?php } ?>
 
 
                                 <?php if (!empty($patient->dis_time)) {?>
-                                     <button onclick="reply_click(this.id)" type="" class="btn green" id="<?php echo $patient->id; ?>" title="<?php echo $patient->dr_id; ?>" data-toggle="modal" data=""><i class="fa fa-print"></i> <?php echo lang('print'); ?></button>
+                                     <button onclick="reply_click(this.id)" type="" class="btn green" id="<?php echo $patient->p_n_id; ?>" title="<?php echo $patient->dr_id; ?>" data-toggle="modal" data=""><i class="fa fa-print"></i> <?php echo lang('print'); ?></button>
 
 
 
-                                     <a type="button" class="btn btn-primary editbill" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $patient->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></a>
+                                     <a type="button" class="btn btn-primary editbill" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $patient->p_n_id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></a>
 
 
                                 <!--
@@ -505,7 +505,7 @@ $(document).ready(function () {
 
             $('#editPatientForm').find('[name="name"]').val(response.patient.ptnname).end()
             $('#editPatientForm').find('[name="b_num"]').val(response.patient.b_num).end()
-            $('#editPatientForm').find('[name="id"]').val(response.patient.id).end()
+            $('#editPatientForm').find('[name="id"]').val(response.patient.p_n_id).end()
 
     $.ajax({
     type: 'ajax',
@@ -638,7 +638,8 @@ $("#bill_type").click(function(){
                      html +='<div class="input-group"><span style="font-weight: bold; color: black;" class="input-group-addon lanr" id="basic-addon3">'+billcat[i].category+'</span><input type="hidden" name="cat_cid[]" value="'+billcat[i].c_num+'"><input style="text-align:right;" type="text" name="cat_cvalue[]" class="form-control bill_tk" aria-describedby="basic-addon3" value="'+total_rate+'"></div>';
                 }else if (billcat[i].c_num == '2' || billcat[i].c_num == '24' ) {
                     var rate = billcat[i].indore_rate;
-                    var total_rate;                var total_rate;
+                    var total_rate;                
+                    var total_rate;
                     if (dayss == 0 && ob_hours < 7 ) {
                         total_rate = 200;
                     }else {

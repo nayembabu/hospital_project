@@ -14,7 +14,7 @@ class Reception extends CI_Controller {
         $this->load->model('receptionist_model');
         $this->load->model('settings_model');
         $this->load->library('upload');
-       // $this->load->library('Pdf');
+        $this->load->library('pdf');
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
         $this->load->model('ion_auth_model');
@@ -26,7 +26,7 @@ class Reception extends CI_Controller {
         }
     }
 
-    public function index() {
+    function index() {
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $timestamp = time();
         $thisdate = date('Y-m-d', time());
@@ -42,20 +42,20 @@ class Reception extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function getTicketJsonEncode() {  
+    function getTicketJsonEncode() {  
         $getthedate = $this->input->get('date');     
         $thisdate = date('Y-m-d', strtotime($getthedate));
         $data = $this->receptionist_model->get_ticketss($thisdate);
         echo json_encode($data);
     }
 
-    public function search_ticketID() {
+    function search_ticketID() {
         $tc_id = $this->input->get('id');
         $data = $this->receptionist_model->getticketall($tc_id);        
         echo json_encode($data);
     }
 
-    public function allticket() {
+    function allticket() {
         $data['tickets'] = $this->receptionist_model->getAllTicket();
         $data['settings'] = $this->settings_model->getSettings();
         $data['doctors'] = $this->receptionist_model->getdoctor();
@@ -69,7 +69,7 @@ class Reception extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function getlastTicketSerial() {
+    function getlastTicketSerial() {
         $getDate = $this->input->get('app_date');
         $dr_id = $this->input->get('dr_id');
         $AppDate = date('Y-m-d', strtotime($getDate));
@@ -77,7 +77,7 @@ class Reception extends CI_Controller {
         echo json_encode($data);
     }    
 
-    public function incmexnp() {
+    function incmexnp() {
         $data['dctr'] = $this->receptionist_model->getdoctor();
         
         $loginId = $this->ion_auth->user()->row()->emp_id;
@@ -89,7 +89,7 @@ class Reception extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function ticketbydate() {
+    function ticketbydate() {
         $th_date = $this->input->post('date');
         $thisdate = date('Y-m-d', strtotime($th_date));
         $data['tickets'] = $this->receptionist_model->getTicketByDate($thisdate);
@@ -104,7 +104,7 @@ class Reception extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function Newticket() {
+    function Newticket() {
         $dr_id          = $this->input->post('dr_id');
         $patient        = $this->input->post('patient');
         $age            = $this->input->post('age').' '.$this->input->post('y_m_d');
@@ -117,23 +117,22 @@ class Reception extends CI_Controller {
         $hospital_fee   = $this->input->post('hospital_fee');
         $thistime       = time();
         $thisdate       = date('Y-m-d', $thistime);
-
-                $data = array(
-                    'dr_id'         => $dr_id,
-                    'app_patient'   => $patient,
-                    'age'           => $age,
-                    'mobile'        => $mobile,
-                    'ap_date'       => $ap_date,
-                    'emp_id'        => $emp_id,
-                    'doctor_fee'    => $doctor_fee,
-                    'hospital_fee'  => $hospital_fee,
-                    'ticket_serial' => $serial,
-                    'thistime'      => $thistime,
-                    'app_serial'    => 'outdoor',
-                    'print'         => 'printed',
-                    'paid'          => 'paid',
-                    'thisdate'      => $thisdate
-                );
+            $data = array(
+                'auto_iddd_for_dr'  => $dr_id,
+                'app_patient'       => $patient,
+                'age'               => $age,
+                'mobile'            => $mobile,
+                'ap_date'           => $ap_date,
+                'emp_id'            => $emp_id,
+                'doctor_fee'        => $doctor_fee,
+                'hospital_fee'      => $hospital_fee,
+                'ticket_serial'     => $serial,
+                'thistime'          => $thistime,
+                'app_serial'        => 'outdoor',
+                'print'             => 'printed',
+                'paid'              => 'paid',
+                'thisdate'          => $thisdate
+            );
         $this->receptionist_model->insertappoint($data);
         $this->session->set_flashdata('feedback', 'Ticket Added');
 
@@ -147,7 +146,6 @@ class Reception extends CI_Controller {
         $ap_id = $this->input->get('id');
         $data['app_ticket'] = $this->receptionist_model->getAppById($ap_id);
         $this->load->view('reception/ticket_print', $data);
-
     }
 
     function stmnt_with_dr() {
@@ -175,7 +173,7 @@ class Reception extends CI_Controller {
         redirect('reception');
     }
 
-    public function editTicketData() {
+    function editTicketData() {
         $a_id           = $this->input->post('ap_id');
         $dr_id          = $this->input->post('dcr_id');
         $patient        = $this->input->post('p_name');
@@ -188,17 +186,17 @@ class Reception extends CI_Controller {
         $emp_id         = $this->ion_auth->user()->row()->emp_id;
         $hospital_fee   = $this->input->post('hospl_fee');
 
-                $data = array(
-                    'dr_id'         => $dr_id,
-                    'app_patient'   => $patient,
-                    'age'           => $age,
-                    'mobile'        => $mobile,
-                    'ap_date'       => $ap_date,
-                    'doctor_fee'    => $doctor_fee,
-                    'hospital_fee'  => $hospital_fee,
-                    'ticket_serial' => $serial,
-                    'first_edit_emp'=> $emp_id
-                );
+            $data = array(
+                'auto_iddd_for_dr'  => $dr_id,
+                'app_patient'       => $patient,
+                'age'               => $age,
+                'mobile'            => $mobile,
+                'ap_date'           => $ap_date,
+                'doctor_fee'        => $doctor_fee,
+                'hospital_fee'      => $hospital_fee,
+                'ticket_serial'     => $serial,
+                'first_edit_emp'    => $emp_id
+            );
         $this->session->set_flashdata('feedback', 'Ticket Updated');
         $this->receptionist_model->updateAppointTicket($a_id, $data);
         redirect('reception');
@@ -206,7 +204,7 @@ class Reception extends CI_Controller {
 
     function getdrfeeByJason() {
         $dr_id = $this->input->get('id');
-        $data['defees'] = $this->receptionist_model->getdefeeById($dr_id);
+        $data = $this->receptionist_model->getdefeeById($dr_id);
         echo json_encode($data);
     }
 
@@ -234,7 +232,7 @@ class Reception extends CI_Controller {
         echo json_encode($data);
     }
 
-    public function print_total() {
+    function print_total() {
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['doctors'] = $this->receptionist_model->getdoctor();
         $data['users'] = $this->receptionist_model->getUsers();
@@ -247,7 +245,7 @@ class Reception extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function countprint() {
+    function countprint() {
         $emp_id = $this->ion_auth->user()->row()->emp_id;
         $dr_id = $this->input->get('dr_id');
         $date = $this->input->get('date');
@@ -261,10 +259,13 @@ class Reception extends CI_Controller {
         $this->dompdf->loadHtml($html);
         $this->dompdf->setPaper('A4', 'portrait');
         $this->dompdf->render();        
+
+$canvas = $this->dompdf->get_canvas();
+$canvas->page_text(0, 0, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
         $this->dompdf->stream("Daily_Attendance.pdf", array("Attachment"=>0)); //Output Line
     }
 
-    public function count_e_dr() {
+    function count_e_dr() {
         $dr_id = $this->input->get('dr_id');
         $date = $this->input->get('date');
         $t_date = date('Y-m-d', strtotime($date));
@@ -280,7 +281,7 @@ class Reception extends CI_Controller {
         $this->dompdf->stream("Daily_Attendance.pdf", array("Attachment"=>0)); //Output Line
     }
 
-    public function countprintadmin() {
+    function countprintadmin() {
         $emp_id = $this->input->get('emp_id');
         $dr_id = $this->input->get('dr_id');
         $date = $this->input->get('date');
@@ -297,7 +298,7 @@ class Reception extends CI_Controller {
         $this->dompdf->stream("Daily_Attendance.pdf", array("Attachment"=>0)); //Output Line
     }
 
-    public function totalticket() {
+    function totalticket() {
         $datefrom = date('Y-m-d', strtotime($this->input->get('date')));
         $todate = date('Y-m-d', strtotime($this->input->get('todate'))); 
         $data['s_date'] = date('d-M-y', strtotime($datefrom));
@@ -308,7 +309,7 @@ class Reception extends CI_Controller {
 
     }
 
-    public function count_e() {
+    function count_e() {
         $emp_id = $this->input->get('emp_id');
         $date = $this->input->get('date');
         $t_date = date('Y-m-d', strtotime($date));

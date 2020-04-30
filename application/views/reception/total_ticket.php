@@ -52,19 +52,11 @@
                         <?php foreach ($tickets as $ticket) { ?>
 
                             <tr class="">
-                                <td> <?php echo $ticket->serial; ?></td>
-                                <td><?php echo $ticket->patient; ?></td>
+                                <td> <?php echo $ticket->ticket_serial; ?></td>
+                                <td><?php echo $ticket->app_patient; ?></td>
                                 <td class="center"><?php echo $ticket->age; ?></td>
                                 <td class="center"><?php echo $ticket->mobile; ?></td>
-                                <td><?php
-                                    $this->db->where('dr_id', $ticket->dr_id);
-                                    $query = $this->db->get('doctor');
-                                    $drm = $query->row();
-                                        if($query->num_rows > 0 ) {
-                                            echo  $drm->drname;}
-                                     ?>
-                                        
-                                </td>
+                                <td><?php echo $ticket->dr_name; ?> </td>
 
                                 <td class="center"><?php echo $ticket->ap_date; ?></td>
                                 <td>                                
@@ -72,34 +64,20 @@
                                 echo "Not Print"; }else { echo 'Already Printed & Paid '; }?> 
                                 </td>
                                 <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
-                                <td>
-                                    <?php
-                                        $this->db->where('emp_id', $ticket->emp_id);
-                                        $query = $this->db->get('nurse');
-                                        $eml = $query->row();
-                                            if($query->num_rows > 0 ) {
-                                                echo  $eml->ename;} 
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                        $dtime = $ticket->thistime;
-                                        echo date('h:m a  d-M-Y', $dtime);
-                                    ?>
-                                </td>
-                                <?php }?>
+                                <td><?php echo  $ticket->ename; ?></td>
+                                <td><?php if ($ticket->thistime != '') {
+                                    echo date('h:m a  d-M-Y', $ticket->thistime); } ?> </td> 
+                                <?php } ?>
                                 <td>                                
                                 <?php if ($this->ion_auth->in_group(array('admin')) || $ticket->print != 'printed') { ?>
-                                    <button id="printbnt" style="font-size: 16px; padding-right: 10px;" type="button" class="btn btn-info btn-xs btn_width printbnt" title="<?php  echo lang('view'); ?>" data-toggle="modal" data-id="<?php echo $ticket->id; ?>"><i class="fa fa-eye"> </i> <?php  echo lang('view'); ?></button>
-                                    
-                                
+                                    <button id="printbnt" style="font-size: 16px; padding-right: 10px;" type="button" class="btn btn-info btn-xs btn_width printbnt" title="<?php  echo lang('view'); ?>" data-toggle="modal" data-id="<?php echo $ticket->app_tc_id; ?>"><i class="fa fa-eye"> </i> <?php  echo lang('view'); ?></button>
 
-                                    <button style="margin-left: 20px;" type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php  echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $ticket->id; ?>"><i class="fa fa-edit"> </i></button> 
+                                    <button style="margin-left: 20px;" type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php  echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $ticket->app_tc_id; ?>"><i class="fa fa-edit"> </i></button> 
                                 <?php } ?>
 
 
                                     <?php if ($this->ion_auth->in_group(array('admin'))) { ?>  
-                                    <a class="btn btn-info btn-xs btn_width delete_button" href="reception/deleteticket?id=<?php echo $ticket->id; ?>" title="<?php  echo lang('delete'); ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-info btn-xs btn_width delete_button" href="reception/deleteticket?id=<?php echo $ticket->app_tc_id; ?>" title="<?php  echo lang('delete'); ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
                                 <?php } ?>
                                 </td>
                             </tr>

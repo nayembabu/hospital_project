@@ -26,7 +26,6 @@ class Doctor extends CI_Controller {
     }
 
     public function index() {
-
         $data['doctors'] = $this->doctor_model->getDoctor();
         $data['departments'] = $this->department_model->getDepartment();
         $loginId = $this->ion_auth->user()->row()->emp_id;
@@ -37,8 +36,8 @@ class Doctor extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
+    // Add New Doctor
     public function addNew() {
-
         $name = $this->input->post('name');
         $dr_id = $this->input->post('dr_id');
         $chamber = $this->input->post('chamber');
@@ -63,8 +62,8 @@ class Doctor extends CI_Controller {
             redirect('doctor');
     }
 
+    //Doctor Information Update
     public function update() {
-
         $name           = $this->input->post('name');
         $dr_id          = $this->input->post('dr_id');
         $chamber        = $this->input->post('chamber');
@@ -89,12 +88,7 @@ class Doctor extends CI_Controller {
             redirect('doctor');
     }
 
-
-    function getDoctor() {
-        $data['doctors'] = $this->doctor_model->getDoctor();
-        $this->load->view('doctor/doctor', $data);
-    }
-
+    // Doctor Profile Pic Upload
     function update_pic() {
         $dr_main_id = $this->input->post('dr_main_id');
         $file_name = $_FILES['img_url']['name'];
@@ -111,9 +105,9 @@ class Doctor extends CI_Controller {
         $config = array(
             'file_name' => $new_file_name,
             'upload_path' => "./uploads/doctor/",
-            'allowed_types' => "*",
+            'allowed_types' => "*", // All Kinds of file Accept
             'overwrite' => False,
-            'max_size' => "20480000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+            'max_size' => "20480000", // Can be set to particular file size , here it is 200 MB(2048 Kb)
             'max_height' => "1768",
             'max_width' => "2024"
         );
@@ -121,6 +115,7 @@ class Doctor extends CI_Controller {
         $this->upload->initialize($config);
         if ($this->upload->do_upload('img_url')) {
             $path = $this->upload->data();
+            // Upload in Folder
             $img_url = "uploads/doctor/" . $config['file_name'];
             $data = array(
                 'img_url' => $img_url                  
@@ -146,15 +141,13 @@ class Doctor extends CI_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-
+    //Doctor Ticket/Appoinment Fee Add 
     public function addfee() {
-
         $dr_id          = $this->input->post('dr_id');
         $dr_firsttime   = $this->input->post('dr_firsttime');
         $dr_sectime     = $this->input->post('dr_sectime');
         $hospital_first = $this->input->post('hospital_first');
         $hospital_sec   = $this->input->post('hospital_sec');
-
             $data = array(
                 'dr_a_idid_auto'    => $dr_id,
                 'dr_firsttime'      => $dr_firsttime,
@@ -162,12 +155,12 @@ class Doctor extends CI_Controller {
                 'hospital_first'    => $hospital_first,
                 'hospital_sec'      => $hospital_sec
             );
-
             $this->doctor_model->insertDoctorfee($data);
             $this->session->set_flashdata('feedback', 'Added');
             redirect('doctor/drfee');
         }
 
+        //Get Doctor By json
     function editDoctorByJason() {
         $id = $this->input->get('id');
         $data['doctor'] = $this->doctor_model->getDoctorById($id);
@@ -194,7 +187,6 @@ class Doctor extends CI_Controller {
         $hospital_first = $this->input->post('hospital_first');
         $hospital_sec   = $this->input->post('hospital_sec');
         $dr_fee_id      = $this->input->post('dr_fee_id');
-
                 $data = array(
                     'dr_a_idid_auto'    => $dr_id,
                     'dr_firsttime'      => $dr_firsttime,
@@ -202,7 +194,6 @@ class Doctor extends CI_Controller {
                     'hospital_first'    => $hospital_first,
                     'hospital_sec'      => $hospital_sec
                 );
-
             $this->doctor_model->updateDoctorfee($dr_fee_id, $data);
             $this->session->set_flashdata('feedback', 'Update');
             redirect('doctor/drfee');
@@ -215,6 +206,7 @@ class Doctor extends CI_Controller {
         redirect('doctor/drfee');
     }
 
+    //Doctor Speciality View Method for Front View
     function dr_spclty() {
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId); 
@@ -260,6 +252,7 @@ class Doctor extends CI_Controller {
         $this->doctor_model->deleteSpclty($iniq_id);
     }
 
+    // Doctor Chamber Time 
     function dr_chamber() {        
         $loginId = $this->ion_auth->user()->row()->emp_id;
         $data['user_P'] = $this->settings_model->get_log_user($loginId); 
@@ -305,7 +298,6 @@ class Doctor extends CI_Controller {
                     'timeend' => $drTimeEnd 
                 );
         $this->doctor_model->updateDoctorTime_able($f_data, $iniq_id);
-
     }
 
     function delete_Dr_Time_able() {
@@ -313,5 +305,3 @@ class Doctor extends CI_Controller {
         $this->doctor_model->deleteDRTime_able($iniq_id);        
     }
 }
-
-/* End of file doctor.php */

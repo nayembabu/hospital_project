@@ -35,6 +35,16 @@ class Labrcv extends CI_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
+    function editReceiveTest() {
+        $data['ptNInfo'] = $this->labrcv_model->getptninfo();
+        $loginId = $this->ion_auth->user()->row()->emp_id;
+        $data['user_P'] = $this->settings_model->get_log_user($loginId); 
+
+        $this->load->view('home/dashboard', $data); // just the header file
+        $this->load->view('labrcv/editRcvTst', $data);
+        $this->load->view('home/footer'); // just the header file
+
+    }
 
     public function addnew() {
         $data['doctor'] = $this->labrcv_model->getdoctor();        
@@ -175,10 +185,24 @@ class Labrcv extends CI_Controller {
         $data['patient_info'] = $this->labrcv_model->getLabPatient($labrcvidii);        
         $data['labtest_forprint'] = $this->labrcv_model->getLabTestforP($labrcvidii);        
         $data['department'] = $this->labrcv_model->getLabDepartment();   
-        $this->load->view('labrcv/memoprint', $data); 
+        $this->load->view('labrcv/print_memo_r', $data); 
+
+
+        // // HTML to PDF
+        // $html = $this->output->get_output();
+        // $this->dompdf->loadHtml($html);
+        // $this->dompdf->setPaper('A4', 'portrait');
+        // $this->dompdf->render();        
+        // $this->dompdf->stream("Bill.pdf", array("Attachment"=>0));
+        // //Output Line
     }
 
-
+    function getAllTstData() {
+        $labPtnIIDDD = $this->input->post('labPtnIIDD');
+        $data['labPtn'] = $this->labrcv_model->getLabTstPtnInfo($labPtnIIDDD);
+        $data['labPtn'] = $this->labrcv_model->getLabTstPtnInfo($labPtnIIDDD);
+        echo json_encode($data);
+    }
 
 
 

@@ -83,7 +83,7 @@ class Patient_model extends CI_model {
     }
 
     function getDoctorById($dr_id) {
-        $this->db->where('dr_id', $dr_id);
+        $this->db->where('dr_auto_id', $dr_id);
         $query = $this->db->get('doctor');
         return $query->row();
     }

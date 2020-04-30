@@ -13,7 +13,6 @@ class Patient extends CI_Controller {
         $this->load->model('patient_model');
         $this->load->library('upload');
         $this->load->library('pdf');
-       // $this->load->library('Pdf');
         $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
         $this->load->model('donor_model');
@@ -100,6 +99,7 @@ class Patient extends CI_Controller {
 
     public function report_with_doctor() {
         $dr_a_id = $this->input->get('dr_a_id');
+        $data['dr_info'] = $this->patient_model->getDoctorById($dr_a_id);
         $st_date = date('Y-m-d', strtotime($this->input->get('st_date')));
         $last_date = date('Y-m-d', strtotime($this->input->get('last_date')));
         $data['patient_data'] = $this->patient_model->getstatementDr($st_date, $last_date, $dr_a_id);
@@ -167,21 +167,22 @@ class Patient extends CI_Controller {
         $increment_ids = $id_ptns->p_n_id+1;
 
         $data = array(
-                'ptnname'           => $name,
-                'f_s_name'          => $f_name,
-                'dr_a_iniq_idd'     => $dr_id,
-                'pn_address'        => $address,
-                'mobile'            => $mobile,
-                'sex'               => $sex,
-                'age'               => $age,
-                'reg_no'            => $reg_no,
-                'time_this'         => $this_time,
-                'Patient_cause'     => $ptn_cuss,
-                'patient_rand_id'   => $patient_id,
-                'emp_id'            => $emp_id,
-                'b_num'             => $b_num,
-                'add_date'          => $add_date,
-                'rel_with_ptn'      => $rel_actv
+            'ptnname'           => $name,
+            'f_s_name'          => $f_name,
+            'dr_a_iniq_idd'     => $dr_id,
+            'pn_address'        => $address,
+            'mobile'            => $mobile,
+            'sex'               => $sex,
+            'age'               => $age,
+            'reg_no'            => $reg_no,
+            'time_this'         => $this_time,
+            'Patient_cause'     => $ptn_cuss,
+            'patient_rand_id'   => $patient_id,
+            'emp_id'            => $emp_id,
+            'b_num'             => $b_num,
+            'add_date'          => $add_date,
+            'rel_with_ptn'      => $rel_actv,
+            'reg_time_stamp_now'=> $this_tim
             );
         $this->patient_model->insertPatient($data);
 

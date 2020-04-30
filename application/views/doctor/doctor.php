@@ -16,10 +16,10 @@
                                     <i class="fa fa-plus-circle"></i> <?php echo lang('add_new'); ?> 
                                 </button>
                             </div>
-                        </a>
-                        <button class="export no-print" onclick="javascript:window.print();"><?php echo lang('print'); ?></button>  
+                        </a> 
                     </div>
-                    <div class="space15"></div>
+
+                     <!-- Datatable start-->
                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                         <thead>
                             <tr>
@@ -62,6 +62,9 @@
 
                         </tbody>
                     </table>
+                    <!-- Datatable End-->
+
+
                 </div>
             </div>
         </section>
@@ -84,7 +87,7 @@
                 <form role="form" action="doctor/addNew" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
-                        <input required="" type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="Full Doctor Name">
+                        <input required="required" type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="Full Doctor Name">
                     </div>
 
 
@@ -95,7 +98,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Full Degree</label>
-                        <input required="" type="text" class="form-control" name="profile" id="exampleInputEmail1" value='' placeholder="Full Degree">
+                        <input required="required" type="text" class="form-control" name="profile" id="exampleInputEmail1" value='' placeholder="Full Degree">
                     </div>
 
                     <div class="form-group">
@@ -105,29 +108,27 @@
                             <option value="Female">Female</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"><!-- Department Select-->
                         <label for="exampleInputEmail1"><?php echo lang('department'); ?></label>
-                        <select class="form-control m-bot15 js-example-basic-single" name="department" value=''>
+                        <select class="form-control m-bot15 js-example-basic-single" required="required" name="department" value=''>
+                            <option value=""> Select.......... </option>
                             <?php foreach ($departments as $department) { ?>
                                 <option value="<?php echo $department->dept_id; ?>"> <?php echo $department->dept_name; ?> </option>
                             <?php } ?> 
                         </select>
                     </div>
 
-
-
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('chamber'); ?></label>
-                        <input type="text" class="form-control" name="chamber" id="exampleInputEmail1" value='' placeholder="Doctor Cember">
+                        <input type="text" class="form-control" name="chamber" id="exampleInputEmail1" required="required" value='' placeholder="Doctor Cember">
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
-                        <input required="" type="text" class="form-control" name="phone" id="exampleInputEmail1" value='' placeholder="Doctor ">
+                        <input required="required" type="text" class="form-control" name="phone" id="exampleInputEmail1" value='' placeholder="Doctor ">
                     </div>
 
-
-                    <div class="form-group">
+                    <div class="form-group"><!-- Activity Is Doctor Here or Out -->
                         <label for="exampleInputEmail1">Activity</label>
                         <select class="form-control" name="activity" value=''>
                             <option value="1"> Active </option>
@@ -142,7 +143,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-<!-- Add Accountant Modal-->
+<!-- Add Doctor Modal-->
 
 
 
@@ -159,7 +160,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
-                        <input required="" type="text"  class="form-control" name="name" id="exampleInputEmail1" value=''>
+                        <input required="required" type="text"  class="form-control" name="name" id="exampleInputEmail1" value=''>
                     </div>
 
     <br><br><br><br><br>
@@ -167,6 +168,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('image'); ?></label>
                         <input required="required" style="float: left;" type="file" name="img_url" id="file" onchange="loadfile(this)" >
+                        <!-- View Upload Picture  -->
                         <img id="preimage_ss" width="100px" height="100px" name="img_url" src="">
                     </div>
 
@@ -181,7 +183,7 @@
 <!-- Upload Photo Modal-->
 
 
-<!-- Edit Event Modal-->
+<!-- Edit Doctor Modal-->
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -244,10 +246,9 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-<!-- Edit Event Modal-->
+<!-- Edit Doctor Modal-->
 
 <script type="text/javascript">
-    $(document).ready(function () {
         $(".editbutton").click(function (e) {
             e.preventDefault(e);
             // Get the record's ID via attribute
@@ -261,14 +262,14 @@
                 dataType: 'json',
                 success: function (response) {
                     // Populate the form fields with the data returned from server
-                    $('#editDoctorForm').find('[name="dr_main_id"]').val(response.doctor.dr_auto_id).end()
-                    $('#editDoctorForm').find('[name="name"]').val(response.doctor.dr_name).end()
-                    $('#editDoctorForm').find('[name="profile"]').val(response.doctor.profile).end()
+                    $('#editDoctorForm').find('[name="dr_main_id"]').val(response.doctor.dr_auto_id);
+                    $('#editDoctorForm').find('[name="name"]').val(response.doctor.dr_name);
+                    $('#editDoctorForm').find('[name="profile"]').val(response.doctor.profile);
 
                     $('#activity_option option[value='+response.doctor.stus+']').attr('selected', 'selected');  
 
-                    $('#editDoctorForm').find('[name="chamber"]').val(response.doctor.chamber).end()
-                    $('#editDoctorForm').find('[name="phone"]').val(response.doctor.phone).end()
+                    $('#editDoctorForm').find('[name="chamber"]').val(response.doctor.chamber);
+                    $('#editDoctorForm').find('[name="phone"]').val(response.doctor.phone);
 
                     $('#dept_option option[value='+response.doctor.department+']').attr('selected', 'selected');
                     
@@ -276,8 +277,6 @@
                 }
             });
         });
-    });
-
 
 
 
@@ -294,9 +293,9 @@ $(".upload_btn").click(function (e) {
                 dataType: 'json',
                 success: function (response) {
                     // Populate the form fields with the data returned from server
-                    $('#Upload_Doctor_pic').find('[name="dr_main_id"]').val(response.doctor.dr_auto_id).end()
-                    $('#Upload_Doctor_pic').find('[name="name"]').val(response.doctor.dr_name).end()
-                        
+                    $('#Upload_Doctor_pic').find('[name="dr_main_id"]').val(response.doctor.dr_auto_id);
+                    $('#Upload_Doctor_pic').find('[name="name"]').val(response.doctor.dr_name);
+                    $('#preimage_ss').attr('src', response.doctor.img_url);
                 }
             });
         });
@@ -335,9 +334,3 @@ $(".upload_btn").click(function (e) {
 
 
 </script>
-<script>
-    $(document).ready(function () {
-        $(".flashmessage").delay(3000).fadeOut(100);
-    });
-</script>
-

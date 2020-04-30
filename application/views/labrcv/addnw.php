@@ -1,3 +1,7 @@
+
+
+
+
 <style type="text/css">
 
     .search_box {
@@ -249,12 +253,8 @@
 							<div style="width: 55%; float: left;">
 		                        <select required="required" class="form-control tstiids custom-select custom-select-lg m-bot15 js-example-basic-single" id="tstiids" name="test_iiddd[]">
 								  <option value="">Select.........</option>
-							<?php foreach ($labtest as $tst) {
-								if (!empty($tst->inv_code)) { ?>
-								  <option value="<?php echo $tst->tst_inv_id; ?>"><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option>
-								  <? }else { ?>
+							<?php foreach ($labtest as $tst) { ?>
 								  <option value="<?php echo $tst->tst_inv_id; ?>"><?php echo $tst->inv_name; ?></option>
-								  <?php } ?>
 							<?php } ?>
 								</select>
 							</div>
@@ -415,7 +415,7 @@ chngval();
 
 	$('.plusAddBtn').click(function() {
 
-		var nwtst = "<div class='input-group apndBox' style='margin-top: 10px;'><span style='font-weight: bold; color: black;' class='input-group-addon lanr sp_dr_name' id='basic-addon3'>Test ID / Name</span><div style='width: 55%; float: left;'><select class='form-control tstiids m-bot15 js-example-basic-single' id='tstiids' name='test_iiddd[]'><option value=''>Select......</option><?php foreach ($labtest as $tst) { if (!empty($tst->inv_code)) { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_code.'-----------'.$tst->inv_name; ?></option> <?php }else { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_name; ?></option>  <?php } ?> <?php } ?></select></div><input type='text' name='testtakk[]' readonly='readonly' class='form-control tstrate tstrtval' style='width: 20%; float: left; text-align: right;' value='0'><div class='' style='width: 90px; float: right;'><img style='cursor: pointer; float: right;' class='dltBtnS' width='40px' height='40px' src='uploads/delete.png'></div></div>";
+		var nwtst = "<div class='input-group apndBox' style='margin-top: 10px;'><span style='font-weight: bold; color: black;' class='input-group-addon lanr sp_dr_name' id='basic-addon3'>Test ID / Name</span><div style='width: 55%; float: left;'><select class='form-control tstiids m-bot15 js-example-basic-single' id='tstiids' name='test_iiddd[]'><option value=''>Select......</option><?php foreach ($labtest as $tst) { ?> <option value='<?php echo $tst->tst_inv_id; ?>'><?php echo $tst->inv_name; ?></option> <?php } ?></select></div><input type='text' name='testtakk[]' readonly='readonly' class='form-control tstrate tstrtval' style='width: 20%; float: left; text-align: right;' value='0'><div class='' style='width: 90px; float: right;'><img style='cursor: pointer; float: right;' class='dltBtnS' width='40px' height='40px' src='uploads/delete.png'></div></div>";
 
 		$('.testDivFull').append(nwtst); 
 		chngval();

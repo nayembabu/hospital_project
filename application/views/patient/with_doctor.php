@@ -1,15 +1,12 @@
 
-
 <html>
     <head>
         <style>
 
-    @media print {
-        @page { margin:0; }
-        body { margin: 0.5cm; }
-    }
-
-
+            @media print {
+                @page { margin:0; }
+                body { margin: 0.5cm; }
+            }
             .header, .header-space,
             .footer, .footer-space {
               height: 100px;
@@ -23,7 +20,6 @@
               position: fixed;
               bottom: 0;
             }
-
 
         </style>
     </head>
@@ -92,7 +88,7 @@
         <p style="font-size: 20px; margin: 0;"><?php echo $this->db->get('settings')->row()->address; ?></p>
         <p style="font-size: 20px; margin: 0;">Admition Patient Statement with Doctor</p>
         <p style="font-size: 15px; margin: 0 0 0 0;">Date : <?php echo $s_date; ?> to <?php echo $l_date;?></p>
-        <p style="font-size: 15px; margin: 0 0 0 0;">Doctor Name : </p>
+        <p style="font-size: 15px; margin: 0 0 0 0;">Doctor Name : <?php echo strtoupper($dr_info->dr_name); ?></p>
 
     </div>
 </center>

@@ -19,20 +19,17 @@
             <div class="panel-body">
                 <div class="adv-table editable-table ">
 
-                
-<?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Sr_Receptionist'))) { ?>
+      
                 <form style="margin: -25px -15px -32px -16px; padding: 0" role="form" class="f_report">
-                        <div align="center" class="form-group">
-                            
-                                <div class="input-group input-large" data-date="13/07/2018" data-date-format="mm/dd/yyyy">
-                                    <input type="text" class="form-control dtpic " id="printdate" name="date" value="" placeholder="<?php echo lang('date'); ?>">
-                                   
-                                <button type="button" name="submit" class="btn btn-info range_submit"><?php echo lang('submit'); ?></button>
+                    <div align="center" class="form-group">
+                        
+                        <div class="input-group input-large" data-date="13/07/2018" data-date-format="mm/dd/yyyy">
+                            <input type="text" class="form-control dtpic " id="printdate" name="date" value="" placeholder="<?php echo lang('date'); ?>">                           
+                            <button type="button" name="submit" class="btn btn-info range_submit"><?php echo lang('submit'); ?></button>
 
-                                </div>
-                            </div>
-                         </form><br>
-<?php } ?>
+                        </div>
+                    </div>
+                 </form><br>
 
                     <div class="clearfix">
                         <a data-toggle="modal" href="#myModal">
@@ -41,10 +38,8 @@
                                    <i class="fa fa-plus-circle"></i>  <?php  echo lang('add_ticket'); ?> 
                                 </button>
                             </div>
-                        </a>
-                        <button class="export" onclick="javascript:window.print();"> <?php  echo lang('print'); ?></button>  
+                        </a> 
                     </div>
-                    <div class="space15"></div>
                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                         <thead>
                             <tr>
@@ -62,7 +57,6 @@
                             </tr>
                         </thead>
                         <tbody class="datatavl" id="datatab1">
-
                             
                         </tbody>
                     </table>
@@ -77,7 +71,6 @@
 
 
 
-
 <!-- Add Ticket Modal-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
@@ -88,19 +81,15 @@
             </div>
             <div class="modal-body">
                 <form role="form" action="reception/Newticket" method="post" id="ticketform" enctype="multipart/form-data">
-
-
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('doctor'); ?></label>
                         <select class="form-control m-bot15 js-example-basic-single" id="doctor" name="dr_id" value=''>
                             <option value="">Select....</option>
                         <?php foreach ($doctors as $doctor) { ?>
-                            <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
-
+                            <option value="<?php echo $doctor->dr_auto_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
                         <?php } ?>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('ticket').' '.lang('time'); ?></label>
                         <select required="required" class="form-control" name="tickettime" id="tickettime" value='' onchange="changeval()">
@@ -109,8 +98,8 @@
                             <option value="secondtime"><?php  echo lang('second_ticket'); ?></option>
                         </select>
                     </div>
-                    <input type="hidden" required="required" name="doctor_fee" class="doctor_fee" value=''>
-                    <input type="hidden" required="required" name="hospital_fee" class="hospital_fee" value=''>
+                    <input type="text" required="required" name="doctor_fee" class="doctor_fee" value=''>
+                    <input type="text" required="required" name="hospital_fee" class="hospital_fee" value=''>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('patient'); ?> <?php  echo lang('name'); ?></label>
@@ -174,7 +163,7 @@
                         <select class="form-control" id="doctor_id" name="dcr_id" value=''>
                             <option>Select....</option>
                         <?php foreach ($doctors as $doctor) { ?>
-                            <option value="<?php echo $doctor->dr_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
+                            <option value="<?php echo $doctor->dr_auto_id; ?>"><?php echo $doctor->dr_id; ?> --------- <?php echo $doctor->dr_name; ?> </option>
 
                         <?php } ?>
                         </select>
@@ -189,8 +178,8 @@
                             <option value="secondtime"><?php  echo lang('second_ticket'); ?></option>
                         </select>
                     </div>
-                    <input type="hidden" name="docr_fee" class="docr_fee" value=''>
-                    <input type="hidden" name="hospl_fee" class="hosp_fee" value=''>
+                    <input type="text" name="docr_fee" class="docr_fee" value=''>
+                    <input type="text" name="hospl_fee" class="hosp_fee" value=''>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('patient'); ?> <?php  echo lang('name'); ?></label>
@@ -266,7 +255,7 @@ getTicketQuery();
             data: '',
             method: 'GET',
             dataType: 'json',
-        }).success(function(edata) {
+        success: function(edata) {
             
             var html = '';
             var i;
@@ -353,7 +342,8 @@ getTicketQuery();
                     }
                 }
                 $('.datatavl').html(html);
-             });
+                 }
+            });
 
 }
 
@@ -366,11 +356,11 @@ getTicketQuery();
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (ticket) {
-            var dr_st_fee = parseInt(ticket.defees.dr_firsttime);
-            var hos_st_fee = parseInt(ticket.defees.hospital_first);
-            var dr_nd_fee = parseInt(ticket.defees.dr_sectime);
-            var hos_nd_fee = parseInt(ticket.defees.hospital_sec);
+        success: function (ticket_fees_s) {
+            var dr_st_fee = parseInt(ticket_fees_s.dr_firsttime);
+            var hos_st_fee = parseInt(ticket_fees_s.hospital_first);
+            var dr_nd_fee = parseInt(ticket_fees_s.dr_sectime);
+            var hos_nd_fee = parseInt(ticket_fees_s.hospital_sec);
             var dr_first_fee = dr_st_fee - hos_st_fee;
             var dr_second_fee = dr_nd_fee - hos_nd_fee;
         if (select_status == 'firsttime') {
@@ -381,6 +371,7 @@ getTicketQuery();
             $('.hospital_fee').val(hos_nd_fee).end()
         }
 
+            }
         });
     }
 
@@ -401,11 +392,11 @@ getTicketQuery();
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (tc_dr) {
-            var dcr_1st_fee = parseInt(tc_dr.defees.dr_firsttime);
-            var hosp_1st_fee = parseInt(tc_dr.defees.hospital_first);
-            var dcr_2nd_fee = parseInt(tc_dr.defees.dr_sectime);
-            var hosp_2nd_fee = parseInt(tc_dr.defees.hospital_sec);
+        success: function (tc_dr) {
+            var dcr_1st_fee = parseInt(tc_dr.dr_firsttime);
+            var hosp_1st_fee = parseInt(tc_dr.hospital_first);
+            var dcr_2nd_fee = parseInt(tc_dr.dr_sectime);
+            var hosp_2nd_fee = parseInt(tc_dr.hospital_sec);
             var dr_1st_fee = dcr_1st_fee - hosp_1st_fee;
             var dr_2nd_fee = dcr_2nd_fee - hosp_2nd_fee;
         if (select_sts == 'firsttime') {
@@ -416,6 +407,7 @@ getTicketQuery();
             $('.hospl_fee').val(hosp_2nd_fee).end()
         }
 
+            }
         });
     }
 
@@ -447,7 +439,7 @@ $(document).on('click ','#editbutton', function () {
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (editTc) {
+        success: function (editTc) {
             // Populate the form fields with the data returned from server
             $('#editTicketForm').find('[name="ap_id"]').val(editTc.app_tc_id).end()
             $('#editTicketForm').find('[name="p_name"]').val(editTc.app_patient).end()
@@ -458,7 +450,8 @@ $(document).on('click ','#editbutton', function () {
             $('#editTicketForm').find('[name="hospl_fee"]').val(editTc.hospital_fee).end()
             $('#editTicketForm').find('[name="app_date"]').val(editTc.ap_date).end()
             $('#doctor_id option[value='+editTc.dr_id+']').attr('selected', 'selected');
-        });
+        }
+    });
     });
     /* Event for Edit */
 

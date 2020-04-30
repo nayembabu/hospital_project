@@ -1,0 +1,190 @@
+*{
+    margin: 0px;
+    padding: 0px ;
+    font-family: sans-serif;
+    font-size: 11px;
+    
+}
+
+
+@page {
+    transform: rotate(90deg);
+}
+@media print{
+    body {        
+    transform: rotate(90deg);
+      }
+  }
+
+
+.cler{
+    margin-left: 40px;
+    clear: both;
+}
+.float_left{
+    float: left;
+}
+.float_right{
+    float: right;
+}
+.Main_logo{
+    margin-left: 30px;
+    
+}
+.paid_styl{
+    
+    margin-left: 200px;
+    font-size: 30px;
+    border-bottom: solid #000 1px;
+    border-right: solid #000 2px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    
+}
+.border_bottom{
+    padding-top: 5px;
+    border-bottom: solid #000 1px;
+}
+.pad_lef{
+    
+    
+    padding-left: 50px;
+}
+.padfre{
+    padding-top: 0px;
+}
+.LOGO{
+    
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.line_first  {
+    
+}
+.bill_no{
+    margin-top: 40px;
+    margin-left: 30px;
+}
+.date_antry{
+    font-size: 12px;
+    margin-top: 30px;
+    float: right;
+}
+.cos_box{
+    font-size: 12px;
+    margin-top: 25px;
+    margin-left: 110px;
+    padding: 5px 15px;
+    text-align: center;
+    border: solid #000000 1px;
+    border-radius: 50px;
+}
+.admin_detels p{
+    padding-top: 29px;
+}
+.antry_number{
+    float: left;
+    margin-left: 40px;
+}
+.antry_date{
+    float: left;
+    margin-left: 125px;
+}
+.QR_box{
+    padding: 5px;
+    border: solid #000 1px;
+    border-radius: 5px;
+    max-width: 20%;
+    float: right;
+}
+.costomer_only{
+    margin-top: 4px;
+}
+.costomer_detels p{
+    padding-top: 10px;
+}
+.extea{
+    padding-right: 
+}
+.costomer_name{
+    
+    margin-left: 40px;
+}
+.Costomer_copy{
+    margin-right: 10px;
+    padding-top: 10px;
+    
+}
+.costomer_ID{
+    margin-left: 30px;
+    
+}
+.gender{
+    margin-left: 73px;
+}
+.test{
+    margin-left: 40px;
+}
+.Costomer_copy{
+    
+}
+.fontup{
+    text-transform: uppercase;
+}
+.delivery{
+    max-width: 50%;
+    padding-top: 0px;
+}
+.foter{
+    
+    padding-top: 70px;
+}
+.foot {
+    
+    font-size: 10px;
+    text-transform: capitalize;
+    
+    margin-bottom: 10px;
+    
+}
+.foot_right{
+     font-size: 12px;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,15 +1,10 @@
 
-
 <!--sidebar end-->
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper site-min-height">
-
-
-
         <!-- page start-->
         <section class="">
-
             <header class="panel-heading">
                     <i class="fa fa-user"></i>   <?php echo lang('patient'); ?>
                 </header>
@@ -24,11 +19,7 @@
                                 </button>
                             </div>
                         </a>
-<button onclick="open_blank_chart()" type="button" class="btn green" id="" title="" data-toggle="modal" data_id=""><i class="fa fa-stethoscope"></i> <?php echo lang('blank').' '.lang('chart'); ?></button>
-                        <button class="export no-print" onclick="javascript:window.print();"><?php echo lang('print'); ?></button>
-
-                    </div>
-                    <div class="space15"></div>
+<button onclick="open_blank_chart()" type="button" class="btn green" id="" title="" ><i class="fa fa-stethoscope"></i> <?php echo lang('blank').' '.lang('chart'); ?></button>
                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                         <thead>
                             <tr>
@@ -41,6 +32,7 @@
                                 <th><?php echo lang('admission').' '.lang('time'); ?></th>
                                 <th><?php echo lang('mobile'); ?></th>
                                 <th>Employee</th>
+                                <th>Entry Time</th>
                                 <th class="no-print"><?php echo lang('options'); ?></th>
                             </tr>
                         </thead>
@@ -58,23 +50,17 @@
                                 <td><?php echo date('d-M-y h:m a', $patient->time_this); ?></td>
                                 <td><?php echo $patient->mobile; ?></td>
                                 <td><?php echo $patient->ename; ?></td>
-
-
-
+                                <td><?php if ($patient->reg_time_stamp_now != '') {
+                                    echo date('d-M-y h:m:s a', $patient->reg_time_stamp_now);
+                                } ?></td>
                                 <td class="no-print">
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Supervisor'))) { ?>
-                                     <a type="button" class="btn editbutton editpbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data_p_id="<?php echo $patient->p_n_id; ?>"><i class="fa fa-edit"></i> </a>
+                                     <a type="button" class="btn editbutton editpbutton btn-xs" title="<?php echo lang('edit'); ?>" data-toggle="modal" data_p_id="<?php echo $patient->p_n_id; ?>"><i class="fa fa-edit"></i> </a>
                                     <?php } ?>
-
-
-                                     <button onclick="reply_click(this.id)" type="button" class="btn green" id="<?php echo $patient->p_n_id; ?>" title="" data-toggle="modal" data_id=""><i class="fa fa-stethoscope"></i> </button> 
-
-
+                                     <button onclick="reply_click(this.id)" type="button" class="btn green btn-xs" id="<?php echo $patient->p_n_id; ?>" title="" data-toggle="modal" data_id=""><i class="fa fa-stethoscope"></i> </button> 
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
-                                     <a class="btn delete_button btn-danger" title="<?php echo lang('delete'); ?>" href="patient/delete?id=<?php echo $patient->p_n_id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
+                                     <a class="btn delete_button btn-danger btn-xs" title="<?php echo lang('delete'); ?>" href="patient/delete?id=<?php echo $patient->p_n_id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
                                     <?php } ?>
-                                   
-
                                 </td>
                             </tr>
                         <?php } ?>
@@ -104,7 +90,6 @@
             </div>
             <div class="modal-body">
                 <form role="form" id="patientadd" action="patient/addpatient" method="post" enctype="multipart/form-data">
-
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('doctor'); ?></label>
                         <select required="required" class="form-control m-bot15 js-example-basic-single" id="doctor" name="dr_id" value=''>
@@ -114,10 +99,6 @@
                         <?php } ?>
                         </select>
                     </div>
-
-
-
-
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php  echo lang('name'); ?></label>
                        <!-- <select class="form-control m-bot15 js-example-basic-single" id="app_id" name="app_id" value='' onchange="changeid()">
@@ -139,7 +120,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('sex'); ?></label>
-                        <select class="form-control m-bot15" name="sex" value=''>
+                        <select class="form-control " name="sex" value=''>
                             <option value="Male"> Male </option>
                             <option value="Female"> Female </option>
                             <option value="Others"> Others </option>
@@ -161,12 +142,10 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        
+                    <div class="form-group">                        
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="fa" value="option1">
                           <label class="form-check-label" for="inlineRadio1">Father Name</label>
-
                           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="hus" value="option2">
                           <label class="form-check-label" for="inlineRadio2">Husband Name</label>
                         </div>

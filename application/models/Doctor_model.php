@@ -44,13 +44,13 @@ class Doctor_model extends CI_model {
 
     function getDoctorfeeById($id) {
         $this->db->where('dr_fee_id', $id);
-        $this->db->join('doctor', 'dr_fee.dr_iidd_manaual = doctor.dr_id');
+        $this->db->join('doctor', 'dr_fee.dr_a_idid_auto = doctor.dr_auto_id', 'left');
         $query = $this->db->get('dr_fee');
         return $query->row();
     }
 
     function drfee() {
-        $this->db->join('doctor', 'dr_fee.dr_iidd_manaual = doctor.dr_id');
+        $this->db->join('doctor', 'dr_fee.dr_a_idid_auto = doctor.dr_auto_id', 'left');
         $query = $this->db->get('dr_fee');
         return $query->result();
     }
