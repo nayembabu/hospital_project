@@ -18,9 +18,6 @@ class Bill_model extends CI_model {
         return $query->result();
     }
 
-
-
-
     function getOut_patient() {
         $date = date('Y-m-d', strtotime("0 days"));
         $date_lef = strtotime($date);

@@ -74,6 +74,8 @@ class Usg extends CI_Controller {
                     'repodatesss'           => $date
                  );
         $this->usg_model->addNewReport($a_data);
+
+        
         $this->session->set_flashdata('feedback', 'Report Entry Successfull');
         redirect('usg');
 

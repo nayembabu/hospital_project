@@ -7,11 +7,11 @@ class Department extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library('Ion_auth');
+        
+$this->load->library('Ion_auth');
         $this->load->library('session');
         $this->load->library('form_validation');
-        $this->load->model('department_model');
-        $language = $this->db->get('settings')->row()->language;
+        $this->load->model('department_model');      $language = $this->db->get('settings')->row()->language;
         $this->lang->load('system_syntax', $language);
         $this->load->library('upload');
         $this->load->model('ion_auth_model');

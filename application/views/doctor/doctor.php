@@ -23,6 +23,7 @@
                     <table class="table table-striped table-hover table-bordered" id="editable-sample">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th><?php echo lang('doctor'); ?> <?php echo lang('id'); ?></th>
                                 <th><?php echo lang('image'); ?></th>
                                 <th><?php echo lang('name'); ?></th>
@@ -37,6 +38,7 @@
 
                         <?php foreach ($doctors as $doctor) { ?>
                             <tr class="">
+                                <td><?php echo $doctor->dr_auto_id; ?></td>
                                 <td><?php echo $doctor->dr_id; ?></td>
                             <?php if ($doctor->img_url != '') {?>        
                                 <td style="width:10%;"><img width="50px" height="50px" src="<?php echo $doctor->img_url; ?>"></td>

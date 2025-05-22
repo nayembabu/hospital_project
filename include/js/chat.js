@@ -41,10 +41,9 @@ function showchat() {
         $.ajax({
             type: 'ajax',
             url: 'home/getchatByJason',
-            async: false,
             data: '',
             dataType: 'json',
-        }).success(function(getchat) {
+            success:function(getchat) {
             var html = '';
             var i;
             for (i=0; i<getchat.length; i++) {
@@ -60,6 +59,7 @@ function showchat() {
                         }}
             $('.msg_body').html(html);
 
-        });
+        }
+    })
     }
-    });
+})
